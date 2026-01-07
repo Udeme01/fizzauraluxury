@@ -3,8 +3,8 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="flex flex-col items-center justify-center bg-accent-900 font-montserrat p-6">
-      <section>
+    <footer className="flex flex-col items-center justify-center bg-accent-900 font-montserrat p-8">
+      <section className="md:flex md:flex-row md:gap-12 lg:max-w-7xl">
         <section>
           <div className="flex items-center justify-left gap-1">
             <img
@@ -12,16 +12,16 @@ const Footer = () => {
               alt="brand logo image"
               className="w-16 h-auto"
             />
-            <h1 className="font-opensans text-3xl font-semibold tracking-tighter text-neutral-white">
-              FizzAura Luxury.
+            <h1 className="font-opensans text-2xl font-semibold tracking-tighter text-neutral-white">
+              FizzAura Luxury
             </h1>
           </div>
-          <p className="text-sm mt-4 text-neutral-white/60">
+          <p className="text-xs mt-4 text-neutral-white/60 w-full lg:max-w-96">
             Lorem ipsum dolor sit amet consectetur adipiscing elit. Sit amet
             consectetur adipiscing elit quisque faucibus ex. Adipiscing elit
             quisque faucibus ex sapien vitae pellentesque.
           </p>
-          <ul className="flex mt-4 p-3 w-fit gap-4">
+          <ul className="flex mt-4 w-fit gap-4">
             <li>
               <Instagram color="white" size={24} className="cursor-pointer" />
             </li>
@@ -34,7 +34,7 @@ const Footer = () => {
           </ul>
         </section>
 
-        <section className="mt-6 border-t border-neutral-white pt-6 flex flex-col gap-12 md:flex-row md:gap-20">
+        <section className="mt-12 border-t border-neutral-white/5 pt-12 flex flex-col gap-12 md:mt-0 md:border-t-0 md:flex-row lg:gap-20">
           {/* company section */}
           <section>
             <h1 className="mb-4 text-md text-neutral-white">Company</h1>
@@ -68,7 +68,7 @@ const Footer = () => {
                 Shipping and Delivery
               </li>
               <li className="text-neutral-white/60 cursor-pointer">
-                Returns and Exchanges/Refunds
+                Returns and Refunds
               </li>
               <li className="text-neutral-white/60 cursor-pointer">
                 Size Guide
@@ -99,8 +99,8 @@ const Footer = () => {
         </section>
       </section>
       {/* Bottom Bar */}
-      <section className="w-full mt-6 border-t border-neutral-white pt-6 flex flex-col items-center justify-center">
-        <p className="text-xs text-neutral-white/60">
+      <section className="w-full mt-6 border-t border-neutral-white/5 pt-6 flex flex-col items-center justify-center md:mt-12">
+        <p className="text-xs text-neutral-white/60 md:mt-12">
           &copy; {new Date().getFullYear()} FizzAura Luxury. All rights
           reserved.
         </p>
