@@ -75,3 +75,32 @@ export const trending_products = [
     colors: ["#8B4513", "#000000"],
   },
 ];
+
+// src/data/products.js
+export const newArrivals = [
+  {
+    id: 1,
+    name: "Classic Leather Jacket",
+    price: 45000,
+    images: ["/images/products/jacket-1.jpg"],
+    category: "Outerwear",
+    colors: ["Black", "Brown", "Navy"],
+    sizes: ["S", "M", "L", "XL"],
+    featured: true,
+    isNew: true, // ← Add this to mark as new arrival
+    inStock: true,
+  },
+  {
+    id: 2,
+    name: "Cotton Polo Shirt",
+    price: 15000,
+    images: ["/images/products/polo-1.jpg"],
+    category: "Tops",
+    colors: ["White", "Blue", "Red"],
+    sizes: ["S", "M", "L", "XL"],
+    featured: false,
+    isNew: true, // ← Add this
+    inStock: true,
+  },
+  // Add more products...
+];

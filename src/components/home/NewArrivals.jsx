@@ -1,20 +1,38 @@
+// src/components/home/NewArrivals.jsx
+import { Link } from "react-router-dom";
+import { ArrowRight, ShoppingBag } from "lucide-react";
 import { trending_products } from "../../data/products";
 
-const TrendingProducts = () => {
+const NewArrivals = () => {
+  // Get products marked as new arrivals (or use date-based logic)
+  const newProducts = trending_products
+    .filter((product) => product.isNew)
+    .slice(0, 6); // Show only 6 products
   return (
-    <section className="py-16 px-6 sm:px-8 lg:px-12 bg-gray-50 font-montserrat">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl text-gray-900 mb-4">
-            Trending Products
-          </h2>
-          <p className="text-gray-600 text-base sm:text-lg">
-            Fashion Is Not Just About Clothes But Also
-          </p>
+    <section className="py-16 md:py-20 bg-neutral-50 font-montserrat">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="flex items-center justify-between mb-10">
+          <div>
+            <h2 className="text-3xl sm:text-4xl text-gray-900 mb-4">
+              New Arrivals
+            </h2>
+            <p className="text-gray-600 text-base sm:text-lg">
+              Fresh styles just landed
+            </p>
+          </div>
+
+          {/* View All Link - Desktop */}
+          <Link
+            to="/shop?filter=new"
+            className="hidden md:inline-flex items-center gap-2 text-neutral-black font-semibold hover:gap-3 transition-all"
+          >
+            View All
+            <ArrowRight className="w-5 h-5" />
+          </Link>
         </div>
 
-        {/* Carousel Container */}
+        {/* Products Grid */}
         <div className="relative group">
           {/* Products Slider */}
           <div className="overflow-hidden">
@@ -27,12 +45,12 @@ const TrendingProducts = () => {
                     <div className="relative bg-gray-100 aspect-square overflow-hidden">
                       {/* Sold Out Badge */}
                       {/* {product.soldOut && (
-                        <div className="absolute inset-0 flex items-center justify-center z-10">
-                          <span className="bg-white text-gray-900 text-sm font-bold px-6 py-3 rounded-full border-2 border-gray-900">
-                            SOLD OUT
-                          </span>
-                        </div>
-                      )} */}
+                                <div className="absolute inset-0 flex items-center justify-center z-10">
+                                  <span className="bg-white text-gray-900 text-sm font-bold px-6 py-3 rounded-full border-2 border-gray-900">
+                                    SOLD OUT
+                                  </span>
+                                </div>
+                              )} */}
 
                       {/* Product Image */}
                       <img
@@ -86,10 +104,10 @@ const TrendingProducts = () => {
           </div>
         </div>
 
-        {/* View All Button */}
+        {/* View All Button - Mobile */}
         <div className="text-center mt-6">
           <button className="inline-block px-8 py-3 border border-gray-900 text-gray-900 font-semibold uppercase tracking-wider hover:bg-gray-900 hover:text-white transition-colors duration-300 cursor-pointer">
-            View All
+            View All New Arrivals
           </button>
         </div>
       </div>
@@ -97,4 +115,4 @@ const TrendingProducts = () => {
   );
 };
 
-export default TrendingProducts;
+export default NewArrivals;
