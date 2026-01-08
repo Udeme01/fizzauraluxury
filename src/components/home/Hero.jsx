@@ -31,7 +31,7 @@ const Hero = () => {
   ];
 
   return (
-    <section className="relative w-full h-[50vh] lg:min-h-[70vh] overflow-hidden">
+    <section className="relative w-full h-[50vh] lg:min-h-[70vh] overflow-hidden font-montserrat">
       {/* Slides */}
       {slides.map((slide, index) => (
         <div
@@ -44,17 +44,17 @@ const Hero = () => {
           <div className={`absolute inset-0 ${slide.bgColor}`} />
 
           {/* Content Container */}
-          <div className="relative z-10 h-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-            <div className="grid grid-cols-2 gap-8 h-full items-center">
+          <div className="relative z-10 h-full w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+            <div className="grid grid-cols-2 h-full items-center">
               {/* Left Side - Text Content */}
-              <div className="flex flex-col justify-center space-y-6 lg:space-y-8">
+              <div className="flex flex-col justify-center space-y-6 lg:space-y-8 w-full h-full border">
                 {/* Small Tag */}
                 <p className="text-white/90 text-sm sm:text-base font-medium tracking-wide">
                   {slide.tag}
                 </p>
 
                 {/* Main Heading */}
-                <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-playfair font-bold text-white leading-tight">
+                <h1 className="text-3xl w-full sm:text-6xl lg:text-7xl xl:text-8xl font-semibold text-white leading-tight">
                   {slide.title}
                 </h1>
 
@@ -70,7 +70,7 @@ const Hero = () => {
               </div>
 
               {/* Right Side - Image */}
-              <div className="relative w-full h-full flex items-center justify-center lg:justify-end">
+              <div className="relative w-full h-full flex items-center justify-center lg:justify-end border">
                 {/* Decorative Circle Background */}
                 <div className="absolute w-100 h-100 sm:w-115 sm:h-115 md:w-125 md:h-125 bg-white/10 rounded-full -right-60 lg:-right-48" />
                 {/* Product Image */}
