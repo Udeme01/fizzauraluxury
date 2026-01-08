@@ -32,7 +32,6 @@ const Hero = () => {
 
   return (
     <section className="relative w-full h-[50vh] lg:min-h-[70vh] overflow-hidden font-montserrat">
-        
       {/* Slides */}
       {slides.map((slide, index) => (
         <div
@@ -44,16 +43,9 @@ const Hero = () => {
           {/* Background Color */}
           <div className={`absolute inset-0 ${slide.bgColor}`} />
 
-
-
           {/* Content Container */}
           <div className="relative z-10 h-full w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-
-
             <div className="grid grid-cols-2 lg:grid-cols-12 h-full items-center gap-0">
-
-
-
               {/* Left Side - Text Content */}
               <div className="flex flex-col justify-center space-y-6 lg:space-y-8 w-full h-full lg:col-span-7 xl:col-span-6">
                 {/* Small Tag */}
@@ -66,7 +58,7 @@ const Hero = () => {
                   {slide.title}
                 </h1>
 
-                {/* CTA Button */} 
+                {/* CTA Button */}
                 <div>
                   <Link
                     to="/shop"
@@ -76,9 +68,6 @@ const Hero = () => {
                   </Link>
                 </div>
               </div>
-
-
-
 
               {/* Right Side - Image */}
               <div className="relative w-full h-full flex items-center justify-center lg:justify-end lg:col-span-5 xl:col-span-6 lg:-ml-12 xl:-ml-16">
@@ -92,18 +81,10 @@ const Hero = () => {
                   className="relative z-10 w-75 sm:w-100 md:w-112.5 lg:w-125 object-contain drop-shadow-2xl"
                 />
               </div>
-
-
-
-
             </div>
-
-
           </div>
           {/* Content Container */}
-
-          
-        </div> 
+        </div>
       ))}
 
       {/* Dots Navigation */}
