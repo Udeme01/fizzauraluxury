@@ -1,3 +1,5 @@
+import { Truck, Shield, RefreshCw, Headphones } from "lucide-react";
+
 // Sample trending product data
 export const trending_products = [
   {
@@ -103,4 +105,54 @@ export const newArrivals = [
     inStock: true,
   },
   // Add more products...
+];
+
+export const features = [
+  {
+    icon: Truck,
+    title: "Fast Delivery",
+    description: "Quick delivery within Lagos and beyond",
+  },
+  {
+    icon: Shield,
+    title: "Secure Shopping",
+    description: "100% secure and trusted",
+  },
+  {
+    icon: RefreshCw,
+    title: "Easy Returns",
+    description: "Hassle-free 7-day return policy",
+  },
+  {
+    icon: Headphones,
+    title: "24/7 Support",
+    description: "Always here to help you",
+  },
+];
+
+export const collections = [
+  {
+    id: 1,
+    title: "Jackets",
+    count: "10 Products",
+    image:
+      "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&h=800&fit=crop",
+    link: "/shop/jackets",
+  },
+  {
+    id: 2,
+    title: "Trucker Jackets",
+    count: "10 Products",
+    image:
+      "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&h=800&fit=crop",
+    link: "/shop/trucker-jackets",
+  },
+  {
+    id: 3,
+    title: "Face Caps",
+    count: "10 Products",
+    image:
+      "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=600&h=800&fit=crop",
+    link: "/shop/face-caps",
+  },
 ];

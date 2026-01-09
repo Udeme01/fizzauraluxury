@@ -10,19 +10,19 @@ const CustomerReviews = () => {
       id: 1,
       text: "I Am Always Impressed With The Quality Of The Clothingat This Store. The Designs Are Not Only Stylish But Alsodurable, And Every...",
       name: "STEVE JOBS",
-      image: "/images/reviews/customer-1.jpg",
+      image: "/images/profiles/dp03.jpg",
     },
     {
       id: 2,
       text: "What I Love Most Is How Effortlessly Their Clothing Combines Elegance With Everyday Wearability. The Fabrics Feel Premium,Flattering.",
       name: "LUCA MORETTI",
-      image: "/images/reviews/customer-2.jpg",
+      image: "/images/profiles/dp02.jpg",
     },
     {
       id: 3,
       text: "Their Collections Never Disappoint. From The Stitching To The Silhouettes, You Can Feel The Care Put Into Every Detail. I Get Compliment.",
       name: "ANN SMITH",
-      image: "/images/reviews/customer-3.jpg",
+      image: "/images/profiles/dp01.jpg",
     },
   ];
 
@@ -39,10 +39,10 @@ const CustomerReviews = () => {
   };
 
   return (
-    <section className="py-16 md:py-20 bg-white">
+    <section className="py-16 md:py-20 bg-white font-montserrat">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-opensans font-bold text-neutral-900 mb-12 text-center md:text-left">
+        <h2 className="text-3xl sm:text-4xl text-neutral-900 mb-10 text-center">
           Customer Reviews
         </h2>
 
@@ -51,7 +51,7 @@ const CustomerReviews = () => {
           {reviews.map((review) => (
             <div
               key={review.id}
-              className="bg-neutral-100 rounded-2xl p-8 flex flex-col justify-between min-h-[320px]"
+              className="bg-neutral-100 p-6 flex flex-col justify-between min-h-[320px]"
             >
               {/* Review Text */}
               <p className="text-neutral-800 text-base leading-relaxed mb-8">
@@ -102,8 +102,8 @@ const CustomerReviews = () => {
               style={{ transform: `translateX(-${currentSlide * 100}%)` }}
             >
               {reviews.map((review) => (
-                <div key={review.id} className="w-full flex-shrink-0 px-2">
-                  <div className="bg-neutral-100 rounded-2xl p-6 sm:p-8 flex flex-col justify-between min-h-[280px] sm:min-h-[320px]">
+                <div key={review.id} className="w-full shrink-0">
+                  <div className="bg-neutral-100 p-6 sm:p-8 flex flex-col justify-between min-h-[280px] sm:min-h-[320px]">
                     {/* Review Text */}
                     <p className="text-neutral-800 text-sm sm:text-base leading-relaxed mb-6 sm:mb-8">
                       "{review.text}"

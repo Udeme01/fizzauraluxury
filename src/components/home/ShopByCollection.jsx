@@ -1,34 +1,8 @@
 import React from "react";
 import { ArrowRight } from "lucide-react";
+import { collections } from "../../data/products";
 
 const ShopByCollection = () => {
-  const collections = [
-    {
-      id: 1,
-      title: "Jackets",
-      count: "10 Products",
-      image:
-        "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&h=800&fit=crop",
-      link: "/shop/jackets",
-    },
-    {
-      id: 2,
-      title: "Trucker Jackets",
-      count: "10 Products",
-      image:
-        "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&h=800&fit=crop",
-      link: "/shop/trucker-jackets",
-    },
-    {
-      id: 3,
-      title: "Face Caps",
-      count: "10 Products",
-      image:
-        "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=600&h=800&fit=crop",
-      link: "/shop/face-caps",
-    },
-  ];
-
   return (
     <section className="py-12 sm:py-16 lg:py-20 px-6 sm:px-8 lg:px-12 bg-white font-montserrat">
       <div className="max-w-7xl mx-auto">
@@ -43,7 +17,7 @@ const ShopByCollection = () => {
         </div>
 
         {/* Collection Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {collections.map((collection) => (
             <a
               key={collection.id}

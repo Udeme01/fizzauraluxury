@@ -10,7 +10,7 @@ const NewArrivals = () => {
     .slice(0, 6); // Show only 6 products
   return (
     <section className="py-16 md:py-20 bg-neutral-50 font-montserrat">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-6">
         {/* Section Header */}
         <div className="flex items-center justify-between mb-10">
           <div>
@@ -38,7 +38,7 @@ const NewArrivals = () => {
           <div className="overflow-hidden">
             <div className="flex transition-transform duration-500 ease-out">
               {trending_products.map((product) => (
-                <div key={product.id} className="shrink-0 px-3">
+                <div key={product.id} className="shrink-0 pr-6">
                   {/* Product Card */}
                   <div className="overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 group/card">
                     {/* Image Container */}
@@ -63,7 +63,7 @@ const NewArrivals = () => {
                     </div>
 
                     {/* Product Info */}
-                    <div className="p-4">
+                    <div className="py-4">
                       <p className="text-sm text-gray-500 mb-1">
                         {product.category}
                       </p>
