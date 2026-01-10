@@ -14,7 +14,12 @@ const Header = () => {
         >
           <img src="/images/brand/fa_logo.png" />
         </Link>
-        <ShoppingCart color="black" size={24} />
+        <Link to="/cart" className="relative">
+          <ShoppingCart className="w-6 h-6 text-neutral-black" />
+          <span className="absolute -top-2 -right-2 bg-accent-900 text-neutral-white shadow-2xl text-xs w-5 h-5 rounded-full flex items-center justify-center font-semibold">
+            0
+          </span>
+        </Link>
       </section>
     </header>
   );

@@ -69,14 +69,14 @@ const Contact = () => {
   ];
 
   return (
-    <div className="bg-neutral-50 min-h-screen py-12 md:py-16">
+    <div className="bg-neutral-50 min-h-screen py-12 md:py-16 font-montserrat">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Page Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-playfair font-bold text-neutral-900 mb-4">
+          <h1 className="text-3xl sm:text-4xl text-gray-900 mb-4">
             Get in Touch
           </h1>
-          <p className="text-neutral-600 text-lg md:text-xl max-w-2xl mx-auto">
+          <p className="text-neutral-600 text-md sm:text-lg md:text-xl mx-auto">
             Have questions? We'd love to hear from you. Send us a message and
             we'll respond as soon as possible.
           </p>
@@ -86,8 +86,8 @@ const Contact = () => {
           {/* Contact Information - Left Side */}
           <div className="lg:col-span-1 space-y-8">
             {/* Contact Methods */}
-            <div className="bg-white rounded-2xl p-6 md:p-8 shadow-lg">
-              <h2 className="text-2xl font-semibold text-neutral-900 mb-6">
+            <div className="bg-white p-6 md:p-8 shadow-lg">
+              <h2 className="text-2xl text-neutral-900 mb-6">
                 Contact Information
               </h2>
               <div className="space-y-6">
@@ -125,10 +125,8 @@ const Contact = () => {
             </div>
 
             {/* Social Media */}
-            <div className="bg-white rounded-2xl p-6 md:p-8 shadow-lg">
-              <h2 className="text-2xl font-semibold text-neutral-900 mb-6">
-                Follow Us
-              </h2>
+            <div className="bg-white rounded- p-6 md:p-8 shadow-lg">
+              <h2 className="text-2xl text-neutral-900 mb-6">Follow Us</h2>
               <div className="flex gap-4">
                 <a
                   href="https://instagram.com/fizzauraluxury"
@@ -161,10 +159,8 @@ const Contact = () => {
             </div>
 
             {/* Business Hours */}
-            <div className="bg-white rounded-2xl p-6 md:p-8 shadow-lg">
-              <h2 className="text-2xl font-semibold text-neutral-900 mb-6">
-                Business Hours
-              </h2>
+            <div className="bg-white p-6 md:p-8 shadow-lg">
+              <h2 className="text-2xl text-neutral-900 mb-6">Business Hours</h2>
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between">
                   <span className="text-neutral-600">Monday - Friday</span>
@@ -188,8 +184,8 @@ const Contact = () => {
 
           {/* Contact Form - Right Side */}
           <div className="lg:col-span-2">
-            <div className="bg-white rounded-2xl p-6 md:p-8 lg:p-10 shadow-lg">
-              <h2 className="text-2xl md:text-3xl font-semibold text-neutral-900 mb-6">
+            <div className="bg-white p-6 md:p-8 lg:p-10 shadow-lg">
+              <h2 className="text-2xl md:text-3xl text-neutral-900 mb-6">
                 Send Us a Message
               </h2>
 
@@ -209,7 +205,7 @@ const Contact = () => {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
+                    className="w-full px-4 py-3 border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
                     placeholder="John Doe"
                   />
                 </div>
@@ -229,7 +225,7 @@ const Contact = () => {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
+                    className="w-full px-4 py-3 border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
                     placeholder="johndoe@example.com"
                   />
                 </div>
@@ -249,7 +245,7 @@ const Contact = () => {
                     value={formData.subject}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
+                    className="w-full px-4 py-3 border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
                     placeholder="How can we help you?"
                   />
                 </div>
@@ -269,7 +265,7 @@ const Contact = () => {
                     onChange={handleChange}
                     required
                     rows="6"
-                    className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors resize-none"
+                    className="w-full px-4 py-3 border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors resize-none"
                     placeholder="Tell us what you need..."
                   />
                 </div>
@@ -278,7 +274,7 @@ const Contact = () => {
                 <div>
                   <button
                     type="submit"
-                    className="w-full bg-neutral-900 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-neutral-800 transition-colors flex items-center justify-center gap-2"
+                    className="w-full bg-neutral-900 text-white px-8 py-4 cursor-pointer font-semibold text-lg hover:bg-neutral-800 transition-colors flex items-center justify-center gap-2"
                   >
                     <MessageCircle className="w-5 h-5" />
                     Send via WhatsApp
@@ -294,18 +290,18 @@ const Contact = () => {
         </div>
 
         {/* Quick Contact Banner */}
-        <div className="mt-12 bg-accent-500 rounded-2xl p-8 md:p-12 text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-neutral-900 mb-4">
+        <div className="mt-12 bg-neutral-white shadow-lg p-8 md:p-12 text-center">
+          <h2 className="text-2xl md:text-3xl text-neutral-900 mb-4">
             Need Immediate Assistance?
           </h2>
-          <p className="text-neutral-800 mb-6 text-lg">
+          <p className="text-neutral-800 mb-6 text-base md:text-lg">
             Chat with us directly on WhatsApp for quick responses
           </p>
           <a
             href="https://wa.me/2348012345678"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-neutral-900 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-neutral-800 transition-colors"
+            className="inline-flex items-center gap-2 bg-neutral-900 text-white px-8 py-4 font-semibold text-lg hover:bg-neutral-800 transition-colors"
           >
             <MessageCircle className="w-5 h-5" />
             Chat on WhatsApp
