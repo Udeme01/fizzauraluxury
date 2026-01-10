@@ -4,7 +4,7 @@ import { features } from "../../data/products";
 const FeaturesSection = () => {
   return (
     <section className="py-12 md:py-16 bg-neutral-50 font-montserrat">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature) => {
             const Icon = feature.icon;

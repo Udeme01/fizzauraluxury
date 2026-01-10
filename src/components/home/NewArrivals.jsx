@@ -9,8 +9,8 @@ const NewArrivals = () => {
     .filter((product) => product.isNew)
     .slice(0, 6); // Show only 6 products
   return (
-    <section className="py-16 md:py-20 bg-neutral-50 font-montserrat">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="py-16 md:py-20 font-montserrat">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8">
         {/* Section Header */}
         <div className="flex items-center justify-between mb-10">
           <div>

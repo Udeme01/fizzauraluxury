@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const PromoBanner = () => {
   return (
     <section className="w-full bg-neutral-800 overflow-hidden font-montserrat">
-      <div className="max-w-7xl mx-auto px-6 md:py-8 lg:py-16 xl:py-24">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 md:py-8 lg:py-16 xl:py-24">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-20 items-center py-10 md:py-0">
           {/* Left Side - Text Content */}
           <div className="flex flex-col justify-center space-y-6 lg:space-y-8 z-10">

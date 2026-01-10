@@ -4,8 +4,8 @@ import { collections } from "../../data/products";
 
 const ShopByCollection = () => {
   return (
-    <section className="py-12 sm:py-16 lg:py-20 px-6 sm:px-8 lg:px-12 bg-white font-montserrat">
-      <div className="max-w-7xl mx-auto">
+    <section className="py-12 sm:py-16 lg:py-20 px-6 sm:px-8 bg-white font-montserrat">
+      <div>
         {/* Section Header */}
         <div className="text-center mb-10 sm:mb-12">
           <h2 className="text-3xl sm:text-4xl text-gray-900 mb-4">

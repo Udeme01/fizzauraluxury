@@ -170,8 +170,8 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="flex flex-col items-center justify-center bg-accent-900 font-montserrat p-8 py-16">
-      <section className="md:flex md:flex-row md:gap-12 lg:max-w-7xl">
+    <footer className="flex flex-col items-center justify-center bg-accent-900 font-montserrat p-8 py-16 md:py-20">
+      <section className="md:flex md:flex-row md:gap-12 w-full h-full max-w-7xl px-6 lg:px-8">
         {/* Brand Section */}
         <section>
           <div className="flex items-center justify-left gap-2">
