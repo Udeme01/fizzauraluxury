@@ -1,5 +1,5 @@
 // src/components/home/Hero.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const Hero = () => {
@@ -29,6 +29,16 @@ const Hero = () => {
       bgColor: "bg-[#1C4532]", // Dark green
     },
   ];
+
+  // Auto-slide effect
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 5000); // Change slide every 5 seconds
+
+    // Cleanup on unmount
+    return () => clearInterval(timer);
+  }, [slides.length]);
 
   return (
     <section className="relative w-full h-[50vh] lg:min-h-[70vh] overflow-hidden font-montserrat">

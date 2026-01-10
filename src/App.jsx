@@ -8,6 +8,7 @@ import Shop from "./pages/Shop.jsx";
 import ScrollToTop from "./components/common/ScrollToTop.jsx";
 import Cart from "./pages/Cart.jsx";
 import ProductDetail from "./pages/ProductDetails.jsx";
+import NotFound from "./pages/NotFound.jsx";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -41,7 +42,7 @@ const App = () => {
         },
         {
           path: "*",
-          element: <div>404 Not Found</div>,
+          element: <NotFound />,
         },
       ],
     },
