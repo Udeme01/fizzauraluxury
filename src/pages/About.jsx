@@ -40,7 +40,7 @@ const About = () => {
             FizzAura Luxury...
           </h1>
           <p className="text-neutral-black text-lg md:text-xl mx-auto font-medium">
-            ...for people whose presence is felt before they speak.
+            ...where energy meets style.
           </p>
         </div>
       </section>

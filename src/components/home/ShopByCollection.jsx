@@ -4,7 +4,7 @@ import { collections } from "../../data/products";
 
 const ShopByCollection = () => {
   return (
-    <section className="py-12 sm:py-16 lg:py-20 px-6 sm:px-8 bg-white font-montserrat">
+    <section className="py-12 sm:py-16 lg:py-20 bg-white font-montserrat">
       <div>
         {/* Section Header */}
         <div className="text-center mb-10 sm:mb-12">
@@ -17,7 +17,7 @@ const ShopByCollection = () => {
         </div>
 
         {/* Collection Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto px-6 sm:px-8">
           {collections.map((collection) => (
             <a
               key={collection.id}

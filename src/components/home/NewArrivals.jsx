@@ -13,7 +13,7 @@ const NewArrivals = () => {
       <div className="max-w-7xl mx-auto px-6 sm:px-8">
         {/* Section Header */}
         <div className="flex items-center justify-between mb-10">
-          <div>
+          <div className="text-center w-full md:text-left">
             <h2 className="text-3xl sm:text-4xl text-gray-900 mb-4">
               New Arrivals
             </h2>
@@ -23,12 +23,10 @@ const NewArrivals = () => {
           </div>
 
           {/* View All Link - Desktop */}
-          <Link
-            to="/shop?filter=new"
-            className="hidden md:inline-flex items-center gap-2 text-neutral-black font-semibold hover:gap-3 transition-all"
-          >
-            View All
-            <ArrowRight className="w-5 h-5" />
+          <Link to="/shop?filter=new">
+            <button className="hidden md:inline-block w-28 px-2 py-3 border border-gray-900 text-gray-900 font-semibold uppercase tracking-wider hover:bg-gray-900 hover:text-white transition-colors duration-300 cursor-pointer">
+              View All
+            </button>
           </Link>
         </div>
 
@@ -105,9 +103,9 @@ const NewArrivals = () => {
         </div>
 
         {/* View All Button - Mobile */}
-        <div className="text-center mt-6">
+        <div className="text-center mt-6 md:hidden">
           <button className="inline-block px-8 py-3 border border-gray-900 text-gray-900 font-semibold uppercase tracking-wider hover:bg-gray-900 hover:text-white transition-colors duration-300 cursor-pointer">
-            View All New Arrivals
+            View All
           </button>
         </div>
       </div>

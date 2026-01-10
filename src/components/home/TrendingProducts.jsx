@@ -1,17 +1,26 @@
 import { trending_products } from "../../data/products";
+import { Link } from "react-router";
 
 const TrendingProducts = () => {
   return (
     <section className="py-16 md:py-20 font-montserrat">
       <div className="max-w-7xl mx-auto px-6 sm:px-8">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl text-gray-900 mb-4">
-            Trending Products
-          </h2>
-          <p className="text-gray-600 text-base sm:text-lg">
-            Fashion Is Not Just About Clothes But Also
-          </p>
+        <div className="text-center mb-12 md:flex md:items-center md:justify-between">
+          <div className="md:text-left">
+            <h2 className="text-3xl sm:text-4xl text-gray-900 mb-4">
+              Trending Products
+            </h2>
+            <p className="text-gray-600 text-base sm:text-lg">
+              Fashion Is Not Just About Clothes But Also
+            </p>
+          </div>
+          {/* View All Link - Desktop */}
+          <Link to="/shop?filter=new">
+            <button className="hidden md:inline-block w-28 px-2 py-3 border border-gray-900 text-gray-900 font-semibold uppercase tracking-wider hover:bg-gray-900 hover:text-white transition-colors duration-300 cursor-pointer">
+              View All
+            </button>
+          </Link>
         </div>
 
         {/* Carousel Container */}
@@ -88,7 +97,7 @@ const TrendingProducts = () => {
 
         {/* View All Button */}
         <div className="text-center mt-6">
-          <button className="inline-block px-8 py-3 border border-gray-900 text-gray-900 font-semibold uppercase tracking-wider hover:bg-gray-900 hover:text-white transition-colors duration-300 cursor-pointer">
+          <button className="inline-block px-8 py-3 border border-gray-900 text-gray-900 font-semibold uppercase tracking-wider hover:bg-gray-900 hover:text-white transition-colors duration-300 cursor-pointer md:hidden">
             View All
           </button>
         </div>
