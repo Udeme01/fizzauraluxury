@@ -2,6 +2,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, ShoppingBag } from "lucide-react";
 import { trending_products } from "../../data/products";
+import Button from "../common/Button";
 
 const NewArrivals = () => {
   // Get products marked as new arrivals (or use date-based logic)
@@ -23,11 +24,11 @@ const NewArrivals = () => {
           </div>
 
           {/* View All Link - Desktop */}
-          <Link to="/shop?filter=new">
-            <button className="hidden md:inline-block w-28 px-2 py-3 border border-gray-900 text-gray-900 font-semibold uppercase tracking-wider hover:bg-gray-900 hover:text-white transition-colors duration-300 cursor-pointer">
+          <div className="hidden md:block md:w-40 text-right">
+            <Button to={"/shop?filter=new"} variant="outline" size="md">
               View All
-            </button>
-          </Link>
+            </Button>
+          </div>
         </div>
 
         {/* Products Grid */}
@@ -104,9 +105,9 @@ const NewArrivals = () => {
 
         {/* View All Button - Mobile */}
         <div className="text-center mt-6 md:hidden">
-          <button className="inline-block px-8 py-3 border border-gray-900 text-gray-900 font-semibold uppercase tracking-wider hover:bg-gray-900 hover:text-white transition-colors duration-300 cursor-pointer">
+          <Button to={"/shop?filter=new"} variant="outline" size="md">
             View All
-          </button>
+          </Button>
         </div>
       </div>
     </section>

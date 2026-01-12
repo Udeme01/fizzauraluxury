@@ -9,6 +9,7 @@ import {
   Linkedin,
   MessageCircle,
 } from "lucide-react";
+import Button from "../components/common/Button";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -270,15 +271,16 @@ const Contact = () => {
                   />
                 </div>
 
-                {/* Submit Button */}
+                {/* WhatsApp Submit Button */}
                 <div>
-                  <button
-                    type="submit"
-                    className="w-full bg-neutral-900 text-white px-8 py-4 cursor-pointer font-semibold text-lg hover:bg-neutral-800 transition-colors flex items-center justify-center gap-2"
+                  <Button
+                    icon={MessageCircle}
+                    variant=""
+                    size="md"
+                    className="w-full bg-green-800 text-neutral-white py-4 hover:bg-green-700 transform transition-all duration-500 inline-flex items-center justify-center gap-2"
                   >
-                    <MessageCircle className="w-5 h-5" />
                     Send via WhatsApp
-                  </button>
+                  </Button>
                   <p className="text-xs text-neutral-500 mt-3 text-center">
                     Your message will be sent directly to our WhatsApp for
                     faster response
@@ -297,15 +299,18 @@ const Contact = () => {
           <p className="text-neutral-800 mb-6 text-base md:text-lg">
             Chat with us directly on WhatsApp for quick responses
           </p>
-          <a
-            href="https://wa.me/2348012345678"
+          {/* WhatsApp Btn */}
+          <Button
+            href={"https://wa.me/2348055742292"}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-neutral-900 text-white px-8 py-4 font-semibold text-lg hover:bg-neutral-800 transition-colors"
+            icon={MessageCircle}
+            variant=""
+            size="md"
+            className="bg-green-800 text-neutral-white py-4 hover:bg-green-700 transform transition-all duration-500 inline-flex items-center justify-center gap-2"
           >
-            <MessageCircle className="w-5 h-5" />
             Chat on WhatsApp
-          </a>
+          </Button>
         </div>
       </div>
     </div>

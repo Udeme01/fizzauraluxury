@@ -1,6 +1,7 @@
 // src/pages/About.jsx
 import { Link } from "react-router-dom";
 import { Award, Target, Eye, Heart } from "lucide-react";
+import Button from "../components/common/Button";
 
 const About = () => {
   const values = [
@@ -76,14 +77,10 @@ const About = () => {
                 believe streetwear is more than clothing — it is identity,
                 attitude, and expression.
               </p>
-              <div className="pt-4">
-                <Link
-                  to="/shop"
-                  className="inline-block px-8 py-3 font-semibold bg-accent-900 text-primary-50 hover:bg-accent-800 hover:text-neutral-white transition-colors duration-500"
-                >
-                  Explore Collection
-                </Link>
-              </div>
+              {/* CTA Btn */}
+              <Button to={"/shop"} variant="outline" size="md" className="mt-4">
+                Explore Collection
+              </Button>
             </div>
           </div>
         </div>
@@ -270,9 +267,10 @@ const About = () => {
             Explore our collection of timeless pieces designed for the confident
             individual.
           </p>
-          <button className="inline-block text-sm px-8 py-3 border border-gray-900 text-gray-900 font-semibold uppercase tracking-wider hover:bg-gray-900 hover:text-white transition-colors duration-300 cursor-pointer">
+          {/* CTA Btn */}
+          <Button to={"/shop"} variant="outline" size="md">
             Shop Now
-          </button>
+          </Button>
         </div>
       </section>
     </div>

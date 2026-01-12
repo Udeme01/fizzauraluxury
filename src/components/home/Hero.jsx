@@ -1,6 +1,7 @@
 // src/components/home/Hero.jsx
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Button from "../common/Button.jsx";
 
 const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -59,24 +60,19 @@ const Hero = () => {
               {/* Left Side - Text Content */}
               <div className="flex flex-col justify-center space-y-6 lg:space-y-8 w-full h-full lg:col-span-7 xl:col-span-6">
                 {/* Small Tag */}
-                <p className="text-white/90 text-sm sm:text-base font-medium tracking-wide">
+                <p className="text-accent-50 text-sm sm:text-base font-medium tracking-wide">
                   {slide.tag}
                 </p>
 
                 {/* Main Heading */}
-                <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-semibold text-white leading-tight">
+                <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-semibold text-accent-50 leading-tight">
                   {slide.title}
                 </h1>
 
                 {/* CTA Button */}
-                <div>
-                  <Link
-                    to="/shop"
-                    className="inline-block text-white text-sm sm:text-base font-semibold uppercase tracking-widest border-b-2 border-white pb-2 hover:opacity-80 transition-opacity"
-                  >
-                    Shop Collection
-                  </Link>
-                </div>
+                <Button to={"/shop"} variant="primary" size="md">
+                  Shop Now
+                </Button>
               </div>
 
               {/* Right Side - Image */}

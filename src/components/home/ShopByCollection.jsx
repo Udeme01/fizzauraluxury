@@ -1,6 +1,6 @@
 import React from "react";
-import { ArrowRight } from "lucide-react";
 import { collections } from "../../data/products";
+import Button from "../common/Button";
 
 const ShopByCollection = () => {
   return (
@@ -47,10 +47,9 @@ const ShopByCollection = () => {
                 </h3>
 
                 {/* Shop Now Button */}
-                <div className="inline-flex items-center gap-2 text-sm sm:text-base font-semibold uppercase tracking-wider border-b-2 border-white pb-1 group-hover:gap-4 transition-all duration-300">
-                  <span>Shop Now</span>
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-                </div>
+                <Button variant="primary" size="md">
+                  Shop Now
+                </Button>
               </div>
 
               {/* Hover Effect Line */}

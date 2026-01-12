@@ -1,5 +1,6 @@
 // src/components/home/PromoBanner.jsx
 import { Link } from "react-router-dom";
+import Button from "../common/Button";
 
 const PromoBanner = () => {
   return (
@@ -25,14 +26,9 @@ const PromoBanner = () => {
             </p>
 
             {/* CTA Button */}
-            <div>
-              <Link
-                to="/shop"
-                className="inline-block bg-white text-neutral-900 px-8 py-4 font-semibold text-xs uppercase tracking-wider hover:bg-neutral-black hover:text-neutral-white transition-colors duration-300 cursor-pointer"
-              >
-                Shop Now
-              </Link>
-            </div>
+            <Button to={"/shop"} variant="primary" size="md">
+              Shop Now
+            </Button>
           </div>
 
           {/* Right Side - Product Image with Circle */}

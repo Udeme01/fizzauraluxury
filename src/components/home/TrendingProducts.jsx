@@ -1,5 +1,6 @@
 import { trending_products } from "../../data/products";
 import { Link } from "react-router";
+import Button from "../common/Button";
 
 const TrendingProducts = () => {
   return (
@@ -16,11 +17,15 @@ const TrendingProducts = () => {
             </p>
           </div>
           {/* View All Link - Desktop */}
-          <Link to="/shop?filter=new">
-            <button className="hidden md:inline-block w-28 px-2 py-3 border border-gray-900 text-gray-900 font-semibold uppercase tracking-wider hover:bg-gray-900 hover:text-white transition-colors duration-300 cursor-pointer">
+          <div className="hidden md:block md:w-40 text-right">
+            <Button
+              to={"/shop?filter=trending_products"}
+              variant="outline"
+              size="md"
+            >
               View All
-            </button>
-          </Link>
+            </Button>
+          </div>
         </div>
 
         {/* Carousel Container */}
@@ -96,10 +101,10 @@ const TrendingProducts = () => {
         </div>
 
         {/* View All Button */}
-        <div className="text-center mt-6">
-          <button className="inline-block px-8 py-3 border border-gray-900 text-gray-900 font-semibold uppercase tracking-wider hover:bg-gray-900 hover:text-white transition-colors duration-300 cursor-pointer md:hidden">
+        <div className="text-center mt-6 md:hidden">
+          <Button to={"/shop?filter=new"} variant="outline" size="md">
             View All
-          </button>
+          </Button>
         </div>
       </div>
     </section>
