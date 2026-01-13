@@ -22,9 +22,13 @@ const Button = ({
     secondary: "bg-neutral-200 text-neutral-900 hover:bg-neutral-300",
     outline:
       "border-2 border-neutral-black text-neutral-black hover:opacity-60",
-    ghost: "text-white hover:opacity-80",
-    accent: "bg-accent-500 text-neutral-900 hover:bg-accent-600",
   };
+
+  // const variants = {
+  //   primary: "btn-primary",
+  //   secondary: "btn-secondary",
+  //   outline: "btn-outline",
+  // };
 
   const sizes = {
     sm: "px-4 py-2 text-sm",
