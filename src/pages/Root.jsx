@@ -15,7 +15,6 @@ const Root = () => {
         <Outlet />
       </main>
       <Footer />
-      {/* <Cart /> */}
     </CartProvider>
   );
 };

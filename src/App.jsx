@@ -9,6 +9,7 @@ import ScrollToTop from "./components/common/ScrollToTop.jsx";
 import Cart from "./pages/Cart.jsx";
 import ProductDetail from "./pages/ProductDetails.jsx";
 import NotFound from "./pages/NotFound.jsx";
+import { CartContextProvider } from "./context/shoppingCartContext.jsx";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -26,7 +27,7 @@ const App = () => {
         },
         {
           path: "product/:id",
-          element: <ProductDetail />, 
+          element: <ProductDetail />,
         },
         {
           path: "about",

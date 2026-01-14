@@ -2,51 +2,13 @@ import React from "react";
 import { Link } from "react-router";
 import { Trash2, Plus, Minus, ShoppingBag } from "lucide-react";
 import Button from "../common/Button";
-import CartSummary from "./CartSummary";
 
-const CartItem = ({ cartItems, subtotal, shipping, tax, total }) => {
-  // Sample cart items - In real app, this would come from context/redux
-  //   const [cartItems, setCartItems] = useState([
-  //     {
-  //       id: 1,
-  //       name: "Classic Black OFI Jacket",
-  //       category: "ofi-jackets",
-  //       price: 129.99,
-  //       image:
-  //         "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400&h=400&fit=crop",
-  //       quantity: 1,
-  //       size: "L",
-  //       color: "#000000",
-  //     },
-  //     {
-  //       id: 11,
-  //       name: "Classic Denim Trucker Jacket",
-  //       category: "trucker-jackets",
-  //       price: 89.99,
-  //       image:
-  //         "https://images.unsplash.com/photo-1576871337622-98d48d1cf531?w=400&h=400&fit=crop",
-  //       quantity: 2,
-  //       size: "M",
-  //       color: "#4682B4",
-  //     },
-  //     {
-  //       id: 21,
-  //       name: "Classic Black Snapback",
-  //       category: "face-caps",
-  //       price: 29.99,
-  //       image:
-  //         "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=400&h=400&fit=crop",
-  //       quantity: 1,
-  //       size: "One Size",
-  //       color: "#000000",
-  //     },
-  //   ]);
-
+const CartItem = ({ cartItems }) => {
   return (
     <section>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         {cartItems.length > 0 ? (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div>
             {/* Cart Items */}
             <div className="lg:col-span-2 space-y-4">
               {cartItems.map((item) => (
@@ -58,7 +20,7 @@ const CartItem = ({ cartItems, subtotal, shipping, tax, total }) => {
                     {/* Product Image */}
                     <Link
                       to={`/product/${item.id}`}
-                      className="flex-shrink-0 w-24 h-24 md:w-32 md:h-32 bg-neutral-100 overflow-hidden"
+                      className="shrink-0 w-24 h-24 md:w-32 md:h-32 bg-neutral-100 overflow-hidden"
                     >
                       <img
                         src={item.image}
@@ -166,14 +128,6 @@ const CartItem = ({ cartItems, subtotal, shipping, tax, total }) => {
                 </div>
               ))}
             </div>
-
-            {/* Order Summary */}
-            <CartSummary
-              subtotal={subtotal}
-              shipping={shipping}
-              tax={tax}
-              total={total}
-            />
           </div>
         ) : (
           // Empty Cart
