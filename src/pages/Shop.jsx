@@ -1,4 +1,3 @@
-// src/pages/Shop.jsx
 import { useState, useMemo } from "react";
 import {
   SlidersHorizontal,

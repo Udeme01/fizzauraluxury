@@ -34,3 +34,225 @@
   //       color: "#000000",
   //     },
   //   ]);
+
+
+
+
+   // WhatsApp Business Number (Replace with actual number)
+  // const WHATSAPP_NUMBER = "2348055742292"; // Format: Country code + number (no + or spaces)
+
+  // Validate customer info
+  // const validateForm = () => {
+  //   const newErrors = {};
+
+  //   if (!customerInfo.fullName.trim()) {
+  //     newErrors.fullName = "Full name is required";
+  //   }
+
+  //   if (!customerInfo.phone.trim()) {
+  //     newErrors.phone = "Phone number is required";
+  //   } else if (!/^\d{10,}$/.test(customerInfo.phone.replace(/\s/g, ""))) {
+  //     newErrors.phone = "Please enter a valid phone number";
+  //   }
+
+  //   if (!customerInfo.email.trim()) {
+  //     newErrors.email = "Email is required";
+  //   } else if (!/\S+@\S+\.\S+/.test(customerInfo.email)) {
+  //     newErrors.email = "Please enter a valid email";
+  //   }
+
+  //   if (!customerInfo.address.trim()) {
+  //     newErrors.address = "Delivery address is required";
+  //   }
+
+  //   if (!customerInfo.city.trim()) {
+  //     newErrors.city = "City is required";
+  //   }
+
+  //   if (!customerInfo.state.trim()) {
+  //     newErrors.state = "State is required";
+  //   }
+
+  //   setErrors(newErrors);
+  //   return Object.keys(newErrors).length === 0;
+  // };
+
+  // Generate WhatsApp order message with customer info
+  // const generateWhatsAppMessage = () => {
+  //   let message = "🛍️ *NEW ORDER FROM FIZZAURA LUXURY*\n\n";
+  //   message += "━━━━━━━━━━━━━━━━━━━━\n\n";
+
+  //   // Customer Information
+  //   message += "👤 *CUSTOMER INFORMATION:*\n\n";
+  //   message += `Name: ${customerInfo.fullName}\n`;
+  //   message += `Phone: ${customerInfo.phone}\n`;
+  //   message += `Email: ${customerInfo.email}\n`;
+  //   message += `Address: ${customerInfo.address}\n`;
+  //   message += `City: ${customerInfo.city}\n`;
+  //   message += `State: ${customerInfo.state}\n`;
+  //   if (customerInfo.notes.trim()) {
+  //     message += `Notes: ${customerInfo.notes}\n`;
+  //   }
+  //   message += "\n━━━━━━━━━━━━━━━━━━━━\n\n";
+
+  //   // Order items
+  //   message += "📦 *ORDER DETAILS:*\n\n";
+  //   items.forEach((item, index) => {
+  //     message += `${index + 1}. *${item.name}*\n`;
+  //     message += `   • Category: ${item.category}\n`;
+  //     message += `   • Size: ${item.size}\n`;
+  //     message += `   • Quantity: ${item.quantity}\n`;
+  //     message += `   • Price: ₦${item.price.toLocaleString("en-NG", {
+  //       minimumFractionDigits: 2,
+  //     })}\n`;
+  //     message += `   • Subtotal: ₦${(item.price * item.quantity).toLocaleString(
+  //       "en-NG",
+  //       { minimumFractionDigits: 2 }
+  //     )}\n\n`;
+  //   });
+
+  //   message += "━━━━━━━━━━━━━━━━━━━━\n\n";
+
+  //   // Order summary
+  //   message += "💰 *ORDER SUMMARY:*\n\n";
+  //   message += `Subtotal: ₦${subtotal.toLocaleString("en-NG", {
+  //     minimumFractionDigits: 2,
+  //   })}\n`;
+  //   message += `Shipping: ${
+  //     shipping === 0
+  //       ? "FREE ✅"
+  //       : "₦" + shipping.toLocaleString("en-NG", { minimumFractionDigits: 2 })
+  //   }\n`;
+  //   message += `Tax (7.5%): ₦${tax.toLocaleString("en-NG", {
+  //     minimumFractionDigits: 2,
+  //   })}\n\n`;
+  //   message += `*TOTAL: ₦${total.toLocaleString("en-NG", {
+  //     minimumFractionDigits: 2,
+  //   })}*\n\n`;
+
+  //   message += "━━━━━━━━━━━━━━━━━━━━\n\n";
+  //   message += "Thank you for shopping with FizzAura Luxury! 🎉";
+
+  //   return encodeURIComponent(message);
+  // };
+
+  // Handle checkout via WhatsApp
+  // const handleWhatsAppCheckout = () => {
+  //   if (validateForm()) {
+  //     const message = generateWhatsAppMessage();
+  //     const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
+  //     window.open(whatsappUrl, "_blank");
+  //     setShowCheckoutModal(false);
+  // Optionally clear cart after successful order
+  //   }
+  // };
+
+  // Handle input changes
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setCustomerInfo((prev) => ({
+  //     ...prev,
+  //     [name]: value,
+  //   }));
+  //   // Clear error for this field
+  //   if (errors[name]) {
+  //     setErrors((prev) => ({
+  //       ...prev,
+  //       [name]: "",
+  //     }));
+  //   }
+  // };
+
+
+    // const [customerInfo, setCustomerInfo] = useState({
+  //   fullName: "",
+  //   phone: "",
+  //   email: "",
+  //   address: "",
+  //   city: "",
+  //   state: "",
+  //   notes: "",
+  // });
+  // const [errors, setErrors] = useState({});
+
+  // Update quantity
+  // const updateQuantity = (id, newQuantity) => {
+  //   if (newQuantity < 1) return;
+  //   setitems(
+  //     items.map((item) =>
+  //       item.id === id ? { ...item, quantity: newQuantity } : item
+  //     )
+  //   );
+  // };
+
+  // Remove item
+  // const removeItem = (id) => {
+  //   setitems(items.filter((item) => item.id !== id));
+  // };
+
+    // const [items, setitems] = useState([
+  //   {
+  //     id: 1,
+  //     name: "Classic Black OFI Jacket",
+  //     category: "ofi-jackets",
+  //     price: 129.99,
+  //     image:
+  //       "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400&h=400&fit=crop",
+  //     quantity: 1,
+  //     size: "L",
+  //     color: "#000000",
+  //   },
+  //   {
+  //     id: 11,
+  //     name: "Classic Denim Trucker Jacket",
+  //     category: "trucker-jackets",
+  //     price: 89.99,
+  //     image:
+  //       "https://images.unsplash.com/photo-1576871337622-98d48d1cf531?w=400&h=400&fit=crop",
+  //     quantity: 2,
+  //     size: "M",
+  //     color: "#4682B4",
+  //   },
+  //   {
+  //     id: 21,
+  //     name: "Classic Black Snapback",
+  //     category: "face-caps",
+  //     price: 29.99,
+  //     image:
+  //       "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=400&h=400&fit=crop",
+  //     quantity: 1,
+  //     size: "One Size",
+  //     color: "#000000",
+  //   },
+  // ]);
+
+  // Helper functions to filter products
+// export const getNewArrivals = () => products.filter((p) => p.isNew);
+// export const getTrendingProducts = () => products.filter((p) => p.isTrending);
+// export const getBestSellers = () => products.filter((p) => p.isBestSeller);
+// export const getFeaturedProducts = () => products.filter((p) => p.isFeatured);
+// export const getInStockProducts = () => products.filter((p) => p.inStock);
+
+// // Get products by category
+// export const getProductsByCategory = (category) =>
+//   products.filter((p) => p.category === category);
+
+// export const getOfiJackets = () => getProductsByCategory("ofi-jackets");
+// export const getTruckerJackets = () => getProductsByCategory("trucker-jackets");
+// export const getFaceCaps = () => getProductsByCategory("face-caps");
+
+// // Get single product by ID or slug
+// export const getProductById = (id) =>
+//   products.find((p) => p.id === parseInt(id));
+
+// export const getProductBySlug = (slug) => products.find((p) => p.slug === slug);
+
+// // Get related products (same category, exclude current product)
+// export const getRelatedProducts = (productId, limit = 4) => {
+//   const product = getProductById(productId);
+//   if (!product) return [];
+
+//   return products
+//     .filter((p) => p.category === product.category && p.id !== productId)
+//     .slice(0, limit);
+// };

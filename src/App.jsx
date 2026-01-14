@@ -50,10 +50,10 @@ const App = () => {
   ]);
 
   return (
-    <>
+    <CartContextProvider>
       <ScrollToTop />
       <RouterProvider router={router} />
-    </>
+    </CartContextProvider>
   );
 };
 

@@ -2,19 +2,24 @@ import React from "react";
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { ShoppingCart, Menu } from "lucide-react";
-import { CartContext } from "../../context/CartContext";
+// import { CartContext } from "../../context/CartContext";
+import { CartContext } from "../../context/shoppingCartContext";
 import DesktopNavigation from "./DesktopNavigation";
 import MobileNavigation from "./MobileNavigation";
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { cartItems } = useContext(CartContext);
+  // const { cartItems } = useContext(CartContext);
 
-  // Calculate total cart items
-  const cartItemCount = cartItems.reduce(
-    (total, item) => total + item.quantity,
-    0
-  );
+  // // Calculate total cart items
+  // const cartItemCount = cartItems.reduce(
+  //   (total, item) => total + item.quantity,
+  //   0
+  // );
+
+  // context
+  const { items } = useContext(CartContext);
+  const cartQuantity = items.length;
 
   return (
     <header className="bg-white border-b border-neutral-200 sticky top-0 z-40 font-montserrat">
@@ -55,9 +60,9 @@ const Header = () => {
           >
             <ShoppingCart className="w-6 h-6 text-neutral-900" />
             {/* Cart Badge */}
-            {cartItemCount > 0 && (
+            {cartQuantity > 0 && (
               <span className="absolute -top-1 -right-1 bg-primary-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-semibold">
-                {cartItemCount}
+                {cartQuantity}
               </span>
             )}
           </Link>

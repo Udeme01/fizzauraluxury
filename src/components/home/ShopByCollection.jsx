@@ -26,7 +26,7 @@ const ShopByCollection = () => {
               className="group relative overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500"
             >
               {/* Image Container */}
-              <div className="relative aspect-[3/4] overflow-hidden bg-gray-100">
+              <div className="relative aspect-3/4 overflow-hidden bg-gray-100">
                 <img
                   src={collection.image}
                   alt={collection.title}

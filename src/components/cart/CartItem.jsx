@@ -1,21 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router";
 import { Trash2, Plus, Minus, ShoppingBag } from "lucide-react";
 import Button from "../common/Button";
+import { CartContext } from "../../context/shoppingCartContext";
 
-const CartItem = ({ cartItems }) => {
+const CartItem = () => {
+  const { items } = useContext(CartContext);
+  console.log(items);
   return (
     <section>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
-        {cartItems.length > 0 ? (
+        {items.length > 0 ? (
           <div>
             {/* Cart Items */}
             <div className="lg:col-span-2 space-y-4">
-              {cartItems.map((item) => (
+              {items.map((item) => (
                 <div
                   key={item.id}
                   className="bg-white p-4 md:p-6 shadow-sm hover:shadow-md transition-shadow"
                 >
+                  {/* {console.log(item)} */}
+
                   <div className="flex gap-4">
                     {/* Product Image */}
                     <Link
@@ -45,12 +50,13 @@ const CartItem = ({ cartItems }) => {
 
                           {/* Size & Color */}
                           <div className="flex items-center gap-4 mt-2 text-sm text-neutral-600">
-                            <span>Size: {item.size}</span>
+                            <span>Size: {item.selectedSize}</span>
                             <div className="flex items-center gap-1">
                               <span>Color:</span>
                               <div
                                 className="w-4 h-4 rounded-full border border-neutral-300"
-                                style={{ backgroundColor: item.color }}
+                                style={{ backgroundColor: item.selectedColor }}
+                                c
                               />
                             </div>
                           </div>

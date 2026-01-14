@@ -1,5 +1,5 @@
 // src/pages/ProductDetail.jsx
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import {
   Heart,
@@ -15,8 +15,15 @@ import {
   Check,
 } from "lucide-react";
 import { products } from "../data/products";
+import { CartContext } from "../context/shoppingCartContext";
 
 const ProductDetail = () => {
+  const { addItemToCart, items } = useContext(CartContext);
+
+  const handleAddItemToCart = () => {
+    addItemToCart(id, quantity, selectedSize, selectedColor);
+  };
+
   const { id } = useParams();
   const navigate = useNavigate();
   const product = products.find((p) => p.id === parseInt(id));
@@ -105,19 +112,19 @@ const ProductDetail = () => {
     setTouchEnd(0);
   };
 
-  // Handle add to cart
-  const handleAddToCart = () => {
-    if (product.sizes && product.sizes.length > 0 && !selectedSize) {
-      alert("Please select a size");
-      return;
-    }
-    if (product.colors && product.colors.length > 0 && !selectedColor) {
-      alert("Please select a color");
-      return;
-    }
-    // Add to cart logic here
-    alert(`Added ${quantity} x ${product.name} to cart!`);
-  };
+  // // Handle add to cart
+  // const handleAddToCart = () => {
+  //   if (product.sizes && product.sizes.length > 0 && !selectedSize) {
+  //     alert("Please select a size");
+  //     return;
+  //   }
+  //   if (product.colors && product.colors.length > 0 && !selectedColor) {
+  //     alert("Please select a color");
+  //     return;
+  //   }
+  //   // Add to cart logic here
+  //   alert(`Added ${quantity} x ${product.name} to cart!`);
+  // };
 
   return (
     <div className="bg-neutral-50 min-h-screen font-montserrat">
@@ -430,7 +437,7 @@ const ProductDetail = () => {
 
               {/* Add to Cart Button */}
               <button
-                onClick={handleAddToCart}
+                onClick={handleAddItemToCart}
                 disabled={!product.inStock}
                 className={`w-full py-4 text-lg flex items-center justify-center gap-3 transition-colors ${
                   !product.inStock
