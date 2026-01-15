@@ -18,7 +18,8 @@ import { products } from "../data/products";
 import { CartContext } from "../context/shoppingCartContext";
 
 const ProductDetail = () => {
-  const { addItemToCart, items } = useContext(CartContext);
+  const { addItemToCart, items, updateCartItemQuantity } =
+    useContext(CartContext);
 
   const handleAddItemToCart = () => {
     addItemToCart(id, quantity, selectedSize, selectedColor);
@@ -33,12 +34,6 @@ const ProductDetail = () => {
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [quantity, setQuantity] = useState(1);
-  const [isFavorite, setIsFavorite] = useState(false);
-  const [activeTab, setActiveTab] = useState("description");
-
-  // Touch/Swipe handling
-  const [touchStart, setTouchStart] = useState(0);
-  const [touchEnd, setTouchEnd] = useState(0);
 
   // If product not found
   if (!product) {
@@ -68,64 +63,6 @@ const ProductDetail = () => {
   const relatedProducts = products
     .filter((p) => p.category === product.category && p.id !== product.id)
     .slice(0, 4);
-
-  // Handle quantity changes
-  const increaseQuantity = () => setQuantity((prev) => prev + 1);
-  const decreaseQuantity = () => {
-    if (quantity > 1) setQuantity((prev) => prev - 1);
-  };
-
-  // Image navigation
-  const nextImage = () => {
-    setSelectedImage((prev) => (prev + 1) % productImages.length);
-  };
-
-  const prevImage = () => {
-    setSelectedImage(
-      (prev) => (prev - 1 + productImages.length) % productImages.length
-    );
-  };
-
-  // Swipe handlers
-  const handleTouchStart = (e) => {
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchMove = (e) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > 50;
-    const isRightSwipe = distance < -50;
-
-    if (isLeftSwipe && productImages.length > 1) {
-      nextImage();
-    }
-    if (isRightSwipe && productImages.length > 1) {
-      prevImage();
-    }
-
-    setTouchStart(0);
-    setTouchEnd(0);
-  };
-
-  // // Handle add to cart
-  // const handleAddToCart = () => {
-  //   if (product.sizes && product.sizes.length > 0 && !selectedSize) {
-  //     alert("Please select a size");
-  //     return;
-  //   }
-  //   if (product.colors && product.colors.length > 0 && !selectedColor) {
-  //     alert("Please select a color");
-  //     return;
-  //   }
-  //   // Add to cart logic here
-  //   alert(`Added ${quantity} x ${product.name} to cart!`);
-  // };
 
   return (
     <div className="bg-neutral-50 min-h-screen font-montserrat">
@@ -169,70 +106,12 @@ const ProductDetail = () => {
           {/* Image Gallery - SWIPEABLE */}
           <div className="space-y-4">
             {/* Main Image with Swipe */}
-            <div
-              className="relative bg-neutral-100 aspect-square overflow-hidden"
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
-            >
+            <div className="relative bg-neutral-100 aspect-square overflow-hidden">
               <img
                 src={productImages[selectedImage]}
                 alt={`${product.name} - Image ${selectedImage + 1}`}
                 className="w-full h-full object-cover"
               />
-
-              {/* Badges */}
-              {/* <div className="absolute top-4 left-4 flex flex-col gap-2">
-                {product.isNew && (
-                  <span className="bg-accent-500 text-neutral-900 px-3 py-1 rounded-full text-xs font-bold uppercase">
-                    New
-                  </span>
-                )}
-                {product.oldPrice && (
-                  <span className="bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold uppercase">
-                    Sale
-                  </span>
-                )}
-                {!product.inStock && (
-                  <span className="bg-neutral-900 text-white px-3 py-1 rounded-full text-xs font-bold uppercase">
-                    Sold Out
-                  </span>
-                )}
-              </div> */}
-
-              {/* Favorite Button */}
-              {/* <button
-                onClick={() => setIsFavorite(!isFavorite)}
-                className="absolute top-4 right-4 bg-white rounded-full p-3 hover:bg-neutral-50 transition-colors shadow-lg"
-              >
-                <Heart
-                  className={`w-6 h-6 ${
-                    isFavorite
-                      ? "fill-red-500 text-red-500"
-                      : "text-neutral-600"
-                  }`}
-                />
-              </button> */}
-
-              {/* Navigation Arrows - Show if multiple images */}
-              {productImages.length > 1 && (
-                <>
-                  <button
-                    onClick={prevImage}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow-lg transition-colors"
-                    aria-label="Previous image"
-                  >
-                    <ChevronLeft className="w-6 h-6 text-neutral-900" />
-                  </button>
-                  <button
-                    onClick={nextImage}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow-lg transition-colors"
-                    aria-label="Next image"
-                  >
-                    <ChevronRight className="w-6 h-6 text-neutral-900" />
-                  </button>
-                </>
-              )}
 
               {/* Image Counter Dots */}
               {productImages.length > 1 && (
@@ -288,27 +167,6 @@ const ProductDetail = () => {
             <h1 className="text-3xl md:text-4xl font-bold text-neutral-900">
               {product.name}
             </h1>
-
-            {/* Rating (if available) */}
-            {/* {product.rating && (
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className={`w-4 h-4 ${
-                        i < Math.floor(product.rating)
-                          ? "fill-yellow-400 text-yellow-400"
-                          : "text-neutral-300"
-                      }`}
-                    />
-                  ))}
-                </div>
-                <span className="text-sm text-neutral-600">
-                  ({product.reviews || 0} reviews)
-                </span>
-              </div>
-            )} */}
 
             {/* Price */}
             <div className="flex items-center gap-3">
@@ -411,7 +269,7 @@ const ProductDetail = () => {
                 <div className="flex items-center gap-4">
                   <div className="flex items-center border-2 border-neutral-300 overflow-hidden">
                     <button
-                      onClick={decreaseQuantity}
+                      onClick={() => updateCartItemQuantity(id, -1)}
                       disabled={quantity <= 1}
                       className="p-3 hover:bg-neutral-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
                     >
@@ -421,7 +279,7 @@ const ProductDetail = () => {
                       {quantity}
                     </span>
                     <button
-                      onClick={increaseQuantity}
+                      onClick={updateCartItemQuantity}
                       className="p-3 hover:bg-neutral-100 transition-colors"
                     >
                       <Plus className="w-5 h-5" />

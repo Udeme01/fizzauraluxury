@@ -17,6 +17,7 @@ export const CartContext = createContext({
 // "state" = Your current shopping cart (what's already in it)
 // "action" = The instruction you're giving (like "add this item")
 const cartReducer = (state, action) => {
+  // ==================== ADD_ITEM ====================
   if (action.type === "ADD_ITEM") {
     // Step 1: Look in your STORE CATALOG (products array from products.js)
     // NOT in the cart, but in the list of ALL products available for sale
@@ -79,6 +80,45 @@ const cartReducer = (state, action) => {
     // Step 6: Return the new state with updated items
     // {...state} = copy everything from state
     // items: updatedItems = but replace items with our new updated list
+    return {
+      ...state,
+      items: updatedItems,
+    };
+  }
+
+  // ==================== UPDATE_ITEM ====================
+  // This is used when user clicks + or - buttons to change quantity in cart
+  if (action.type === "UPDATE_ITEM") {
+    console.log("updated");
+    // Step 1: Find the exact item in cart (same id, color, size)
+    const existingItemIndex = state.items.findIndex(
+      (item) =>
+        item.id === action.payload.id &&
+        item.selectedColor === action.payload.selectedColor &&
+        item.selectedSize === action.payload.selectedSize
+    );
+
+    // Step 2: Make a copy of cart items
+    const updatedItems = [...state.items];
+
+    // Step 3: If item exists in cart
+    if (existingItemIndex > -1) {
+      // Get the item at that position
+      const existingItem = updatedItems[existingItemIndex];
+
+      // Create updated version with NEW quantity (not adding, but REPLACING)
+      // This is different from ADD_ITEM which ADDS to existing quantity
+      // UPDATE_ITEM SETS the quantity to exactly what you specify
+      const updatedItem = {
+        ...existingItem,
+        quantity: action.payload.quantity, // Set to exact quantity
+      };
+
+      // Replace old item with updated one
+      updatedItems[existingItemIndex] = updatedItem;
+    }
+
+    // Return new state with updated items
     return {
       ...state,
       items: updatedItems,
