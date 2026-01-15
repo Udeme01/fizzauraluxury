@@ -48,12 +48,14 @@ const Cart = () => {
         />
 
         {/* Order Summary */}
-        <CartSummary
-          subtotal={subtotal}
-          shipping={shipping}
-          tax={tax}
-          total={total}
-        />
+        {items.length > 0 && (
+          <CartSummary
+            subtotal={subtotal}
+            shipping={shipping}
+            tax={tax}
+            total={total}
+          />
+        )}
       </div>
 
       {/* Customer Information Modal */}

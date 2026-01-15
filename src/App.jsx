@@ -10,6 +10,7 @@ import Cart from "./pages/Cart.jsx";
 import ProductDetail from "./pages/ProductDetails.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import { CartContextProvider } from "./context/shoppingCartContext.jsx";
+import { ToastContainer } from "react-toastify";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -51,6 +52,7 @@ const App = () => {
 
   return (
     <CartContextProvider>
+      <ToastContainer />
       <ScrollToTop />
       <RouterProvider router={router} />
     </CartContextProvider>

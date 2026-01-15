@@ -6,7 +6,7 @@ import { CartContext } from "../../context/shoppingCartContext";
 
 const CartItem = () => {
   const { items } = useContext(CartContext);
-  console.log(items);
+  // console.log(items);
   return (
     <section>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
@@ -16,7 +16,7 @@ const CartItem = () => {
             <div className="lg:col-span-2 space-y-4">
               {items.map((item) => (
                 <div
-                  key={item.id}
+                  key={`${item.id}-${item.selectedColor}-${item.selectedSize}`}
                   className="bg-white p-4 md:p-6 shadow-sm hover:shadow-md transition-shadow"
                 >
                   {/* {console.log(item)} */}
@@ -56,7 +56,6 @@ const CartItem = () => {
                               <div
                                 className="w-4 h-4 rounded-full border border-neutral-300"
                                 style={{ backgroundColor: item.selectedColor }}
-                                c
                               />
                             </div>
                           </div>
