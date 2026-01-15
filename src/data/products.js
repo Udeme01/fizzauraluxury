@@ -176,9 +176,9 @@ export const products = [
     originalPrice: null,
     discount: 0,
     image:
-      "https://images.unsplash.com/photo-1544923246-77307dd5271e?w=600&h=800&fit=crop",
+      "https://images.unsplash.com/photo-1727524366429-27de8607d5f6?q=80&w=1073&auto=format&fit=crop",
     images: [
-      "https://images.unsplash.com/photo-1544923246-77307dd5271e?w=600&h=800&fit=crop",
+      "https://images.unsplash.com/photo-1727524366429-27de8607d5f6?q=80&w=1073&auto=format&fit=crop",
     ],
     colors: ["#36454F", "#708090"],
     sizes: ["S", "M", "L", "XL", "XXL"],
@@ -259,9 +259,9 @@ export const products = [
     originalPrice: 139.99,
     discount: 21,
     image:
-      "https://images.unsplash.com/photo-1548623621-b83b77e12f9f?w=600&h=800&fit=crop",
+      "https://plus.unsplash.com/premium_photo-1765207887658-a7d65dab7161?q=80&w=1170&auto=format&fit=crop",
     images: [
-      "https://images.unsplash.com/photo-1548623621-b83b77e12f9f?w=600&h=800&fit=crop",
+      "https://plus.unsplash.com/premium_photo-1765207887658-a7d65dab7161?q=80&w=1170&auto=format&fit=crop",
     ],
     colors: ["#FFFFFF", "#F5F5F5"],
     sizes: ["S", "M", "L", "XL", "XXL"],
@@ -894,5 +894,3 @@ export const products = [
     tags: ["corduroy", "brown", "retro"],
   },
 ];
-
-

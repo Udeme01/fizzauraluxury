@@ -24,7 +24,8 @@ const ProductDetail = () => {
     addItemToCart(id, quantity, selectedSize, selectedColor);
   };
 
-  const { id } = useParams();
+  const { id: urlId } = useParams();
+  const id = parseInt(urlId);
   const navigate = useNavigate();
   const product = products.find((p) => p.id === parseInt(id));
 

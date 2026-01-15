@@ -4,77 +4,37 @@ import { products } from "../data/products";
 // Cart Context
 export const CartContext = createContext({
   items: [],
-  products: [],
   addItemToCart: () => {},
   updateCartItemQuantity: () => {},
   clearItem: () => {},
+  removeItem: () => {},
+  getTotalPrice: () => 0,
+  getTotalItems: () => 0,
 });
 
 // Reducer Function...
+// "state" = Your current shopping cart (what's already in it)
+// "action" = The instruction you're giving (like "add this item")
 const cartReducer = (state, action) => {
-  if (action.type === "SET_PRODUCTS") {
-    return {
-      ...state,
-      dummy_products: action.payload,
-    };
-  }
-
   if (action.type === "ADD_ITEM") {
-    const updatedItems = [...state.items];
-
-    const existingCartItemIndex = updatedItems.findIndex(
-      (cartItem) =>
-        cartItem.id === action.payload.id &&
-        cartItem.selectedColor === action.payload.selectedColor &&
-        cartItem.selectedSize === action.payload.selectedSize
+    // Step 1: Look in your STORE CATALOG (products array from products.js)
+    // NOT in the cart, but in the list of ALL products available for sale
+    // Find the product with matching id to get its name, price, image etc.
+    const product = products.find(
+      (product) => product.id === action.payload.id
     );
-
-    const existingCartItem = updatedItems[existingCartItemIndex];
-
-    if (existingCartItem) {
-      return {
-        ...state,
-        message: "This item is already in your cart.",
-      };
-    } else {
-      // If the item does not exist, add it to the cart
-      const product = state.dummy_products.find((product) => {
-        return product.id === action.payload.id;
-      });
-      if (!product) {
-        console.error("Product not found:", action.payload.id);
-        return state;
-      }
-
-      updatedItems.push({
-        id: action.payload.id,
-        name: product.name,
-        price: product.price,
-        image: product.image,
-        category: product.category,
-        quantity: action.payload.quantity,
-        selectedColor: action.payload.selectedColor,
-        selectedSize: action.payload.selectedSize,
-      });
-    }
-
-    // ADD_TO_CART_STORAGE
-    localStorage.setItem("cartItems", JSON.stringify(updatedItems));
-
-    return {
-      ...state,
-      items: updatedItems,
-      message: "",
-    };
+    console.log(product);
+    // Step 2: Check if this EXACT item is ALREADY in your shopping cart
+    // "findIndex" searches through your cart and returns the position (index) where it found the item
+    // If it doesn't find it, it returns -1 (meaning "not found")
+    // Position 0 = first item, Position 1 = second item, etc.
+    const existingItemIndex = state.items.findIndex((item) => {
+      item.id === action.payload.id;
+      item.selectedColor === action.payload.selectedColor;
+      item.selectedSize = action.payload.selectedSize;
+    });
+    console.log(existingItemIndex);
   }
-
-  if (action.type === "SET_ITEMS") {
-    return {
-      ...state,
-      items: action.payload,
-    };
-  }
-
   return state;
 };
 
@@ -84,70 +44,30 @@ export const CartContextProvider = ({ children }) => {
     items: [],
   });
 
-  //   useEffect(() => {
-
-  //     const fetchProducts = async () => {
-  //       try {
-  //         const entries = products;
-  //         const dummy_products = entries.map((entry) => {
-  //           const { id, name, description, price, image, category } = entry;
-
-  //           return {
-  //             id,
-  //             name,
-  //             description,
-  //             price,
-  //             image,
-  //             category,
-  //           };
-  //         });
-  //         cartDispatch({ type: "SET_PRODUCTS", payload: dummy_products });
-  //       } catch (error) {
-  //         console.error("Failed to fetch products:", error);
-  //       }
-  //     };
-
-  //     fetchProducts();
-
-  //     const savedCartItems = JSON.parse(localStorage.getItem("cartItems"));
-  //     if (savedCartItems) {
-  //       cartDispatch({ type: "SET_ITEMS", payload: savedCartItems });
-  //     }
-  //   }, []);
-
-  // Helper Functions...fot dispatching!
-
-  // Load cart from localStorage on mount
-
-  useEffect(() => {
-    const savedCartItems = localStorage.getItem("cartItems");
-    if (savedCartItems) {
-      try {
-        const parsedItems = JSON.parse(savedCartItems);
-        cartDispatch({ type: "SET_ITEMS", payload: parsedItems });
-      } catch (error) {
-        console.error("Failed to parse cart items:", error);
-        localStorage.removeItem("cartItems");
-      }
-    }
-  }, []);
-
-  const handleAddItemToCart = (
-    id,
-    quantity,
-    selectedSize,
-    selectedColor
-  ) => {
+  // Helper Functions
+  const handleAddItemToCart = (id, quantity, selectedSize, selectedColor) => {
     cartDispatch({
       type: "ADD_ITEM",
       payload: { id, quantity, selectedSize, selectedColor },
     });
   };
 
-  const handleUpdateCartItemQuantity = (productId, amount) => {
+  const handleUpdateCartItemQuantity = (
+    id,
+    selectedColor,
+    selectedSize,
+    quantity
+  ) => {
     cartDispatch({
       type: "UPDATE_ITEM",
-      payload: { productId, amount },
+      payload: { id, selectedColor, selectedSize, quantity },
+    });
+  };
+
+  const handleRemoveItem = (id, selectedColor, selectedSize) => {
+    cartDispatch({
+      type: "REMOVE_ITEM",
+      payload: { id, selectedColor, selectedSize },
     });
   };
 
@@ -158,12 +78,32 @@ export const CartContextProvider = ({ children }) => {
     });
   };
 
+  const handleClearCart = () => {
+    cartDispatch({
+      type: "CLEAR_CART",
+    });
+  };
+
+  const getTotalPrice = () => {
+    return cartState.items.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0
+    );
+  };
+
+  const getTotalItems = () => {
+    return cartState.items.reduce((total, item) => total + item.quantity, 0);
+  };
+
   const ctxValue = {
     items: cartState.items,
-    products: cartState.dummy_products,
     addItemToCart: handleAddItemToCart,
     updateCartItemQuantity: handleUpdateCartItemQuantity,
     clearItem: handleClearItem,
+    removeItem: handleRemoveItem,
+    clearCart: handleClearCart,
+    getTotalPrice,
+    getTotalItems,
   };
 
   return (
