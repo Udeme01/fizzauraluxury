@@ -68,7 +68,7 @@ export const products = [
       "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&h=800&fit=crop",
       "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&h=800&fit=crop",
     ],
-    colors: ["#000000", "#1F2937"],
+    colors: ["#000000", "#1F2937", "yellow", "green", "gray", "orange"],
     sizes: ["S", "M", "L", "XL", "XXL"],
     description:
       "Premium quality OFI jacket with classic black finish. Perfect for any occasion.",

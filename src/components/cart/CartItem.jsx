@@ -5,7 +5,7 @@ import Button from "../common/Button";
 import { CartContext } from "../../context/shoppingCartContext";
 
 const CartItem = () => {
-  const { items } = useContext(CartContext);
+  const { items, updateCartItemQuantity } = useContext(CartContext);
   // console.log(items);
   return (
     <section>
@@ -57,6 +57,7 @@ const CartItem = () => {
                                 className="w-4 h-4 rounded-full border border-neutral-300"
                                 style={{ backgroundColor: item.selectedColor }}
                               />
+                              <p>{item.selectedColor.toUpperCase()}</p>
                             </div>
                           </div>
                         </div>
@@ -77,7 +78,12 @@ const CartItem = () => {
                         <div className="flex items-center gap-2 border border-neutral-300">
                           <button
                             onClick={() =>
-                              updateQuantity(item.id, item.quantity - 1)
+                              updateCartItemQuantity(
+                                item.id,
+                                item.selectedColor,
+                                item.selectedSize,
+                                item.quantity - 1
+                              )
                             }
                             disabled={item.quantity <= 1}
                             className="p-2 hover:bg-neutral-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
@@ -90,7 +96,12 @@ const CartItem = () => {
                           </span>
                           <button
                             onClick={() =>
-                              updateQuantity(item.id, item.quantity + 1)
+                              updateCartItemQuantity(
+                                item.id,
+                                item.selectedColor,
+                                item.selectedSize,
+                                item.quantity + 1
+                              )
                             }
                             className="p-2 hover:bg-neutral-100 transition-colors"
                             aria-label="Increase quantity"

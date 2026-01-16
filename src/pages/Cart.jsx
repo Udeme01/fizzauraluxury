@@ -37,7 +37,7 @@ const Cart = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 max-w-7xl mx-auto gap-8">
+      <div className="grid grid-cols-1 max-w-7xl mx-auto gap-8">
         {/* cart items */}
         <CartItem
           items={items}

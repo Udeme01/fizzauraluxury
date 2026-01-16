@@ -89,7 +89,6 @@ const cartReducer = (state, action) => {
   // ==================== UPDATE_ITEM ====================
   // This is used when user clicks + or - buttons to change quantity in cart
   if (action.type === "UPDATE_ITEM") {
-    console.log("updated");
     // Step 1: Find the exact item in cart (same id, color, size)
     const existingItemIndex = state.items.findIndex(
       (item) =>

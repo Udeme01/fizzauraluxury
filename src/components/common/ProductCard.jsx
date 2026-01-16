@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router";
 
 const ProductCard = ({ product, viewMode }) => {
+  // console.log(product);
   return (
     <>
       <Link
