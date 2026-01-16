@@ -5,8 +5,12 @@ import Button from "../common/Button";
 import { CartContext } from "../../context/shoppingCartContext";
 
 const CartItem = () => {
-  const { items, updateCartItemQuantity } = useContext(CartContext);
+  const { items, updateCartItemQuantity, removeItem } = useContext(CartContext);
   // console.log(items);
+
+  const handleRemoveItem = (id, selectedColor, selectedSize) => {
+    removeItem(id, selectedColor, selectedSize);
+  };
   return (
     <section>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
@@ -64,7 +68,13 @@ const CartItem = () => {
 
                         {/* Remove Button - Desktop */}
                         <button
-                          onClick={() => removeItem(item.id)}
+                          onClick={() =>
+                            handleRemoveItem(
+                              item.id,
+                              item.selectedColor,
+                              item.selectedSize
+                            )
+                          }
                           className="hidden md:block text-neutral-400 hover:text-red-500 transition-colors"
                           aria-label="Remove item"
                         >
@@ -133,7 +143,13 @@ const CartItem = () => {
 
                       {/* Remove Button - Mobile */}
                       <button
-                        onClick={() => removeItem(item.id)}
+                        onClick={() =>
+                          handleRemoveItem(
+                            item.id,
+                            item.selectedColor,
+                            item.selectedSize
+                          )
+                        }
                         className="md:hidden mt-3 text-sm text-red-500 hover:text-red-600 transition-colors flex items-center gap-1"
                       >
                         <Trash2 className="w-4 h-4" />

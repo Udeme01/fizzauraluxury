@@ -123,6 +123,52 @@ const cartReducer = (state, action) => {
       items: updatedItems,
     };
   }
+
+  // ==================== REMOVE_ITEM ====================
+  // This removes ONE unit of an item (like clicking minus button)
+  // If quantity becomes 0, the item is completely removed from cart
+  if (action.type === "REMOVE_ITEM") {
+    // Step 1: Find the exact item
+    const existingItemIndex = state.items.findIndex(
+      (item) =>
+        item.id === action.payload.id &&
+        item.selectedColor === action.payload.selectedColor &&
+        item.selectedSize === action.payload.selectedSize
+    );
+
+    // Step 2: Make a copy of cart items
+    const updatedItems = [...state.items];
+
+    // Step 3: If item exists
+    if (existingItemIndex > -1) {
+      // Get the item
+      const existingItem = updatedItems[existingItemIndex];
+
+      // Check if quantity is 1 or less
+      if (existingItem.quantity <= 1) {
+        // If quantity is 1, removing it means DELETE the entire item from cart
+        // "splice" removes items from an array
+        // splice(position, how many to remove)
+        updatedItems.splice(existingItemIndex, 1);
+      } else {
+        // If quantity is more than 1, just decrease by 1
+        const updatedItem = {
+          ...existingItem,
+          quantity: existingItem.quantity - 1,
+        };
+
+        // Replace with updated item
+        updatedItems[existingItemIndex] = updatedItem;
+      }
+    }
+
+    // Return new state
+    return {
+      ...state,
+      items: updatedItems,
+    };
+  }
+
   return state;
 };
 
