@@ -123,6 +123,7 @@ const ProductDetail = () => {
                 className="w-full h-full object-cover"
               />
             </div>
+            <div>more images here...</div>
           </div>
 
           {/* Product Info */}

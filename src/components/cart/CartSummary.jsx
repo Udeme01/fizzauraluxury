@@ -43,7 +43,7 @@ const CartSummary = ({ subtotal, shipping, tax, total }) => {
               </span>
             </div>
 
-            {subtotal < 200 && subtotal > 0 && (
+            {/* {subtotal < 200 && subtotal > 0 && (
               <div className="bg-blue-50 border border-blue-200 p-3 text-sm text-blue-800 mt-4">
                 Add ₦
                 {(200 - subtotal).toLocaleString("en-NG", {
@@ -51,7 +51,7 @@ const CartSummary = ({ subtotal, shipping, tax, total }) => {
                 })}{" "}
                 more for free shipping!
               </div>
-            )}
+            )} */}
           </div>
 
           <div className="border-t border-neutral-200 pt-4 mb-6">

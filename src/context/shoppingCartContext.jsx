@@ -124,45 +124,18 @@ const cartReducer = (state, action) => {
     };
   }
 
-  // ==================== REMOVE_ITEM ====================
-  // This removes ONE unit of an item (like clicking minus button)
-  // If quantity becomes 0, the item is completely removed from cart
-  if (action.type === "REMOVE_ITEM") {
-    // Step 1: Find the exact item
-    const existingItemIndex = state.items.findIndex(
+  // ==================== CLEAR_ITEM ====================
+  if (action.type === "CLEAR_ITEM") {
+    const updatedItems = state.items.filter(
       (item) =>
-        item.id === action.payload.id &&
-        item.selectedColor === action.payload.selectedColor &&
-        item.selectedSize === action.payload.selectedSize
+        !(
+          item.id === action.payload.id &&
+          item.selectedColor === action.payload.selectedColor &&
+          item.selectedSize === action.payload.selectedSize
+        )
     );
 
-    // Step 2: Make a copy of cart items
-    const updatedItems = [...state.items];
-
-    // Step 3: If item exists
-    if (existingItemIndex > -1) {
-      // Get the item
-      const existingItem = updatedItems[existingItemIndex];
-
-      // Check if quantity is 1 or less
-      if (existingItem.quantity <= 1) {
-        // If quantity is 1, removing it means DELETE the entire item from cart
-        // "splice" removes items from an array
-        // splice(position, how many to remove)
-        updatedItems.splice(existingItemIndex, 1);
-      } else {
-        // If quantity is more than 1, just decrease by 1
-        const updatedItem = {
-          ...existingItem,
-          quantity: existingItem.quantity - 1,
-        };
-
-        // Replace with updated item
-        updatedItems[existingItemIndex] = updatedItem;
-      }
-    }
-
-    // Return new state
+    // Return new state with filtered items
     return {
       ...state,
       items: updatedItems,
@@ -214,10 +187,15 @@ export const CartContextProvider = ({ children }) => {
     });
   };
 
-  const handleClearItem = (productId) => {
+  const handleClearItem = (id, selectedColor, selectedSize) => {
     cartDispatch({
       type: "CLEAR_ITEM",
-      payload: { productId },
+      payload: { id, selectedColor, selectedSize },
+    });
+
+    toast.success("Item removed from cart", {
+      position: "top-center",
+      autoClose: 2000,
     });
   };
 

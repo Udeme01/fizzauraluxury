@@ -69,7 +69,7 @@ const NewArrivals = () => {
                         <div className="relative bg-gray-100 aspect-square overflow-hidden">
                           {/* Product Image */}
                           <img
-                            src={product.image}
+                            src={product.images[0]}
                             alt={product.name}
                             className={`w-full h-full object-cover transition-transform duration-500 group-hover/card:scale-110 ${
                               product.soldOut ? "opacity-50" : ""
