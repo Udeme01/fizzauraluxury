@@ -895,6 +895,8 @@ export const collections = [
 //   },
 // ];
 
+// "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&h=800&fit=crop"
+
 export const products = [
   // ==================== OFI JACKETS (10) ====================
   {
@@ -907,7 +909,6 @@ export const products = [
     discount: 19,
     images: [
       "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&h=800&fit=crop",
-      "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&h=800&fit=crop",
     ],
     colors: ["Black", "Charcoal", "Yellow", "Green", "Gray", "Orange"],
     sizes: ["S", "M", "L", "XL", "XXL"],

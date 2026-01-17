@@ -147,9 +147,30 @@ const cartReducer = (state, action) => {
 
 // Provider Component
 export const CartContextProvider = ({ children }) => {
-  const [cartState, cartDispatch] = useReducer(cartReducer, {
-    items: [],
-  });
+  const [cartState, cartDispatch] = useReducer(
+    cartReducer,
+    {
+      items: [],
+    },
+    (initialState) => {
+      // This function runs ONCE when component mounts
+      const savedCart = localStorage.getItem("cart");
+      if (savedCart) {
+        try {
+          return JSON.parse(savedCart);
+        } catch (error) {
+          console.error("Failed to parse cart from localStorage:", error);
+          return initialState;
+        }
+      }
+      return initialState;
+    }
+  );
+
+  // Save cart to localStorage whenever cartState changes
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cartState));
+  }, [cartState]);
 
   // Helper Functions
   const handleAddItemToCart = (id, quantity, selectedSize, selectedColor) => {
