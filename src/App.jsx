@@ -5,7 +5,6 @@ import Home from "./pages/Home.jsx";
 import About from "./pages/About.jsx";
 import Contact from "./pages/Contact.jsx";
 import Shop from "./pages/Shop.jsx";
-import ScrollToTop from "./components/common/ScrollToTop.jsx";
 import Cart from "./pages/Cart.jsx";
 import ProductDetail from "./pages/ProductDetails.jsx";
 import NotFound from "./pages/NotFound.jsx";
@@ -55,7 +54,6 @@ const App = () => {
     <HelmetProvider>
       <CartContextProvider>
         <ToastContainer />
-        <ScrollToTop />
         <RouterProvider router={router} />
       </CartContextProvider>
     </HelmetProvider>
