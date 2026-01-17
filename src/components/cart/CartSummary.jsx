@@ -2,7 +2,13 @@ import React from "react";
 import Button from "../common/Button";
 import { ArrowLeft } from "lucide-react";
 
-const CartSummary = ({ subtotal, shipping, tax, total }) => {
+const CartSummary = ({
+  subtotal,
+  shipping,
+  tax,
+  total,
+  setShowCheckoutModal,
+}) => {
   return (
     <section>
       <div className="lg:col-span-1">

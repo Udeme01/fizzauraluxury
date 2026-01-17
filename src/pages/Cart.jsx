@@ -1,8 +1,4 @@
-// src/pages/Cart.jsx
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
-// import { X, User, Phone, Mail, MapPin } from "lucide-react";
-import Button from "../components/common/Button";
 import CartItem from "../components/cart/CartItem";
 import CartCheckoutModalForm from "../components/cart/CartCheckoutModalForm";
 import CartSummary from "../components/cart/CartSummary";
@@ -54,6 +50,7 @@ const Cart = () => {
             shipping={shipping}
             tax={tax}
             total={total}
+            setShowCheckoutModal={setShowCheckoutModal}
           />
         )}
       </div>
@@ -62,6 +59,11 @@ const Cart = () => {
       <CartCheckoutModalForm
         showCheckoutModal={showCheckoutModal}
         setShowCheckoutModal={setShowCheckoutModal}
+        items={items}
+        shipping={shipping}
+        tax={tax}
+        total={total}
+        subtotal={subtotal}
       />
     </div>
   );

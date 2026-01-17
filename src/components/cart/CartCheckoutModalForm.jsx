@@ -1,6 +1,101 @@
-import React from "react";
+import React, { useState } from "react";
+import { X, User, Phone, Mail, MapPin } from "lucide-react";
+import Button from "../common/Button";
 
-const CartCheckoutModalForm = ({ showCheckoutModal, setShowCheckoutModal }) => {
+const CartCheckoutModalForm = ({
+  showCheckoutModal,
+  setShowCheckoutModal,
+  items,
+  shipping,
+  total,
+  subtotal,
+}) => {
+  // Add state for form
+  const [customerInfo, setCustomerInfo] = useState({
+    fullName: "",
+    phone: "",
+    email: "",
+    address: "",
+    city: "",
+    state: "",
+    notes: "",
+  });
+
+  const [errors, setErrors] = useState({});
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setCustomerInfo((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: "",
+      }));
+    }
+  };
+
+  const handleWhatsAppCheckout = () => {
+    // ... validation code ...
+
+    const message = `
+🛍️ *NEW ORDER FROM ${customerInfo.fullName.toUpperCase()}*
+
+━━━━━━━━━━━━━━━━━
+👤 *CUSTOMER DETAILS*
+━━━━━━━━━━━━━━━━━
+Name: ${customerInfo.fullName}
+Phone: ${customerInfo.phone}
+Email: ${customerInfo.email}
+
+━━━━━━━━━━━━━━━━━
+📍 *DELIVERY ADDRESS*
+━━━━━━━━━━━━━━━━━
+${customerInfo.address}
+${customerInfo.city}, ${customerInfo.state}
+
+━━━━━━━━━━━━━━━━━
+🛒 *ORDER ITEMS*
+━━━━━━━━━━━━━━━━━
+${items
+  .map(
+    (item, index) =>
+      `*${index + 1}. ${item.name}*
+🔗 Product_Link: https://fizzauraluxury.vercel.app/product/${item.id}
+🎨 Color: ${item.selectedColor}
+📏 Size: ${item.selectedSize}
+📦 Quantity: ${item.quantity}
+💰 Subtotal: ₦${(item.price * item.quantity).toLocaleString()}`
+  )
+  .join("\n\n")}
+
+━━━━━━━━━━━━━━━━━
+💵 *ORDER SUMMARY*
+━━━━━━━━━━━━━━━━━
+Subtotal: ₦${subtotal.toLocaleString()}
+Shipping: ${shipping === 0 ? "FREE ✅" : `₦${shipping.toLocaleString()}`}
+*TOTAL: ₦${total.toLocaleString()}*
+
+${
+  customerInfo.notes
+    ? `━━━━━━━━━━━━━━━━━\n📝 *SPECIAL NOTES*\n━━━━━━━━━━━━━━━━━\n${customerInfo.notes}\n\n`
+    : ""
+}
+━━━━━━━━━━━━━━━━━
+📅 Order Date: ${new Date().toLocaleString()}
+  `.trim();
+
+    const phoneNumber = "2348055742292";
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+      message
+    )}`;
+
+    window.open(whatsappUrl, "_blank");
+    setShowCheckoutModal(false);
+  };
   return (
     <section>
       {showCheckoutModal && (
@@ -191,7 +286,7 @@ const CartCheckoutModalForm = ({ showCheckoutModal, setShowCheckoutModal }) => {
                   <div className="space-y-1 text-sm">
                     <div className="flex justify-between">
                       <span className="text-neutral-600">
-                        Items ({cartItems.length})
+                        Items ({items.length})
                       </span>
                       <span className="font-medium">
                         ₦

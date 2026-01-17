@@ -2,20 +2,12 @@ import React from "react";
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { ShoppingCart, Menu } from "lucide-react";
-// import { CartContext } from "../../context/CartContext";
 import { CartContext } from "../../context/shoppingCartContext";
 import DesktopNavigation from "./DesktopNavigation";
 import MobileNavigation from "./MobileNavigation";
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  // const { cartItems } = useContext(CartContext);
-
-  // // Calculate total cart items
-  // const cartItemCount = cartItems.reduce(
-  //   (total, item) => total + item.quantity,
-  //   0
-  // );
 
   // context
   const { items } = useContext(CartContext);

@@ -1,39 +1,4 @@
-// Sample cart items - In real app, this would come from context/redux
-  //   const [cartItems, setCartItems] = useState([
-  //     {
-  //       id: 1,
-  //       name: "Classic Black OFI Jacket",
-  //       category: "ofi-jackets",
-  //       price: 129.99,
-  //       image:
-  //         "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400&h=400&fit=crop",
-  //       quantity: 1,
-  //       size: "L",
-  //       color: "#000000",
-  //     },
-  //     {
-  //       id: 11,
-  //       name: "Classic Denim Trucker Jacket",
-  //       category: "trucker-jackets",
-  //       price: 89.99,
-  //       image:
-  //         "https://images.unsplash.com/photo-1576871337622-98d48d1cf531?w=400&h=400&fit=crop",
-  //       quantity: 2,
-  //       size: "M",
-  //       color: "#4682B4",
-  //     },
-  //     {
-  //       id: 21,
-  //       name: "Classic Black Snapback",
-  //       category: "face-caps",
-  //       price: 29.99,
-  //       image:
-  //         "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=400&h=400&fit=crop",
-  //       quantity: 1,
-  //       size: "One Size",
-  //       color: "#000000",
-  //     },
-  //   ]);
+
 
 
 
@@ -185,46 +150,6 @@
   //   );
   // };
 
-  // Remove item
-  // const removeItem = (id) => {
-  //   setitems(items.filter((item) => item.id !== id));
-  // };
-
-    // const [items, setitems] = useState([
-  //   {
-  //     id: 1,
-  //     name: "Classic Black OFI Jacket",
-  //     category: "ofi-jackets",
-  //     price: 129.99,
-  //     image:
-  //       "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400&h=400&fit=crop",
-  //     quantity: 1,
-  //     size: "L",
-  //     color: "#000000",
-  //   },
-  //   {
-  //     id: 11,
-  //     name: "Classic Denim Trucker Jacket",
-  //     category: "trucker-jackets",
-  //     price: 89.99,
-  //     image:
-  //       "https://images.unsplash.com/photo-1576871337622-98d48d1cf531?w=400&h=400&fit=crop",
-  //     quantity: 2,
-  //     size: "M",
-  //     color: "#4682B4",
-  //   },
-  //   {
-  //     id: 21,
-  //     name: "Classic Black Snapback",
-  //     category: "face-caps",
-  //     price: 29.99,
-  //     image:
-  //       "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=400&h=400&fit=crop",
-  //     quantity: 1,
-  //     size: "One Size",
-  //     color: "#000000",
-  //   },
-  // ]);
 
   // Helper functions to filter products
 // export const getNewArrivals = () => products.filter((p) => p.isNew);
@@ -257,52 +182,6 @@
 //     .slice(0, limit);
 // };
 
-
-// ============== product-detail-page ==============
-
- // Get related products (same category)
-  const relatedProducts = products
-    .filter((p) => p.category === product.category && p.id !== product.id)
-    .slice(0, 4);
-
-
-    {/* Related Products */}
-        {relatedProducts.length > 0 && (
-          <div>
-            <h2 className="text-2xl md:text-3xl font-bold text-neutral-900 mb-8">
-              You May Also Like
-            </h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-              {relatedProducts.map((relatedProduct) => (
-                <Link
-                  key={relatedProduct.id}
-                  to={`/product/${relatedProduct.id}`}
-                  className="group bg-white overflow-hidden hover:shadow-lg transition-shadow"
-                  onClick={() => window.scrollTo(0, 0)}
-                >
-                  <div className="relative aspect-square bg-neutral-100 overflow-hidden">
-                    <img
-                      src={relatedProduct.images?.[0] || relatedProduct.image}
-                      alt={relatedProduct.name}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                  </div>
-                  <div className="p-4">
-                    <p className="text-xs text-neutral-500 uppercase mb-1">
-                      {relatedProduct.category}
-                    </p>
-                    <h3 className="font-semibold text-neutral-900 mb-2 line-clamp-2">
-                      {relatedProduct.name}
-                    </h3>
-                    <p className="font-bold text-neutral-900">
-                      ₦{relatedProduct.price.toLocaleString()}
-                    </p>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
 
 
 
