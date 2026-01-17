@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { X, User, Phone, Mail, MapPin } from "lucide-react";
 import Button from "../common/Button";
+import { CartContext } from "../../context/shoppingCartContext";
 
 const CartCheckoutModalForm = ({
   showCheckoutModal,
@@ -10,6 +11,9 @@ const CartCheckoutModalForm = ({
   total,
   subtotal,
 }) => {
+  // cart context
+  const { clearCart } = useContext(CartContext);
+
   // Add state for form
   const [customerInfo, setCustomerInfo] = useState({
     fullName: "",
@@ -92,9 +96,22 @@ ${
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
       message
     )}`;
-
+    // open whatsapp
     window.open(whatsappUrl, "_blank");
+    // clear the cart after sending order
+    clearCart();
+    // close modal
     setShowCheckoutModal(false);
+    // Optional: Reset form
+    setCustomerInfo({
+      fullName: "",
+      phone: "",
+      email: "",
+      address: "",
+      city: "",
+      state: "",
+      notes: "",
+    });
   };
   return (
     <section>

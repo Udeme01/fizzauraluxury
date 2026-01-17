@@ -8,6 +8,7 @@ export const CartContext = createContext({
   addItemToCart: () => {},
   updateCartItemQuantity: () => {},
   clearItem: () => {},
+  clearCart: () => {},
   removeItem: () => {},
   getTotalPrice: () => 0,
   getTotalItems: () => 0,
@@ -139,6 +140,14 @@ const cartReducer = (state, action) => {
     return {
       ...state,
       items: updatedItems,
+    };
+  }
+
+  // ==================== CLEAR_CART ====================
+  if (action.type === "CLEAR_CART") {
+    return {
+      ...state,
+      items: [],
     };
   }
 
