@@ -51,12 +51,10 @@ const App = () => {
   ]);
 
   return (
-    <HelmetProvider>
-      <CartContextProvider>
-        <ToastContainer />
-        <RouterProvider router={router} />
-      </CartContextProvider>
-    </HelmetProvider>
+    <CartContextProvider>
+      <ToastContainer />
+      <RouterProvider router={router} />
+    </CartContextProvider>
   );
 };
 
