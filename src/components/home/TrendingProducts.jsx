@@ -25,7 +25,7 @@ const TrendingProducts = () => {
           {/* View All Link - Desktop */}
           <div className="hidden md:block md:w-40 text-right">
             <Button
-              to={"/shop?filter=trending_products"}
+              to={"/shop?filter=trending"}
               variant="outline"
               size="md"
             >

@@ -1,8 +1,12 @@
 import React from "react";
-import { collections } from "../../data/products";
+// import { collections } from "../../data/products";
+import { products } from "../../data/products";
 import Button from "../common/Button";
 
 const ShopByCollection = () => {
+  const newCollection = products
+    .filter((product) => product.category)
+    .slice(0, 3);
   return (
     <section className="py-12 sm:py-16 lg:py-20 bg-white font-montserrat">
       <div>
@@ -18,44 +22,51 @@ const ShopByCollection = () => {
 
         {/* Collection Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto px-6 sm:px-8">
-          {collections.map((collection) => (
-            <a
-              key={collection.id}
-              //   href={collection.link}
-              href="/"
-              className="group relative overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500"
-            >
-              {/* Image Container */}
-              <div className="relative aspect-3/4 overflow-hidden bg-gray-100">
-                <img
-                  src={collection.image}
-                  alt={collection.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
+          {newCollection.map((collection) => {
+            console.log(collection.category);
+            return (
+              <div
+                key={collection.id}
+                //   href={collection.link}
+                href="/"
+                className="group relative overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500"
+              >
+                {/* Image Container */}
+                <div className="relative aspect-3/4 overflow-hidden bg-gray-100">
+                  <img
+                    src={collection.images[0]}
+                    alt={collection.name}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
 
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
+                  {/* Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
+                </div>
+
+                {/* Content */}
+                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                  {/* <p className="text-sm sm:text-base font-medium text-white/90 mb-2">
+                    {collection.count}
+                  </p> */}
+                  <h3 className="text-2xl sm:text-3xl font-bold mb-4">
+                    {collection.name}
+                  </h3>
+
+                  {/* Shop Now Button */}
+                  <Button
+                    to={`shop?category=${collection.category}`}
+                    variant="primary"
+                    size="md"
+                  >
+                    Shop Now
+                  </Button>
+                </div>
+
+                {/* Hover Effect Line */}
+                <div className="absolute top-0 left-0 w-full h-1 bg-white transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500" />
               </div>
-
-              {/* Content */}
-              <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                <p className="text-sm sm:text-base font-medium text-white/90 mb-2">
-                  {collection.count}
-                </p>
-                <h3 className="text-2xl sm:text-3xl font-bold mb-4">
-                  {collection.title}
-                </h3>
-
-                {/* Shop Now Button */}
-                <Button variant="primary" size="md">
-                  Shop Now
-                </Button>
-              </div>
-
-              {/* Hover Effect Line */}
-              <div className="absolute top-0 left-0 w-full h-1 bg-white transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500" />
-            </a>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

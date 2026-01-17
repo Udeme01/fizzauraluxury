@@ -1,21 +1,36 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import {
   SlidersHorizontal,
   Grid,
   List,
   ChevronLeft,
   ChevronRight,
+  X,
 } from "lucide-react";
 import { products } from "../data/products";
 import ProductCard from "../components/common/ProductCard";
 
 const Shop = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Get URL parameters
+  const filterParam = searchParams.get("filter"); // 'new' or 'trending'
+  const categoryParam = searchParams.get("category"); // category from URL
+
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortBy, setSortBy] = useState("default");
-  const [viewMode, setViewMode] = useState("grid"); // grid or list
+  const [viewMode, setViewMode] = useState("grid");
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 12;
+
+  // Initialize filters from URL parameters on mount
+  useEffect(() => {
+    if (categoryParam) {
+      setSelectedCategory(categoryParam);
+    }
+  }, [categoryParam]);
 
   // Get unique categories from products
   const categories = [
@@ -27,14 +42,21 @@ const Shop = () => {
   const filteredProducts = useMemo(() => {
     let filtered = [...products];
 
-    // Filter by category
+    // Step 1: Apply URL filter parameter (new/trending)
+    if (filterParam === "new") {
+      filtered = filtered.filter((product) => product.isNew === true);
+    } else if (filterParam === "trending") {
+      filtered = filtered.filter((product) => product.isTrending === true);
+    }
+
+    // Step 2: Apply category filter (from URL or manual selection)
     if (selectedCategory !== "all") {
       filtered = filtered.filter(
         (product) => product.category.toLowerCase() === selectedCategory
       );
     }
 
-    // Sort products
+    // Step 3: Sort products
     switch (sortBy) {
       case "price-low":
         filtered.sort((a, b) => a.price - b.price);
@@ -46,12 +68,11 @@ const Shop = () => {
         filtered.sort((a, b) => (b.isNew === a.isNew ? 0 : b.isNew ? 1 : -1));
         break;
       default:
-        // Keep original order
         break;
     }
 
     return filtered;
-  }, [selectedCategory, sortBy]);
+  }, [selectedCategory, sortBy, filterParam]);
 
   // Pagination calculations
   const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
@@ -63,11 +84,27 @@ const Shop = () => {
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
     setCurrentPage(1);
+
+    // Update URL: remove category param if "all", otherwise set it
+    if (category === "all") {
+      searchParams.delete("category");
+    } else {
+      searchParams.set("category", category);
+    }
+    setSearchParams(searchParams);
   };
 
   const handleSortChange = (sort) => {
     setSortBy(sort);
     setCurrentPage(1);
+  };
+
+  // Clear all filters
+  const clearAllFilters = () => {
+    setSelectedCategory("all");
+    setSortBy("default");
+    setCurrentPage(1);
+    setSearchParams({}); // Clear all URL parameters
   };
 
   // Pagination handlers
@@ -124,22 +161,79 @@ const Shop = () => {
     return pages;
   };
 
+  // Get page title based on filters
+  const getPageTitle = () => {
+    if (filterParam === "new") return "New Arrivals";
+    if (filterParam === "trending") return "Trending Products";
+    if (selectedCategory !== "all")
+      return (
+        selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)
+      );
+    return "Shop Collection";
+  };
+
+  const getPageDescription = () => {
+    if (filterParam === "new") return "Fresh styles just landed";
+    if (filterParam === "trending")
+      return "Fashion Is Not Just About Clothes But Also";
+    if (selectedCategory !== "all")
+      return `Browse our ${selectedCategory} collection`;
+    return `Discover ${filteredProducts.length} products`;
+  };
+
   return (
     <div className="bg-neutral-50 min-h-screen font-montserrat">
       {/* Page Header */}
       <div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
           <h1 className="text-3xl md:text-4xl xl:text-5xl font-medium text-neutral-black mb-2">
-            Shop Collection
+            {getPageTitle()}
           </h1>
-          <p className="text-neutral-black">
-            Discover {filteredProducts.length}{" "}
-            {selectedCategory !== "all" ? selectedCategory : ""} products
-          </p>
+          <p className="text-neutral-black">{getPageDescription()}</p>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Active Filters Display */}
+        {(filterParam || categoryParam) && (
+          <div className="bg-white shadow-sm p-4 mb-4 flex items-center justify-between">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-sm text-neutral-600">Active filters:</span>
+              {filterParam && (
+                <span className="inline-flex items-center gap-2 px-3 py-1 bg-accent-900 text-white text-sm">
+                  {filterParam === "new" ? "New Arrivals" : "Trending"}
+                  <button
+                    onClick={() => {
+                      searchParams.delete("filter");
+                      setSearchParams(searchParams);
+                    }}
+                    className="hover:bg-white/20 rounded-full p-0.5"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </span>
+              )}
+              {categoryParam && categoryParam !== "all" && (
+                <span className="inline-flex items-center gap-2 px-3 py-1 bg-neutral-black text-white text-sm capitalize">
+                  {categoryParam}
+                  <button
+                    onClick={() => handleCategoryChange("all")}
+                    className="hover:bg-white/20 rounded-full p-0.5"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </span>
+              )}
+            </div>
+            <button
+              onClick={clearAllFilters}
+              className="text-sm text-neutral-600 hover:text-neutral-900 underline"
+            >
+              Clear all
+            </button>
+          </div>
+        )}
+
         {/* Filters Bar */}
         <div className="bg-white shadow-sm p-4 mb-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -332,11 +426,7 @@ const Shop = () => {
               Try adjusting your filters to see more products
             </p>
             <button
-              onClick={() => {
-                setSelectedCategory("all");
-                setSortBy("default");
-                setCurrentPage(1);
-              }}
+              onClick={clearAllFilters}
               className="bg-neutral-900 text-white px-6 py-3 rounded-lg font-semibold hover:bg-neutral-800 transition-colors"
             >
               Clear Filters

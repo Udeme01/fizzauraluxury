@@ -23,33 +23,6 @@ export const features = [
   },
 ];
 
-export const collections = [
-  {
-    id: 1,
-    title: "Jackets",
-    count: "10 Products",
-    image:
-      "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&h=800&fit=crop",
-    link: "/shop/jackets",
-  },
-  {
-    id: 2,
-    title: "Trucker Jackets",
-    count: "10 Products",
-    image:
-      "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&h=800&fit=crop",
-    link: "/shop/trucker-jackets",
-  },
-  {
-    id: 3,
-    title: "Face Caps",
-    count: "10 Products",
-    image:
-      "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=600&h=800&fit=crop",
-    link: "/shop/face-caps",
-  },
-];
-
 // Central Product Data Source
 
 // export const products = [
@@ -895,42 +868,9 @@ export const collections = [
 //   },
 // ];
 
-// "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&h=800&fit=crop"
-
 export const products = [
-  // ==================== OFI JACKETS (10) ====================
   {
     id: 1,
-    name: "Classic Black OFI Jacket",
-    slug: "classic-black-ofi-jacket",
-    category: "ofi-jackets",
-    price: 129.99,
-    originalPrice: 159.99,
-    discount: 19,
-    images: [
-      "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&h=800&fit=crop",
-      "https://media.istockphoto.com/id/92066451/photo/black-leather-motorcycle-jacket.jpg?s=612x612&w=0&k=20&c=K-eTbRSrzO3f4HsjPxijkx9S3ndwNPFfOQwNvt59tjM=",
-      "https://media.istockphoto.com/id/468491140/photo/close-up-of-black-leather-jacket-details.jpg?s=612x612&w=0&k=20&c=QXxiMm4jNRKjF7fz0nWoJTkrU23r0DVC5txCPL6zAE8=",
-      "https://media.istockphoto.com/id/1185322501/photo/close-up-photo-of-a-black-leather-jacket.jpg?s=612x612&w=0&k=20&c=M4_tEdMe7T2p62nDML91faaWrIE6pGoIuVmWwIj4Ltk=",
-      "https://cdn.pixabay.com/photo/2019/12/19/05/58/leather-gloves-4705453_1280.jpg",
-    ],
-    colors: ["Black", "Charcoal", "Yellow", "Green", "Gray", "Orange"],
-    sizes: ["S", "M", "L", "XL", "XXL"],
-    description:
-      "Premium quality OFI jacket with classic black finish. Perfect for any occasion.",
-    isNew: true,
-    inStock: true,
-    isTrending: true,
-    isBestSeller: true,
-    isFeatured: true,
-    soldOut: false,
-    rating: 4.8,
-    reviews: 45,
-    createdAt: "2025-01-05",
-    tags: ["premium", "classic", "bestseller"],
-  },
-  {
-    id: 2,
     name: "White OFI Track Jacket",
     slug: "white-ofi-track-jacket",
     category: "ofi-jackets",
@@ -957,32 +897,57 @@ export const products = [
     createdAt: "2025-01-02",
     tags: ["athletic", "track", "sporty"],
   },
-
   {
-    id: 3,
-    name: "Olive Green OFI Field Jacket",
-    slug: "olive-green-ofi-field-jacket",
-    category: "ofi-jackets",
-    price: 149.99,
-    originalPrice: 189.99,
-    discount: 21,
+    id: 2,
+    name: "Black Denim Trucker",
+    slug: "black-denim-trucker",
+    category: "trucker-jackets",
+    price: 94.99,
+    originalPrice: null,
+    discount: 0,
     images: [
-      "https://images.unsplash.com/photo-1578587018452-892bacefd3f2?w=600&h=800&fit=crop",
+      "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&h=800&fit=crop",
     ],
-    colors: ["Olive Green", "Yellow Green"],
-    sizes: ["S", "M", "L", "XL"],
+    colors: ["Black", "Dark Slate Gray"],
+    sizes: ["M", "L", "XL"],
     description:
-      "Military-inspired field jacket with multiple pockets and durable construction.",
+      "Sleek black denim trucker with modern slim fit and dark wash.",
     isNew: false,
     inStock: true,
-    isTrending: true,
+    isTrending: false,
     isBestSeller: false,
-    isFeatured: true,
+    isFeatured: false,
+    soldOut: false,
+    rating: 4.6,
+    reviews: 43,
+    createdAt: "2024-12-29",
+    tags: ["denim", "black", "slim-fit"],
+  },
+  {
+    id: 3,
+    name: "Corduroy Brown Cap",
+    slug: "corduroy-brown-cap",
+    category: "face-caps",
+    price: 27.99,
+    originalPrice: 34.99,
+    discount: 20,
+    images: [
+      "https://images.unsplash.com/photo-1575428652377-a2d80e2277fc?w=600&h=800&fit=crop",
+    ],
+    colors: ["Brown", "Sienna"],
+    sizes: ["One Size"],
+    description:
+      "Retro corduroy cap in warm brown with vintage-inspired design.",
+    isNew: false,
+    inStock: true,
+    isTrending: false,
+    isBestSeller: false,
+    isFeatured: false,
     soldOut: false,
     rating: 4.7,
-    reviews: 34,
-    createdAt: "2024-12-28",
-    tags: ["military", "outdoor", "utility"],
+    reviews: 62,
+    createdAt: "2024-12-18",
+    tags: ["corduroy", "brown", "retro"],
   },
   {
     id: 4,
@@ -1166,8 +1131,6 @@ export const products = [
     createdAt: "2025-01-01",
     tags: ["puffer", "winter", "insulated"],
   },
-
-  // ==================== TRUCKER JACKETS (10) ====================
   {
     id: 11,
     name: "Classic Denim Trucker Jacket",
@@ -1196,29 +1159,33 @@ export const products = [
   },
   {
     id: 12,
-    name: "Black Denim Trucker",
-    slug: "black-denim-trucker",
-    category: "trucker-jackets",
-    price: 94.99,
-    originalPrice: null,
-    discount: 0,
+    name: "Classic Black OFI Jacket",
+    slug: "classic-black-ofi-jacket",
+    category: "ofi-jackets",
+    price: 129.99,
+    originalPrice: 159.99,
+    discount: 19,
     images: [
-      "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&h=800&fit=crop",
+      "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&h=800&fit=crop",
+      "https://media.istockphoto.com/id/92066451/photo/black-leather-motorcycle-jacket.jpg?s=612x612&w=0&k=20&c=K-eTbRSrzO3f4HsjPxijkx9S3ndwNPFfOQwNvt59tjM=",
+      "https://media.istockphoto.com/id/468491140/photo/close-up-of-black-leather-jacket-details.jpg?s=612x612&w=0&k=20&c=QXxiMm4jNRKjF7fz0nWoJTkrU23r0DVC5txCPL6zAE8=",
+      "https://media.istockphoto.com/id/1185322501/photo/close-up-photo-of-a-black-leather-jacket.jpg?s=612x612&w=0&k=20&c=M4_tEdMe7T2p62nDML91faaWrIE6pGoIuVmWwIj4Ltk=",
+      "https://cdn.pixabay.com/photo/2019/12/19/05/58/leather-gloves-4705453_1280.jpg",
     ],
-    colors: ["Black", "Dark Slate Gray"],
-    sizes: ["M", "L", "XL"],
+    colors: ["Black", "Charcoal", "Yellow", "Green", "Gray", "Orange"],
+    sizes: ["S", "M", "L", "XL", "XXL"],
     description:
-      "Sleek black denim trucker with modern slim fit and dark wash.",
-    isNew: false,
+      "Premium quality OFI jacket with classic black finish. Perfect for any occasion.",
+    isNew: true,
     inStock: true,
-    isTrending: false,
-    isBestSeller: false,
-    isFeatured: false,
+    isTrending: true,
+    isBestSeller: true,
+    isFeatured: true,
     soldOut: false,
-    rating: 4.6,
-    reviews: 43,
-    createdAt: "2024-12-29",
-    tags: ["denim", "black", "slim-fit"],
+    rating: 4.8,
+    reviews: 45,
+    createdAt: "2025-01-05",
+    tags: ["premium", "classic", "bestseller"],
   },
   {
     id: 13,
@@ -1427,7 +1394,6 @@ export const products = [
     tags: ["white", "summer", "clean"],
   },
 
-  // ==================== FACE CAPS (10) ====================
   {
     id: 21,
     name: "Classic Black Snapback",
@@ -1661,28 +1627,28 @@ export const products = [
   },
   {
     id: 30,
-    name: "Corduroy Brown Cap",
-    slug: "corduroy-brown-cap",
-    category: "face-caps",
-    price: 27.99,
-    originalPrice: 34.99,
-    discount: 20,
+    name: "Olive Green OFI Field Jacket",
+    slug: "olive-green-ofi-field-jacket",
+    category: "ofi-jackets",
+    price: 149.99,
+    originalPrice: 189.99,
+    discount: 21,
     images: [
-      "https://images.unsplash.com/photo-1575428652377-a2d80e2277fc?w=600&h=800&fit=crop",
+      "https://images.unsplash.com/photo-1578587018452-892bacefd3f2?w=600&h=800&fit=crop",
     ],
-    colors: ["Brown", "Sienna"],
-    sizes: ["One Size"],
+    colors: ["Olive Green", "Yellow Green"],
+    sizes: ["S", "M", "L", "XL"],
     description:
-      "Retro corduroy cap in warm brown with vintage-inspired design.",
+      "Military-inspired field jacket with multiple pockets and durable construction.",
     isNew: false,
     inStock: true,
-    isTrending: false,
+    isTrending: true,
     isBestSeller: false,
-    isFeatured: false,
+    isFeatured: true,
     soldOut: false,
     rating: 4.7,
-    reviews: 62,
-    createdAt: "2024-12-18",
-    tags: ["corduroy", "brown", "retro"],
+    reviews: 34,
+    createdAt: "2024-12-28",
+    tags: ["military", "outdoor", "utility"],
   },
 ];
