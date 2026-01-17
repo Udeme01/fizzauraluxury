@@ -146,7 +146,33 @@ const ProductDetail = () => {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div>more images here...</div>
+              {/* Thumbnail Gallery */}
+              {productImages.length > 1 && (
+                <div className="grid grid-cols-4 gap-3">
+                  {productImages.map((image, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setSelectedImage(index)}
+                      className={`relative aspect-square bg-neutral-100 overflow-hidden border-2 transition-all ${
+                        selectedImage === index
+                          ? "border-neutral-900 ring-2 ring-neutral-900 ring-offset-2"
+                          : "border-neutral-300 hover:border-neutral-500"
+                      }`}
+                    >
+                      <img
+                        src={image}
+                        alt={`${product.name} thumbnail ${index + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                      {selectedImage === index && (
+                        <div className="absolute inset-0 bg-neutral-900/10 flex items-center justify-center">
+                          <Check className="w-6 h-6 text-white drop-shadow-lg" />
+                        </div>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Product Info */}
