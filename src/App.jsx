@@ -10,7 +10,6 @@ import ProductDetail from "./pages/ProductDetails.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import { CartContextProvider } from "./context/shoppingCartContext.jsx";
 import { ToastContainer } from "react-toastify";
-import { HelmetProvider } from "react-helmet-async";
 
 const App = () => {
   const router = createBrowserRouter([

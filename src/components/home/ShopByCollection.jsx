@@ -23,7 +23,7 @@ const ShopByCollection = () => {
         {/* Collection Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto px-6 sm:px-8">
           {newCollection.map((collection) => {
-            console.log(collection.category);
+            // console.log(collection.category);
             return (
               <div
                 key={collection.id}

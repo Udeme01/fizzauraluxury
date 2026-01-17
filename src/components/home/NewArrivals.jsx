@@ -3,7 +3,7 @@ import { products } from "../../data/products";
 import Button from "../common/Button";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 // Import Swiper styles
 import "swiper/css";
@@ -58,8 +58,8 @@ const NewArrivals = () => {
                 }}
               >
                 {newProducts.map((product) => (
-                  <SwiperSlide>
-                    <div key={product.id} className="shrink-0 pr-6">
+                  <SwiperSlide  key={product.id}>
+                    <div className="shrink-0 pr-6">
                       {/* Product Card */}
                       <Link
                         to={`/product/${product.id}`}

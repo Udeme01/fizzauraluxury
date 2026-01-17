@@ -3,7 +3,7 @@ import Button from "../common/Button";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 const TrendingProducts = () => {
   const trending_products = products
@@ -57,8 +57,8 @@ const TrendingProducts = () => {
                 }}
               >
                 {trending_products.map((product) => (
-                  <SwiperSlide>
-                    <div key={product.id} className="shrink-0 pr-6">
+                  <SwiperSlide key={product.id}>
+                    <div className="shrink-0 pr-6">
                       {/* Product Card */}
                       <Link
                         to={`/product/${product.id}`}
