@@ -1,5 +1,5 @@
 // src/pages/ProductDetail.jsx
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import {
   ShoppingCart,
@@ -61,6 +61,14 @@ const ProductDetail = () => {
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [quantity, setQuantity] = useState(1);
+
+  // Reset selections when product & id changes
+  useEffect(() => {
+    setSelectedImage(0);
+    setSelectedSize("");
+    setSelectedColor("");
+    setQuantity(1);
+  }, [id]);
 
   // product-images
   const productImages =
@@ -267,7 +275,7 @@ const ProductDetail = () => {
                   key={relatedProduct.id}
                   to={`/product/${relatedProduct.id}`}
                   className="group bg-white overflow-hidden hover:shadow-lg transition-shadow"
-                  onClick={() => window.scrollTo(0, 0)}
+                  // onClick={() => window.scrollTo(0, 0)}
                 >
                   <div className="relative aspect-square bg-neutral-100 overflow-hidden">
                     <img
