@@ -1,14 +1,58 @@
-import { products } from "../../data/products";
+import React, { useEffect, useState } from "react";
 import Button from "../common/Button";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import { Link } from "react-router-dom";
+import { fetchProducts } from "../../lib/fetchProducts";
 
 const TrendingProducts = () => {
-  const trending_products = products
-    .filter((trending_product) => trending_product.isTrending)
-    .slice(0, 6);
+  const [trendingProducts, setTrendingProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadTrendingProducts = async () => {
+      setLoading(true);
+      const data = await fetchProducts();
+      // filter only trending products and limit to 6
+      const filter = data.filter((product) => product.isTrending).slice(0, 6);
+      setTrendingProducts(filter);
+      setLoading(false);
+    };
+
+    loadTrendingProducts();
+  }, []);
+
+  // Loading state
+  if (loading) {
+    return (
+      <section className="py-16 md:py-20 font-montserrat">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8">
+          <div className="text-center">
+            <div className="w-12 h-12 border-4 border-gray-900 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading Trending Products...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // No products state
+  if (trendingProducts.length === 0) {
+    return (
+      <section className="py-16 md:py-20 font-montserrat">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8">
+          <div className="text-center">
+            <h2 className="text-3xl sm:text-4xl text-gray-900 mb-4">
+              Trending Products
+            </h2>
+            <p className="text-gray-600">No trending products at the moment</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="py-16 md:py-20 font-montserrat">
       <div className="max-w-7xl mx-auto px-6 sm:px-8">
@@ -24,11 +68,7 @@ const TrendingProducts = () => {
           </div>
           {/* View All Link - Desktop */}
           <div className="hidden md:block md:w-40 text-right">
-            <Button
-              to={"/shop?filter=trending"}
-              variant="outline"
-              size="md"
-            >
+            <Button to={"/shop?filter=trending"} variant="outline" size="md">
               View All
             </Button>
           </div>
@@ -56,7 +96,7 @@ const TrendingProducts = () => {
                   // 1024: { slidesPerView: 3 },
                 }}
               >
-                {trending_products.map((product) => (
+                {trendingProducts.map((product) => (
                   <SwiperSlide key={product.id}>
                     <div className="shrink-0 pr-6">
                       {/* Product Card */}

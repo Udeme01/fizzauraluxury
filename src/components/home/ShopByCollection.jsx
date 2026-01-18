@@ -1,12 +1,53 @@
-import React from "react";
-// import { collections } from "../../data/products";
-import { products } from "../../data/products";
+import React, { useEffect, useState } from "react";
 import Button from "../common/Button";
+import { fetchProducts } from "../../lib/fetchProducts";
 
 const ShopByCollection = () => {
-  const newCollection = products
-    .filter((product) => product.category)
-    .slice(0, 3);
+  const [collection, setCollection] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadCollection = async () => {
+      setLoading(true);
+      const data = await fetchProducts();
+      const filter = data.filter((product) => product.category).slice(0, 3);
+      setCollection(filter);
+      setLoading(false);
+    };
+
+    loadCollection();
+  }, []);
+
+  // Loading state
+  if (loading) {
+    return (
+      <section className="py-16 md:py-20 font-montserrat">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8">
+          <div className="text-center">
+            <div className="w-12 h-12 border-4 border-gray-900 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading Collections...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // No products state
+  if (collection.length === 0) {
+    return (
+      <section className="py-16 md:py-20 font-montserrat">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8">
+          <div className="text-center">
+            <h2 className="text-3xl sm:text-4xl text-gray-900 mb-4">
+              Shop by Collection
+            </h2>
+            <p className="text-gray-600">No collection at the moment</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="py-12 sm:py-16 lg:py-20 bg-white font-montserrat">
       <div>
@@ -22,7 +63,7 @@ const ShopByCollection = () => {
 
         {/* Collection Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto px-6 sm:px-8">
-          {newCollection.map((collection) => {
+          {collection.map((collection) => {
             // console.log(collection.category);
             return (
               <div

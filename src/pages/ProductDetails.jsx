@@ -1,25 +1,80 @@
 // src/pages/ProductDetail.jsx
 import { useState, useContext, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import {
-  ShoppingCart,
-  Minus,
-  Plus,
-  Truck,
-  RefreshCw,
-  Shield,
-  ChevronLeft,
-  Check,
-} from "lucide-react";
-import { products } from "../data/products";
+import { ShoppingCart, Minus, Plus, ChevronLeft, Check } from "lucide-react";
 import { CartContext } from "../context/shoppingCartContext";
 import { toast } from "react-toastify";
 
+import { fetchProductById, fetchProducts } from "../lib/fetchProducts";
+
 const ProductDetail = () => {
   // from cart-context
-  const { addItemToCart, items, updateCartItemQuantity } =
-    useContext(CartContext);
-  // console.log(items);
+  const { addItemToCart } = useContext(CartContext);
+
+  // product-id gotten from url using useParams()...
+  const { id } = useParams();
+  console.log(id);
+
+  // navigate
+  const navigate = useNavigate();
+
+  // states...
+  const [selectedImage, setSelectedImage] = useState(0);
+  const [selectedSize, setSelectedSize] = useState("");
+  const [selectedColor, setSelectedColor] = useState("");
+  const [quantity, setQuantity] = useState(1);
+
+  const [product, setProduct] = useState([]);
+  const [relatedProducts, setRelatedProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch product and related products
+  useEffect(() => {
+    const loadProduct = async () => {
+      console.log(id);
+      setLoading(true);
+      try {
+        // Fetch the single product
+        const productData = await fetchProductById(id);
+        console.log(productData);
+
+        if (!productData) {
+          toast.error("Product not found");
+          navigate("/shop");
+          return;
+        }
+
+        setProduct(productData);
+
+        // Fetch all products to get related ones
+        const allProducts = await fetchProducts();
+        const related = allProducts
+          .filter(
+            (p) =>
+              p.category === productData.category && p.id !== productData.id
+          )
+          .slice(0, 4);
+
+        setRelatedProducts(related);
+      } catch (error) {
+        console.error("Error loading product:", error);
+        toast.error("Error loading product");
+        navigate("/shop");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProduct();
+  }, [id, navigate]);
+
+  // Reset selections when product & id changes
+  useEffect(() => {
+    setSelectedImage(0);
+    setSelectedSize("");
+    setSelectedColor("");
+    setQuantity(1);
+  }, [product]);
 
   // add-item-to-cart func...
   const handleAddItemToCart = () => {
@@ -41,45 +96,59 @@ const ProductDetail = () => {
       return;
     }
 
+    // Check stock
+    if (product.stock === 0) {
+      toast.error("This product is out of stock", {
+        position: "top-center",
+        autoClose: 2000,
+      });
+      return;
+    }
+
     // All good, add to cart
     addItemToCart(id, quantity, selectedSize, selectedColor);
   };
 
-  // product-id gotten from url using useParams()...
-  const { id: urlId } = useParams();
-  const id = parseInt(urlId);
+  // Loading state
+  if (loading) {
+    return (
+      <div className="bg-neutral-50 min-h-screen font-montserrat">
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <div className="w-16 h-16 border-4 border-neutral-900 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-xl text-neutral-600">Loading product...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
-  const navigate = useNavigate();
-  const product = products.find((p) => p.id === parseInt(id));
-
-  // console.log(product);
-  // product.sizes.map((size) => console.log(size));
-  // product.colors.map((color) => console.log(color));
-
-  // states...
-  const [selectedImage, setSelectedImage] = useState(0);
-  const [selectedSize, setSelectedSize] = useState("");
-  const [selectedColor, setSelectedColor] = useState("");
-  const [quantity, setQuantity] = useState(1);
-
-  // Reset selections when product & id changes
-  useEffect(() => {
-    setSelectedImage(0);
-    setSelectedSize("");
-    setSelectedColor("");
-    setQuantity(1);
-  }, [id]);
+  // Product not found
+  if (!product) {
+    return (
+      <div className="bg-neutral-50 min-h-screen font-montserrat">
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-neutral-900 mb-4">
+              Product Not Found
+            </h2>
+            <Link
+              to="/shop"
+              className="text-neutral-600 hover:text-neutral-900 underline"
+            >
+              Return to Shop
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   // product-images
   const productImages =
     product.images && product.images.length > 0
       ? product.images
       : [product.image];
-
-  // Get related products (same category)
-  const relatedProducts = products
-    .filter((p) => p.category === product.category && p.id !== product.id)
-    .slice(0, 4);
 
   // detail page return component...
   return (

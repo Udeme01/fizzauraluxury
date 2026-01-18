@@ -8,11 +8,13 @@ import {
   ChevronRight,
   X,
 } from "lucide-react";
-import { products } from "../data/products";
 import ProductCard from "../components/common/ProductCard";
+import { fetchProductById, fetchProducts } from "../lib/fetchProducts";
 
 const Shop = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // Get URL parameters
   const filterParam = searchParams.get("filter"); // 'new' or 'trending'
@@ -25,6 +27,29 @@ const Shop = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 12;
 
+  // Fetch products from Contentful on mount
+  useEffect(() => {
+    const loadProducts = async () => {
+      setLoading(true);
+      const data = await fetchProducts();
+      // console.log(data);
+      setProducts(data);
+      setLoading(false);
+    };
+
+    loadProducts();
+  }, []);
+
+  // useEffect(() => {
+  //   const loadSingleProduct = async () => {
+  //     const singleProduct = await fetchProducts();
+  //     const getId = singleProduct.map((singleProductId) => singleProductId.id);
+  //     console.log(getId);
+  //   };
+
+  //   loadSingleProduct();
+  // }, []);
+
   // Initialize filters from URL parameters on mount
   useEffect(() => {
     if (categoryParam) {
@@ -33,10 +58,10 @@ const Shop = () => {
   }, [categoryParam]);
 
   // Get unique categories from products
-  const categories = [
-    "all",
-    ...new Set(products.map((p) => p.category.toLowerCase())),
-  ];
+  const categories = useMemo(() => {
+    if (products.length === 0) return ["all"];
+    return ["all", ...new Set(products.map((p) => p.category.toLowerCase()))];
+  }, [products]);
 
   // Filter and sort products
   const filteredProducts = useMemo(() => {
@@ -72,7 +97,7 @@ const Shop = () => {
     }
 
     return filtered;
-  }, [selectedCategory, sortBy, filterParam]);
+  }, [products, selectedCategory, sortBy, filterParam]);
 
   // Pagination calculations
   const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
@@ -180,6 +205,20 @@ const Shop = () => {
       return `Browse our ${selectedCategory} collection`;
     return `Discover ${filteredProducts.length} products`;
   };
+
+  // Loading state
+  if (loading) {
+    return (
+      <div className="bg-neutral-50 min-h-screen font-montserrat">
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <div className="w-16 h-16 border-4 border-accent-900 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-xl text-neutral-600">Loading products...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-neutral-50 min-h-screen font-montserrat">
@@ -341,13 +380,15 @@ const Shop = () => {
                   : "flex flex-col gap-4"
               }
             >
-              {currentProducts.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  viewMode={viewMode}
-                />
-              ))}
+              {currentProducts.map((product) => {
+                return (
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    viewMode={viewMode}
+                  />
+                );
+              })}
             </div>
 
             {/* Pagination */}

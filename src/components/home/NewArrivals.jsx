@@ -1,9 +1,10 @@
 // src/components/home/NewArrivals.jsx
-import { products } from "../../data/products";
+import { useState, useEffect } from "react";
 import Button from "../common/Button";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { Link } from "react-router-dom";
+import { fetchProducts } from "../../lib/fetchProducts";
 
 // Import Swiper styles
 import "swiper/css";
@@ -11,8 +12,53 @@ import "swiper/css";
 // import "swiper/css/pagination";
 
 const NewArrivals = () => {
-  // Get products marked as new arrivals (or use date-based logic)
-  const newProducts = products.filter((product) => product.isNew).slice(0, 6); // Show only 6 products
+  const [newProducts, setNewProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch products on mount
+  useEffect(() => {
+    const loadNewProducts = async () => {
+      setLoading(true);
+      const data = await fetchProducts();
+      // Filter only new arrivals and limit to 6
+      const filtered = data.filter((product) => product.isNew).slice(0, 6);
+      setNewProducts(filtered);
+      setLoading(false);
+    };
+
+    loadNewProducts();
+  }, []);
+
+  // Loading state
+  if (loading) {
+    return (
+      <section className="py-16 md:py-20 font-montserrat">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8">
+          <div className="text-center">
+            <div className="w-12 h-12 border-4 border-gray-900 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading new arrivals...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // No products state
+  if (newProducts.length === 0) {
+    return (
+      <section className="py-16 md:py-20 font-montserrat">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8">
+          <div className="text-center">
+            <h2 className="text-3xl sm:text-4xl text-gray-900 mb-4">
+              New Arrivals
+            </h2>
+            <p className="text-gray-600">No new arrivals at the moment</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="py-16 md:py-20 font-montserrat">
       <div className="max-w-7xl mx-auto px-6 sm:px-8">
@@ -54,68 +100,85 @@ const NewArrivals = () => {
                 breakpoints={{
                   640: { slidesPerView: 2 },
                   768: { slidesPerView: 3 },
-                  // 1024: { slidesPerView: 3 },
                 }}
               >
-                {newProducts.map((product) => (
-                  <SwiperSlide  key={product.id}>
-                    <div className="shrink-0 pr-6">
-                      {/* Product Card */}
-                      <Link
-                        to={`/product/${product.id}`}
-                        className="overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 group/card"
-                      >
-                        {/* Image Container */}
-                        <div className="relative bg-gray-100 aspect-square overflow-hidden">
-                          {/* Product Image */}
-                          <img
-                            src={product.images[0]}
-                            alt={product.name}
-                            className={`w-full h-full object-cover transition-transform duration-500 group-hover/card:scale-110 ${
-                              product.soldOut ? "opacity-50" : ""
-                            }`}
-                          />
-                        </div>
-
-                        {/* Product Info */}
-                        <div className="py-4">
-                          <p className="text-sm text-gray-500 mb-1">
-                            {product.category}
-                          </p>
-                          <h3 className="text-lg font-semibold text-gray-900 mb-2 hover:text-gray-600 transition-colors cursor-pointer">
-                            {product.name}
-                          </h3>
-
-                          {/* Price */}
-                          <div className="flex items-center gap-2 mb-3">
-                            {product.originalPrice && (
-                              <span className="text-gray-400 line-through text-sm">
-                                ${product.originalPrice.toFixed(2)}
-                              </span>
+                {newProducts.map((product) => {
+                  return (
+                    <SwiperSlide key={product.id}>
+                      <div className="shrink-0 pr-6">
+                        {/* Product Card */}
+                        <Link
+                          to={`/product/${product.id}`}
+                          className="overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 group/card"
+                        >
+                          {/* Image Container */}
+                          <div className="relative bg-gray-100 aspect-square overflow-hidden">
+                            {/* Product Image */}
+                            <img
+                              src={product.images[0] || product.image}
+                              alt={product.name}
+                              className={`w-full h-full object-cover transition-transform duration-500 group-hover/card:scale-110 ${
+                                product.stock === 0 ? "opacity-50" : ""
+                              }`}
+                            />
+                            {/* Out of Stock Badge */}
+                            {product.stock === 0 && (
+                              <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                                <span className="bg-white px-4 py-2 font-semibold">
+                                  Out of Stock
+                                </span>
+                              </div>
                             )}
-                            <span className="text-gray-900 font-bold text-lg">
-                              ${product.price.toFixed(2)}
-                            </span>
                           </div>
 
-                          {/* Color Swatches */}
-                          {product.colors && (
-                            <div className="flex gap-2">
-                              {product.colors.map((color, index) => (
-                                <button
-                                  key={index}
-                                  className="w-6 h-6 rounded-full border-2 border-gray-300 hover:border-gray-900 transition-colors"
-                                  style={{ backgroundColor: color }}
-                                  aria-label={`Select ${color} color`}
-                                />
-                              ))}
+                          {/* Product Info */}
+                          <div className="py-4">
+                            <p className="text-sm text-gray-500 mb-1 capitalize">
+                              {product.category}
+                            </p>
+                            <h3 className="text-lg font-semibold text-gray-900 mb-2 hover:text-gray-600 transition-colors cursor-pointer">
+                              {product.name}
+                            </h3>
+
+                            {/* Price */}
+                            <div className="flex items-center gap-2 mb-3">
+                              {product.oldPrice && (
+                                <span className="text-gray-400 line-through text-sm">
+                                  ₦{product.oldPrice.toLocaleString()}
+                                </span>
+                              )}
+                              <span className="text-gray-900 font-bold text-lg">
+                                ₦{product.price.toLocaleString()}
+                              </span>
                             </div>
-                          )}
-                        </div>
-                      </Link>
-                    </div>
-                  </SwiperSlide>
-                ))}
+
+                            {/* Color Swatches */}
+                            {product.colors && product.colors.length > 0 && (
+                              <div className="flex gap-2">
+                                {product.colors
+                                  .slice(0, 5)
+                                  .map((color, index) => (
+                                    <button
+                                      key={index}
+                                      className="w-6 h-6 rounded-full border-2 border-gray-300 hover:border-gray-900 transition-colors"
+                                      style={{ backgroundColor: color }}
+                                      aria-label={`Select ${color} color`}
+                                      title={color}
+                                    />
+                                  ))}
+                                {product.colors.length > 5 && (
+                                  <span className="text-xs text-gray-500 flex items-center">
+                                    +{product.colors.length - 5}
+                                  </span>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        </Link>
+                      </div>
+                    </SwiperSlide>
+                  );
+                })}
               </Swiper>
             </div>
           </div>

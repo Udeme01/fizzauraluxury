@@ -934,7 +934,7 @@ export const products = [
     images: [
       "https://images.unsplash.com/photo-1575428652377-a2d80e2277fc?w=600&h=800&fit=crop",
     ],
-    colors: ["Brown", "Sienna"],
+    colors: ["Brown", "Sienna", "gold"],
     sizes: ["One Size"],
     description:
       "Retro corduroy cap in warm brown with vintage-inspired design.",
@@ -1064,7 +1064,7 @@ export const products = [
     images: [
       "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&h=800&fit=crop",
     ],
-    colors: ["Navy Blue", "Dark Blue"],
+    colors: ["green", "Blue", "red"],
     sizes: ["M", "L", "XL", "XXL"],
     description:
       "Stylish navy bomber jacket with premium OFI branding and comfort fit.",
