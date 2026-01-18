@@ -93,17 +93,17 @@ const ProductDetail = () => {
       return;
     }
 
-    // Check stock
-    if (product.stock === 0) {
-      toast.error("This product is out of stock", {
-        position: "top-center",
-        autoClose: 2000,
-      });
-      return;
-    }
+    // // Check stock
+    // if (product.stock === 0) {
+    //   toast.error("This product is out of stock", {
+    //     position: "top-center",
+    //     autoClose: 2000,
+    //   });
+    //   return;
+    // }
 
     // All good, add to cart
-    addItemToCart(id, quantity, selectedSize, selectedColor);
+    addItemToCart(product, quantity, selectedSize, selectedColor);
   };
 
   // Loading state

@@ -23,12 +23,16 @@ const cartReducer = (state, action) => {
     // Step 1: Look in your STORE CATALOG (products array from products.js)
     // NOT in the cart, but in the list of ALL products available for sale
     // Find the product with matching id to get its name, price, image etc.
-    const product = products.find(
-      (product) => product.id === action.payload.id
-    );
-    // console.log(product);
+    // const product = products.find(
+    //   (product) => product.id === action.payload.id
+    // );
 
-    if (!product) return state;
+    const product = action.payload.product;
+
+    if (!product) {
+      console.error("product not found");
+      return state;
+    }
 
     // Step 2: Check if this EXACT item is ALREADY in your shopping cart
     // "findIndex" searches through your cart and returns the position (index) where it found the item
@@ -38,7 +42,7 @@ const cartReducer = (state, action) => {
       (item) =>
         item.id === action.payload.id &&
         item.selectedColor === action.payload.selectedColor &&
-        item.selectedSize === action.payload.selectedSize
+        item.selectedSize === action.payload.selectedSize,
     );
     // console.log(existingItemIndex);
 
@@ -72,7 +76,7 @@ const cartReducer = (state, action) => {
         id: product.id,
         name: product.name,
         price: product.price,
-        image: product.images[0], // Use first image as thumbnail
+        image: product.images[0] || product.image, // Use first image as thumbnail
         quantity: action.payload.quantity,
         selectedColor: action.payload.selectedColor,
         selectedSize: action.payload.selectedSize,
@@ -95,7 +99,7 @@ const cartReducer = (state, action) => {
       (item) =>
         item.id === action.payload.id &&
         item.selectedColor === action.payload.selectedColor &&
-        item.selectedSize === action.payload.selectedSize
+        item.selectedSize === action.payload.selectedSize,
     );
 
     // Step 2: Make a copy of cart items
@@ -133,7 +137,7 @@ const cartReducer = (state, action) => {
           item.id === action.payload.id &&
           item.selectedColor === action.payload.selectedColor &&
           item.selectedSize === action.payload.selectedSize
-        )
+        ),
     );
 
     // Return new state with filtered items
@@ -173,8 +177,18 @@ export const CartContextProvider = ({ children }) => {
         }
       }
       return initialState;
-    }
+    },
   );
+
+  // useEffect(() => {
+  //   const fetchProducts = async () => {
+  //     try {
+  //       const entries;
+  //     } catch (error) {
+
+  //     }
+  //   }
+  // }, [])
 
   // Save cart to localStorage whenever cartState changes
   useEffect(() => {
@@ -182,10 +196,21 @@ export const CartContextProvider = ({ children }) => {
   }, [cartState]);
 
   // Helper Functions
-  const handleAddItemToCart = (id, quantity, selectedSize, selectedColor) => {
+  const handleAddItemToCart = (
+    product,
+    quantity,
+    selectedSize,
+    selectedColor,
+  ) => {
     cartDispatch({
       type: "ADD_ITEM",
-      payload: { id, quantity, selectedSize, selectedColor },
+      payload: {
+        id: product.id,
+        product,
+        quantity,
+        selectedSize,
+        selectedColor,
+      },
     });
 
     toast.success("Item added to cart!", {
@@ -202,7 +227,7 @@ export const CartContextProvider = ({ children }) => {
     id,
     selectedColor,
     selectedSize,
-    quantity
+    quantity,
   ) => {
     cartDispatch({
       type: "UPDATE_ITEM",
@@ -238,7 +263,7 @@ export const CartContextProvider = ({ children }) => {
   const getTotalPrice = () => {
     return cartState.items.reduce(
       (total, item) => total + item.price * item.quantity,
-      0
+      0,
     );
   };
 
