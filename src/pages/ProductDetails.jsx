@@ -13,7 +13,6 @@ const ProductDetail = () => {
 
   // product-id gotten from url using useParams()...
   const { id } = useParams();
-  console.log(id);
 
   // navigate
   const navigate = useNavigate();
@@ -31,12 +30,10 @@ const ProductDetail = () => {
   // Fetch product and related products
   useEffect(() => {
     const loadProduct = async () => {
-      console.log(id);
       setLoading(true);
       try {
         // Fetch the single product
         const productData = await fetchProductById(id);
-        console.log(productData);
 
         if (!productData) {
           toast.error("Product not found");

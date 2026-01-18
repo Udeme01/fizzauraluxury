@@ -32,23 +32,12 @@ const Shop = () => {
     const loadProducts = async () => {
       setLoading(true);
       const data = await fetchProducts();
-      // console.log(data);
       setProducts(data);
       setLoading(false);
     };
 
     loadProducts();
   }, []);
-
-  // useEffect(() => {
-  //   const loadSingleProduct = async () => {
-  //     const singleProduct = await fetchProducts();
-  //     const getId = singleProduct.map((singleProductId) => singleProductId.id);
-  //     console.log(getId);
-  //   };
-
-  //   loadSingleProduct();
-  // }, []);
 
   // Initialize filters from URL parameters on mount
   useEffect(() => {
