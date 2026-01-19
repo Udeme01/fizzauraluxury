@@ -9,7 +9,8 @@ import {
   X,
 } from "lucide-react";
 import ProductCard from "../components/common/ProductCard";
-import { fetchProductById, fetchProducts } from "../lib/fetchProducts";
+import { fetchProducts } from "../lib/fetchProducts";
+import { shuffleArray } from "../utils/helpers";
 
 const Shop = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -32,7 +33,8 @@ const Shop = () => {
     const loadProducts = async () => {
       setLoading(true);
       const data = await fetchProducts();
-      setProducts(data);
+      const shuffled = shuffleArray(data);
+      setProducts(shuffled);
       setLoading(false);
     };
 
@@ -66,7 +68,7 @@ const Shop = () => {
     // Step 2: Apply category filter (from URL or manual selection)
     if (selectedCategory !== "all") {
       filtered = filtered.filter(
-        (product) => product.category.toLowerCase() === selectedCategory
+        (product) => product.category.toLowerCase() === selectedCategory,
       );
     }
 
@@ -422,7 +424,7 @@ const Shop = () => {
                       >
                         {page}
                       </button>
-                    )
+                    ),
                   )}
                 </div>
 
