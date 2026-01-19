@@ -9,7 +9,7 @@ export const footerLinks = {
   shop: {
     title: "Shop",
     links: [
-      { label: "New Arrivals", href: "/shop?category=new" },
+      { label: "New Arrivals", href: "/shop?filter=new" },
       { label: "Men", href: "/shop?category=men" },
       { label: "Women", href: "/shop?category=women" },
     ],
