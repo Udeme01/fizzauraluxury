@@ -11,6 +11,8 @@ import "swiper/css";
 // import "swiper/css/navigation";
 // import "swiper/css/pagination";
 
+import { shuffleArray } from "../../utils/helpers";
+
 const NewArrivals = () => {
   const [newProducts, setNewProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -21,8 +23,10 @@ const NewArrivals = () => {
       setLoading(true);
       const data = await fetchProducts();
       // Filter only new arrivals and limit to 6
-      const filtered = data.filter((product) => product.isNew).slice(0, 6);
-      setNewProducts(filtered);
+      const filtered = data.filter((product) => product.isNew);
+      const shuffled = shuffleArray(filtered);
+      
+      setNewProducts(shuffled.slice(0, 6));
       setLoading(false);
     };
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Button from "../common/Button";
 import { fetchProducts } from "../../lib/fetchProducts";
+import { shuffleArray } from "../../utils/helpers";
 
 const ShopByCollection = () => {
   const [collection, setCollection] = useState([]);
@@ -10,8 +11,9 @@ const ShopByCollection = () => {
     const loadCollection = async () => {
       setLoading(true);
       const data = await fetchProducts();
-      const filter = data.filter((product) => product.category).slice(0, 3);
-      setCollection(filter);
+      const filtered = data.filter((product) => product.category);
+      const shuffled = shuffleArray(filtered);
+      setCollection(shuffled.slice(0, 3));
       setLoading(false);
     };
 

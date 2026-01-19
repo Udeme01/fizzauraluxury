@@ -5,6 +5,7 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import { Link } from "react-router-dom";
 import { fetchProducts } from "../../lib/fetchProducts";
+import { shuffleArray } from "../../utils/helpers";
 
 const TrendingProducts = () => {
   const [trendingProducts, setTrendingProducts] = useState([]);
@@ -15,8 +16,9 @@ const TrendingProducts = () => {
       setLoading(true);
       const data = await fetchProducts();
       // filter only trending products and limit to 6
-      const filter = data.filter((product) => product.isTrending).slice(0, 6);
-      setTrendingProducts(filter);
+      const filter = data.filter((product) => product.isTrending);
+      const shuffled = shuffleArray(filter);
+      setTrendingProducts(shuffled.slice(0, 6));
       setLoading(false);
     };
 
