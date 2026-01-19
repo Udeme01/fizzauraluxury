@@ -11,6 +11,16 @@ import NotFound from "./pages/NotFound.jsx";
 import { CartContextProvider } from "./context/shoppingCartContext.jsx";
 import { ToastContainer } from "react-toastify";
 
+// Policy Pages
+import FAQ from "./pages/policies/FAQ.jsx";
+import ShippingDelivery from "./pages/policies/ShippingDelivery.jsx";
+import ReturnsRefunds from "./pages/policies/ReturnsRefunds.jsx";
+import SizeGuide from "./pages/policies/SizeGuide.jsx";
+import PrivacyPolicy from "./pages/policies/PrivacyPolicy.jsx";
+import TermsOfService from "./pages/policies/TermsOfService.jsx";
+import CookiePolicy from "./pages/policies/CookiePolicy.jsx";
+import Disclaimer from "./pages/policies/Disclaimer.jsx";
+
 const App = () => {
   const router = createBrowserRouter([
     {
@@ -40,6 +50,39 @@ const App = () => {
         {
           path: "cart",
           element: <Cart />,
+        },
+        // Policy Pages
+        {
+          path: "faq",
+          element: <FAQ />,
+        },
+        {
+          path: "shipping-delivery",
+          element: <ShippingDelivery />,
+        },
+        {
+          path: "returns-refunds",
+          element: <ReturnsRefunds />,
+        },
+        {
+          path: "size-guide",
+          element: <SizeGuide />,
+        },
+        {
+          path: "privacy-policy",
+          element: <PrivacyPolicy />,
+        },
+        {
+          path: "terms-of-service",
+          element: <TermsOfService />,
+        },
+        {
+          path: "cookie-policy",
+          element: <CookiePolicy />,
+        },
+        {
+          path: "disclaimer",
+          element: <Disclaimer />,
         },
         {
           path: "*",

@@ -1,15 +1,9 @@
 // src/pages/Contact.jsx
 import { useState } from "react";
-import {
-  Phone,
-  Mail,
-  MapPin,
-  Instagram,
-  Facebook,
-  Linkedin,
-  MessageCircle,
-} from "lucide-react";
+import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
 import Button from "../components/common/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInstagram, faTiktok } from "@fortawesome/free-brands-svg-icons";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -33,12 +27,12 @@ const Contact = () => {
     const whatsappMessage = `*New Contact Form Submission*\n\nName: ${formData.name}\nEmail: ${formData.email}\nSubject: ${formData.subject}\n\nMessage:\n${formData.message}`;
 
     const encodedMessage = encodeURIComponent(whatsappMessage);
-    const phoneNumber = "2348012345678"; // Replace with your WhatsApp number
+    const phoneNumber = "2349136453525"; // Replace with your WhatsApp number
 
     // Open WhatsApp
     window.open(
       `https://wa.me/${phoneNumber}?text=${encodedMessage}`,
-      "_blank"
+      "_blank",
     );
   };
 
@@ -46,14 +40,14 @@ const Contact = () => {
     {
       icon: Phone,
       title: "Phone",
-      value: "+234 801 234 5678",
-      link: "tel:+2348012345678",
+      value: "+234 913 645 3525",
+      link: "tel:+2349136453525",
     },
     {
       icon: Mail,
       title: "Email",
-      value: "info@fizzauraluxury.com",
-      link: "mailto:info@fizzauraluxury.com",
+      value: "Fizzaurabrand@gmail.com",
+      link: "mailto:Fizzaurabrand@gmail.com",
     },
     {
       icon: MapPin,
@@ -64,8 +58,8 @@ const Contact = () => {
     {
       icon: MessageCircle,
       title: "WhatsApp",
-      value: "+234 801 234 5678",
-      link: "https://wa.me/2348012345678",
+      value: "+234 913 645 3525",
+      link: "https://wa.me/2349136453525",
     },
   ];
 
@@ -108,7 +102,7 @@ const Contact = () => {
                           : undefined
                       }
                     >
-                      <div className="flex-shrink-0 w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center group-hover:bg-primary-600 transition-colors">
+                      <div className="shrink-0 w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center group-hover:bg-primary-600 transition-colors">
                         <Icon className="w-6 h-6 text-primary-600 group-hover:text-white transition-colors" />
                       </div>
                       <div>
@@ -130,31 +124,22 @@ const Contact = () => {
               <h2 className="text-2xl text-neutral-900 mb-6">Follow Us</h2>
               <div className="flex gap-4">
                 <a
-                  href="https://instagram.com/fizzauraluxury"
+                  href="https://www.instagram.com/fizzaura_brand"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-12 h-12 bg-neutral-900 text-white rounded-full flex items-center justify-center hover:bg-primary-600 transition-colors"
                   aria-label="Instagram"
                 >
-                  <Instagram className="w-5 h-5" />
+                  <FontAwesomeIcon icon={faInstagram} className="w-5 h-5" />
                 </a>
                 <a
-                  href="https://facebook.com/fizzauraluxury"
+                  href="https://www.tiktok.com/@fizzaura_luxury1"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-12 h-12 bg-neutral-900 text-white rounded-full flex items-center justify-center hover:bg-primary-600 transition-colors"
                   aria-label="Facebook"
                 >
-                  <Facebook className="w-5 h-5" />
-                </a>
-                <a
-                  href="https://linkedin.com/company/fizzauraluxury"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-12 h-12 bg-neutral-900 text-white rounded-full flex items-center justify-center hover:bg-primary-600 transition-colors"
-                  aria-label="LinkedIn"
-                >
-                  <Linkedin className="w-5 h-5" />
+                  <FontAwesomeIcon icon={faTiktok} className="w-5 h-5" />
                 </a>
               </div>
             </div>
@@ -164,17 +149,17 @@ const Contact = () => {
               <h2 className="text-2xl text-neutral-900 mb-6">Business Hours</h2>
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-neutral-600">Monday - Friday</span>
+                  <span className="text-neutral-600">Monday - Saturday</span>
                   <span className="font-semibold text-neutral-900">
-                    9:00 AM - 6:00 PM
+                    7:00 AM - 8:00 PM
                   </span>
                 </div>
-                <div className="flex justify-between">
+                {/* <div className="flex justify-between">
                   <span className="text-neutral-600">Saturday</span>
                   <span className="font-semibold text-neutral-900">
                     10:00 AM - 4:00 PM
                   </span>
-                </div>
+                </div> */}
                 <div className="flex justify-between">
                   <span className="text-neutral-600">Sunday</span>
                   <span className="font-semibold text-neutral-900">Closed</span>
@@ -301,7 +286,7 @@ const Contact = () => {
           </p>
           {/* WhatsApp Btn */}
           <Button
-            href={"https://wa.me/2348055742292"}
+            href={"https://wa.me/2349136453525"}
             target="_blank"
             rel="noopener noreferrer"
             icon={MessageCircle}
