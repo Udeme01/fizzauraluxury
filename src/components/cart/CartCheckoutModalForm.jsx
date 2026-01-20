@@ -72,15 +72,13 @@ ${items
 🎨 Color: ${item.selectedColor}
 📏 Size: ${item.selectedSize}
 📦 Quantity: ${item.quantity}
-💰 Subtotal: ₦${(item.price * item.quantity).toLocaleString()}`
+💰 Subtotal: ₦${(item.price * item.quantity).toLocaleString()}`,
   )
   .join("\n\n")}
 
 ━━━━━━━━━━━━━━━━━
 💵 *ORDER SUMMARY*
 ━━━━━━━━━━━━━━━━━
-Subtotal: ₦${subtotal.toLocaleString()}
-Shipping: ${shipping === 0 ? "FREE ✅" : `₦${shipping.toLocaleString()}`}
 *TOTAL: ₦${total.toLocaleString()}*
 
 ${
@@ -92,9 +90,9 @@ ${
 📅 Order Date: ${new Date().toLocaleString()}
   `.trim();
 
-    const phoneNumber = "2348055742292";
+    const phoneNumber = "2349136453525";
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
-      message
+      message,
     )}`;
     // open whatsapp
     window.open(whatsappUrl, "_blank");
