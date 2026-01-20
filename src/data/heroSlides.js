@@ -2,22 +2,22 @@
 export const slides = [
   {
     id: 1,
-    tag: "Cap Featuring Raised",
-    title: "Profile Unisex Baseball",
+    tag: "Statement Streetwear",
+    title: "Lift Your AURA Effortlessly",
     image: "/images/hero/result.png",
     bgColor: "bg-[#6B4423]", // Brown
   },
   {
     id: 2,
-    tag: "New Collection 2026",
-    title: "Elegant Fashion Styles",
+    tag: "Authentic African Luxury",
+    title: "Designed for Your Presence",
     image: "/images/hero/okay.png",
     bgColor: "bg-[#2C3E50]", // Dark blue
   },
   {
     id: 3,
-    tag: "Premium Quality",
-    title: "Timeless Luxury Wear",
+    tag: "Refined Smart-Casual",
+    title: "Everyday Luxury, Minimalist Design",
     image: "/images/hero/third.png",
     bgColor: "bg-[#1C4532]", // Dark green
   },

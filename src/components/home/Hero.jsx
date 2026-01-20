@@ -9,7 +9,7 @@ const Hero = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 3000); // Change slide every 5 seconds
+    }, 5000); // Change slide every 5 seconds
 
     // Cleanup on unmount
     return () => clearInterval(timer);

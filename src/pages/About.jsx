@@ -53,7 +53,7 @@ const About = () => {
             {/* Image */}
             <div className="order-2 lg:order-1">
               <img
-                src="/images/hero/h2.jpg"
+                src="/images/hero/h2.png"
                 alt="FizzAura Luxury Brand"
                 className="w-full max-w-[75vw] rounded-full h-auto mx-auto"
               />
