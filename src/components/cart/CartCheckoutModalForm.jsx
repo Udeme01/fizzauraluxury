@@ -314,7 +314,7 @@ ${
                     </div>
                     <div className="flex justify-between">
                       <span className="text-neutral-600">Shipping</span>
-                      <span className="font-medium">
+                      {/* <span className="font-medium">
                         {shipping === 0 ? (
                           <span className="text-green-600">FREE</span>
                         ) : (
@@ -322,7 +322,7 @@ ${
                             minimumFractionDigits: 2,
                           })}`
                         )}
-                      </span>
+                      </span> */}
                     </div>
                     <div className="flex justify-between border-t border-neutral-300 pt-2 mt-2">
                       <span className="font-semibold text-neutral-black">
