@@ -1,17 +1,8 @@
 import React from "react";
-// import { Squash as Hamburger } from "hamburger-react";
-
-// const MobileNavigation = () => {
-//   return (
-//     <div>
-//       <Hamburger color="black" size={24} />
-//     </div>
-//   );
-// };
-
-// export default MobileNavigation;
 import { Link, useLocation } from "react-router-dom";
-import { X, Instagram, Facebook, Linkedin } from "lucide-react";
+import { X } from "lucide-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInstagram, faTiktok } from "@fortawesome/free-brands-svg-icons";
 
 const MobileNavigation = ({ isOpen, onClose }) => {
   const location = useLocation();
@@ -26,18 +17,13 @@ const MobileNavigation = ({ isOpen, onClose }) => {
   const socialLinks = [
     {
       name: "Instagram",
-      icon: Instagram,
-      url: "https://instagram.com/fizzauraluxury",
+      icon: faInstagram,
+      url: "https://www.instagram.com/fizzaura_brand",
     },
     {
-      name: "Facebook",
-      icon: Facebook,
-      url: "https://facebook.com/fizzauraluxury",
-    },
-    {
-      name: "LinkedIn",
-      icon: Linkedin,
-      url: "https://linkedin.com/company/fizzauraluxury",
+      name: "Tiktok",
+      icon: faTiktok,
+      url: "https://www.tiktok.com/@fizzaura_luxury1",
     },
   ];
 
@@ -110,7 +96,6 @@ const MobileNavigation = ({ isOpen, onClose }) => {
           </p>
           <div className="flex gap-3">
             {socialLinks.map((social) => {
-              const Icon = social.icon;
               return (
                 <a
                   key={social.name}
@@ -120,7 +105,7 @@ const MobileNavigation = ({ isOpen, onClose }) => {
                   className="w-12 h-12 bg-neutral-900 text-white rounded-full flex items-center justify-center hover:bg-neutral-800 transition-colors"
                   aria-label={social.name}
                 >
-                  <Icon className="w-5 h-5" />
+                  <FontAwesomeIcon icon={social.icon} className="w-5 h-5" />
                 </a>
               );
             })}
