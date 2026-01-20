@@ -1,41 +1,15 @@
-// src/components/home/Hero.jsx
 import React, { useState, useEffect } from "react";
-// import { Link } from "react-router-dom";
 import Button from "../common/Button.jsx";
+import { slides } from "../../data/heroSlides.js";
 
 const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-
-  // Hero slides data
-  const slides = [
-    {
-      id: 1,
-      tag: "Cap Featuring Raised",
-      title: "Profile Unisex Baseball",
-      image: "/images/hero/result.png",
-      bgColor: "bg-[#6B4423]", // Brown
-    },
-    {
-      id: 2,
-      tag: "New Collection 2026",
-      title: "Elegant Fashion Styles",
-      image: "/images/hero/okay.png",
-      bgColor: "bg-[#2C3E50]", // Dark blue
-    },
-    {
-      id: 3,
-      tag: "Premium Quality",
-      title: "Timeless Luxury Wear",
-      image: "/images/hero/third.png",
-      bgColor: "bg-[#1C4532]", // Dark green
-    },
-  ];
 
   // Auto-slide effect
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 5000); // Change slide every 5 seconds
+    }, 3000); // Change slide every 5 seconds
 
     // Cleanup on unmount
     return () => clearInterval(timer);
