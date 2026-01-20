@@ -13,11 +13,9 @@ const Cart = () => {
   // Calculate totals
   const subtotal = items.reduce(
     (sum, item) => sum + item.price * item.quantity,
-    0
+    0,
   );
-  const shipping = subtotal > 0 ? (subtotal > 200 ? 0 : 15) : 0;
-  const tax = subtotal * 0.075; // 7.5% tax
-  const total = subtotal + shipping + tax;
+  const total = subtotal;
 
   return (
     <div className="bg-neutral-50 font-montserrat">
@@ -38,8 +36,6 @@ const Cart = () => {
         <CartItem
           items={items}
           subtotal={subtotal}
-          shipping={shipping}
-          tax={tax}
           total={total}
         />
 
@@ -47,8 +43,6 @@ const Cart = () => {
         {items.length > 0 && (
           <CartSummary
             subtotal={subtotal}
-            shipping={shipping}
-            tax={tax}
             total={total}
             setShowCheckoutModal={setShowCheckoutModal}
           />
@@ -60,8 +54,6 @@ const Cart = () => {
         showCheckoutModal={showCheckoutModal}
         setShowCheckoutModal={setShowCheckoutModal}
         items={items}
-        shipping={shipping}
-        tax={tax}
         total={total}
         subtotal={subtotal}
       />

@@ -62,3 +62,37 @@ export const fetchProductById = async (id) => {
     return null;
   }
 };
+
+// Fetch active promo banner
+export const fetchPromoBanner = async () => {
+  try {
+    const response = await client.getEntries({
+      content_type: "promoBanner",
+      "fields.isActive": true,
+      limit: 1,
+      order: "-sys.createdAt", // Get most recent
+    });
+
+    if (response.items.length === 0) {
+      return null;
+    }
+
+    const item = response.items[0];
+
+    return {
+      id: item.sys.id,
+      tagLine: item.fields.tagLine,
+      mainHeading: item.fields.mainHeading,
+      subheading: item.fields.subheading,
+      buttonText: item.fields.buttonText,
+      buttonLink: item.fields.buttonLink,
+      productImage: item.fields.productImage
+        ? `https:${item.fields.productImage.fields.file.url}`
+        : "/images/hero/h3.png", // Fallback
+      backgroundColor: item.fields.backgroundColor || "#262626",
+    };
+  } catch (error) {
+    console.error("Error fetching promo banner:", error);
+    return null;
+  }
+};

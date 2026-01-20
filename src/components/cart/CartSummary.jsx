@@ -4,8 +4,6 @@ import { ArrowLeft } from "lucide-react";
 
 const CartSummary = ({
   subtotal,
-  shipping,
-  tax,
   total,
   setShowCheckoutModal,
 }) => {
@@ -27,7 +25,7 @@ const CartSummary = ({
                 })}
               </span>
             </div>
-            <div className="flex justify-between text-neutral-600">
+            {/* <div className="flex justify-between text-neutral-600">
               <span>Shipping</span>
               <span>
                 {shipping === 0 ? (
@@ -38,8 +36,8 @@ const CartSummary = ({
                   })}`
                 )}
               </span>
-            </div>
-            <div className="flex justify-between text-neutral-600">
+            </div> */}
+            {/* <div className="flex justify-between text-neutral-600">
               <span>Tax (7.5%)</span>
               <span>
                 ₦
@@ -47,7 +45,7 @@ const CartSummary = ({
                   minimumFractionDigits: 2,
                 })}
               </span>
-            </div>
+            </div> */}
 
             {/* {subtotal < 200 && subtotal > 0 && (
               <div className="bg-blue-50 border border-blue-200 p-3 text-sm text-blue-800 mt-4">

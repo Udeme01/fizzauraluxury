@@ -12,21 +12,21 @@ const Hero = () => {
       id: 1,
       tag: "Cap Featuring Raised",
       title: "Profile Unisex Baseball",
-      image: "/images/hero/h2.png",
+      image: "/images/hero/result.png",
       bgColor: "bg-[#6B4423]", // Brown
     },
     {
       id: 2,
       tag: "New Collection 2026",
       title: "Elegant Fashion Styles",
-      image: "/images/hero/h3.png",
+      image: "/images/hero/okay.png",
       bgColor: "bg-[#2C3E50]", // Dark blue
     },
     {
       id: 3,
       tag: "Premium Quality",
       title: "Timeless Luxury Wear",
-      image: "/images/hero/h5.png",
+      image: "/images/hero/third.png",
       bgColor: "bg-[#1C4532]", // Dark green
     },
   ];
@@ -42,7 +42,7 @@ const Hero = () => {
   }, [slides.length]);
 
   return (
-    <section className="relative w-full h-[50vh] lg:min-h-[70vh] overflow-hidden font-montserrat">
+    <section className="relative w-full h-[50vh] md:h-[65vh] lg:min-h-[70vh] overflow-hidden font-montserrat">
       {/* Slides */}
       {slides.map((slide, index) => (
         <div
@@ -78,13 +78,13 @@ const Hero = () => {
               {/* Right Side - Image */}
               <div className="relative w-full h-full flex items-center justify-center lg:justify-end lg:col-span-5 xl:col-span-6 lg:-ml-12 xl:-ml-16">
                 {/* Decorative Circle Background */}
-                <div className="absolute w-87.5 h-87.5 sm:w-112.5 sm:h-112.5 md:w-125 md:h-125 lg:w-137.5 lg:h-137.5 bg-white/10 rounded-full -right-20 sm:-right-24 md:-right-28 lg:-right-32" />
+                <div className="absolute w-75 h-75 sm:w-85 sm:h-85 md:w-112.5 md:h-112.5 lg:w-137.5 lg:h-137.5 bg-white/10 rounded-full -right-20 sm:-right-24 md:-right-28 lg:-right-32" />
 
                 {/* Product Image */}
                 <img
                   src={slide.image}
                   alt={slide.title}
-                  className="relative z-10 w-75 sm:w-100 md:w-112.5 lg:w-125 object-contain drop-shadow-2xl"
+                  className="relative z-10 w-75 sm:w-100 md:w-112.5 lg:w-125 object-cover drop-shadow-2xl"
                 />
               </div>
             </div>
