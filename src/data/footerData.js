@@ -1,3 +1,5 @@
+import { faTiktok, faInstagram } from "@fortawesome/free-brands-svg-icons";
+
 export const footerLinks = {
   company: {
     title: "Company",
@@ -39,17 +41,13 @@ export const footerLinks = {
 export const socialLinks = [
   {
     name: "Instagram",
-    href: "https://instagram.com/fizzauraluxury",
-    icon: "Instagram",
+    url: "https://www.instagram.com/fizzaura_brand",
+    icon: faInstagram,
   },
+
   {
-    name: "Facebook",
-    href: "https://facebook.com/fizzauraluxury",
-    icon: "Facebook",
-  },
-  {
-    name: "LinkedIn",
-    href: "https://linkedin.com/company/fizzauraluxury",
-    icon: "Linkedin",
+    name: "Tiktok",
+    url: "https://www.tiktok.com/@fizzaura_luxury1",
+    icon: faTiktok,
   },
 ];
