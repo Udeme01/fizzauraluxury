@@ -53,7 +53,7 @@ const About = () => {
             {/* Image */}
             <div className="order-2 lg:order-1">
               <img
-                src="/images/hero/h2.png"
+                src="/images/hero/ourStoryImg.webp"
                 alt="FizzAura Luxury Brand"
                 className="w-full max-w-[75vw] rounded-full h-auto mx-auto"
               />
@@ -183,7 +183,7 @@ const About = () => {
               <div className="relative">
                 <div className="w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-full overflow-hidden shadow-2xl">
                   <img
-                    src="/images/brand/founder.jpg"
+                    src="/images/profiles/founder.webp"
                     alt="Binuyo Feranmi Jeremiah - Founder & CEO"
                     className="w-full h-full object-cover"
                   />
