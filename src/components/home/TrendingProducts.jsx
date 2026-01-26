@@ -110,7 +110,7 @@ const TrendingProducts = () => {
                         <img
                           src={product.images?.[0] || product.image}
                           alt={product.name}
-                          className={`w-full h-full object-cover transition-transform duration-500 group-hover/card:scale-110 ${
+                          className={`w-200 h-fit object-cover transition-transform duration-500 group-hover/card:scale-110 ${
                             product.stock === 0 ? "opacity-50" : ""
                           }`}
                           loading="lazy"
