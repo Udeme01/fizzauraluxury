@@ -9,7 +9,7 @@ import { fetchProductById, fetchProducts } from "../lib/fetchProducts";
 
 const ProductDetail = () => {
   // from cart-context
-  const { addItemToCart } = useContext(CartContext);
+  const { addItemToCart, items } = useContext(CartContext);
 
   // product-id gotten from url using useParams()...
   const { id } = useParams();
@@ -48,7 +48,7 @@ const ProductDetail = () => {
         const related = allProducts
           .filter(
             (p) =>
-              p.category === productData.category && p.id !== productData.id
+              p.category === productData.category && p.id !== productData.id,
           )
           .slice(0, 4);
 
@@ -101,6 +101,22 @@ const ProductDetail = () => {
     //   });
     //   return;
     // }
+
+    // Check if item already exists in cart
+    const itemExists = items.some(
+      (item) =>
+        item.id === product.id &&
+        item.selectedSize === selectedSize &&
+        item.selectedColor === selectedColor,
+    );
+
+    if (itemExists) {
+      toast.error("This item is already in your cart", {
+        position: "top-center",
+        autoClose: 2000,
+      });
+      return;
+    }
 
     // All good, add to cart
     addItemToCart(product, quantity, selectedSize, selectedColor);
@@ -278,8 +294,8 @@ const ProductDetail = () => {
                             selectedColor === color
                               ? "border-neutral-900 ring-2 ring-neutral-900 ring-offset-2"
                               : color.toLowerCase() === "white"
-                              ? "border-neutral-400 hover:border-neutral-500" // ← Darker border for white
-                              : "border-neutral-300 hover:border-neutral-500"
+                                ? "border-neutral-400 hover:border-neutral-500" // ← Darker border for white
+                                : "border-neutral-300 hover:border-neutral-500"
                           }`}
                           style={{ backgroundColor: color }}
                           title={color}
