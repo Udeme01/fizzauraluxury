@@ -8,7 +8,6 @@ const CartCheckoutModalForm = ({
   showCheckoutModal,
   setShowCheckoutModal,
   items,
-  shipping,
   total,
   subtotal,
 }) => {
@@ -140,7 +139,6 @@ ${items
 💵 *ORDER SUMMARY*
 ━━━━━━━━━━━━━━━━━
 Subtotal: ₦${subtotal.toLocaleString()}
-${shipping > 0 ? `Shipping: ₦${shipping.toLocaleString()}` : "Shipping: FREE"}
 *TOTAL: ₦${total.toLocaleString()}*
 
 ${
@@ -388,14 +386,14 @@ ${
                         ₦{subtotal.toLocaleString()}
                       </span>
                     </div>
-                    {shipping > 0 && (
+                    {/* {shipping > 0 && (
                       <div className="flex justify-between">
                         <span className="text-neutral-600">Shipping</span>
                         <span className="font-medium">
                           ₦{shipping.toLocaleString()}
                         </span>
                       </div>
-                    )}
+                    )} */}
                     <div className="flex justify-between border-t border-neutral-300 pt-2 mt-2">
                       <span className="font-semibold text-neutral-black">
                         Total
