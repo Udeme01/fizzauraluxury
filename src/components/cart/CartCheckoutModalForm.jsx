@@ -127,7 +127,7 @@ ${items
   .map(
     (item, index) =>
       `*${index + 1}. ${item.name}*
-🔗 Product_Link: https://fizzauraluxury.vercel.app/product/${item.id}
+🔗 Product_Link: https://fizzauraluxury.com/product/${item.id}
 🎨 Color: ${item.selectedColor || "N/A"}
 📏 Size: ${item.selectedSize || "N/A"}
 📦 Quantity: ${item.quantity}
