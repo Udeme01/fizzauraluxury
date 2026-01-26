@@ -79,7 +79,7 @@ const ShopByCollection = () => {
                   <img
                     src={collection.images[0]}
                     alt={collection.name}
-                    className="w-full h-fit object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
 
                   {/* Overlay */}
