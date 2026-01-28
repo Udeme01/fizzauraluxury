@@ -11,6 +11,7 @@ import NotFound from "./pages/NotFound.jsx";
 import { CartContextProvider } from "./context/shoppingCartContext.jsx";
 import { ToastContainer } from "react-toastify";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 // Policy Pages
 import FAQ from "./pages/policies/FAQ.jsx";
@@ -98,6 +99,7 @@ const App = () => {
       <ToastContainer />
       <RouterProvider router={router} />
       <Analytics />
+      <SpeedInsights />
     </CartContextProvider>
   );
 };
