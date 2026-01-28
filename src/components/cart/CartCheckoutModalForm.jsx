@@ -149,7 +149,7 @@ ${
 📅 Order Date: ${new Date().toLocaleString()}
       `.trim();
 
-      const phoneNumber = "2349136453525";
+      const phoneNumber = "2349138965388";
       const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
         message,
       )}`;

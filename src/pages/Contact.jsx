@@ -27,7 +27,7 @@ const Contact = () => {
     const whatsappMessage = `*New Contact Form Submission*\n\nName: ${formData.name}\nEmail: ${formData.email}\nSubject: ${formData.subject}\n\nMessage:\n${formData.message}`;
 
     const encodedMessage = encodeURIComponent(whatsappMessage);
-    const phoneNumber = "2349136453525"; // Replace with your WhatsApp number
+    const phoneNumber = "2349138965388"; // Replace with your WhatsApp number
 
     // Open WhatsApp
     window.open(
@@ -40,8 +40,8 @@ const Contact = () => {
     {
       icon: Phone,
       title: "Phone",
-      value: "+234 913 645 3525",
-      link: "tel:+2349136453525",
+      value: "+234 913 896 5388",
+      link: "tel:+2349138965388",
     },
     {
       icon: Mail,
@@ -58,8 +58,8 @@ const Contact = () => {
     {
       icon: MessageCircle,
       title: "WhatsApp",
-      value: "+234 913 645 3525",
-      link: "https://wa.me/2349136453525",
+      value: "+234 913 896 5388",
+      link: "https://wa.me/2349138965388",
     },
   ];
 
@@ -286,7 +286,7 @@ const Contact = () => {
           </p>
           {/* WhatsApp Btn */}
           <Button
-            href={"https://wa.me/2349136453525"}
+            href={"https://wa.me/2349138965388"}
             target="_blank"
             rel="noopener noreferrer"
             icon={MessageCircle}
