@@ -106,6 +106,7 @@ const App = () => {
       <ToastContainer />
       <RouterProvider router={router} />
       <Analytics />
+      <SpeedInsights />
     </CartContextProvider>
   );
 };
