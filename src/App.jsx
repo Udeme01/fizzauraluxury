@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from "./pages/Root.jsx";
 import Home from "./pages/Home.jsx";
@@ -10,7 +10,6 @@ import ProductDetail from "./pages/ProductDetails.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import { CartContextProvider } from "./context/shoppingCartContext.jsx";
 import { ToastContainer } from "react-toastify";
-import { Analytics } from "@vercel/analytics/react";
 
 // Policy Pages
 import FAQ from "./pages/policies/FAQ.jsx";
@@ -22,7 +21,16 @@ import TermsOfService from "./pages/policies/TermsOfService.jsx";
 import CookiePolicy from "./pages/policies/CookiePolicy.jsx";
 import Disclaimer from "./pages/policies/Disclaimer.jsx";
 
+// Analytics
+import { Analytics } from "@vercel/analytics/react";
+import { initGA } from "./analytics.js";
+
 const App = () => {
+  // Initialize Google Analytics once when app loads
+  useEffect(() => {
+    initGA(import.meta.env.VITE_GA_MEASUREMENT_ID);
+  }, []);
+
   const router = createBrowserRouter([
     {
       path: "/",
