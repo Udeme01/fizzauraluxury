@@ -33,11 +33,11 @@ const Footer = () => {
       <section className="md:flex md:flex-row md:gap-12 w-full h-full max-w-7xl px-6 lg:px-8">
         {/* Brand Section */}
         <section>
-          <div className="flex items-center justify-left gap-2">
+          <div className="flex items-center justify-left">
             <img
-              src="/images/brand/fa_logo.png"
+              src="/images/brand/fizzaura_logo.png"
               alt="FizzAura Luxury logo"
-              className="w-16 h-auto"
+              className="w-24 h-auto invert"
             />
             <h1 className="font-opensans text-2xl font-semibold tracking-tighter text-neutral-white">
               FizzAura Luxury

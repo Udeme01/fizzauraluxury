@@ -31,16 +31,16 @@ const About = () => {
     <div className="bg-white font-montserrat">
       {/* Hero Section */}
 
-      <section className="relative z-10 h-[50vh] md:h-[60vh] bg-[url('/images/brand/brand_logo.jpg')] bg-no-repeat bg-center bg-size-[300px] sm:bg-size-[350px] md:bg-size-[400px] lg:bg-size-[450px] flex items-center justify-center">
+      <section className="relative z-10 h-[50vh] md:h-[60vh] bg-[url('/images/brand/fizzaura_logo.png')] bg-no-repeat bg-center bg-size-[300px] sm:bg-size-[350px] md:bg-size-[400px] lg:bg-size-[450px] flex items-center justify-center invert backdrop-invert-100">
         {/* Gradient overlay - makes logo fadely visible */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-white/70 to-white/85" />
+        <div className="absolute inset-0 bg-linear-to-b from-white/20 via-white/60 to-white/20" />
 
         {/* Content */}
-        <div className="relative z-20 text-center px-4">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-neutral-black mb-4">
-            FizzAura Luxury...
-          </h1>
-          <p className="text-neutral-black text-lg md:text-xl mx-auto font-medium">
+        <div className="fixed right-0 left-0 bottom-1/6 z-20 text-center px-4 w-full">
+          {/* <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-neutral-black mb-4">
+            FizzAura...
+          </h1> */}
+          <p className="text-white text-lg md:text-xl mx-auto font-bold tracking-wider uppercase italic">
             ...where energy meets style.
           </p>
         </div>
