@@ -41,7 +41,7 @@ const PromoBanner = () => {
       className="w-full overflow-hidden font-montserrat my-16 md:my-20"
       style={{ backgroundColor: banner.backgroundColor }}
     >
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 md:py-8 lg:py-16">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 md:py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-20 items-center py-10 md:py-0">
           {/* Left Side - Text Content */}
           <div className="flex flex-col justify-center space-y-6 lg:space-y-8 z-10">
@@ -76,7 +76,7 @@ const PromoBanner = () => {
               <img
                 src={banner.productImage}
                 alt={banner.mainHeading}
-                className="w-70 sm:w-87.5 md:w-100 lg:w-112.5 xl:w-125 object-contain"
+                className="w-100 sm:w-87.5 md:w-100 lg:w-112.5 xl:w-125 object-contain"
                 style={{
                   filter: "drop-shadow(0 25px 50px rgba(0, 0, 0, 0.5))",
                   maskImage:
