@@ -25,6 +25,14 @@ import Disclaimer from "./pages/policies/Disclaimer.jsx";
 import { Analytics } from "@vercel/analytics/react";
 import { initGA } from "./analytics.js";
 
+// Admin
+import AdminLogin from "./pages/admin/AdminLogin.jsx";
+import AdminLayout from "./components/admin/layout/AdminLayout.jsx";
+import ProtectedAdminRoute from "./components/admin/layout/ProtectedAdminRoute.jsx";
+import Dashboard from "./pages/admin/Dashboard.jsx";
+import Products from "./pages/admin/Products.jsx";
+import ProductForm from "./pages/admin/ProductForm.jsx";
+
 const App = () => {
   // Initialize Google Analytics once when app loads
   useEffect(() => {
@@ -96,6 +104,36 @@ const App = () => {
         {
           path: "*",
           element: <NotFound />,
+        },
+      ],
+    },
+    {
+      path: "/admin/login",
+      element: <AdminLogin />,
+    },
+    {
+      path: "/admin",
+      element: <AdminLayout />,
+      children: [
+        {
+          element: <ProtectedAdminRoute />, // checks auth, renders <Outlet/> or redirects
+          children: [
+            { index: true, element: <Dashboard /> },
+            // { path: "orders", element: <Orders /> },
+            // { path: "orders/:id", element: <OrderDetail /> },
+            {
+              path: "products",
+              children: [
+                { index: true, element: <Products /> },
+                { path: "new", element: <ProductForm /> },
+                { path: ":id/edit", element: <ProductForm /> },
+              ],
+            },
+            // { path: "products/:id", element: <ProductEdit /> },
+            // { path: "customers", element: <Customers /> },
+            // { path: "analytics", element: <Analytics /> },
+            // { path: "settings", element: <Settings /> },
+          ],
         },
       ],
     },
