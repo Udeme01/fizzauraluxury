@@ -2,7 +2,7 @@
 import { useState, useMemo } from "react";
 import { Plus, Search } from "lucide-react";
 import ProductsTable from "../../components/admin/products/ProductsTable";
-import { mockProducts } from "../../data/mockDashboard";
+import { mockProducts } from "../../data/dashboard/mockDashboard";
 import { useNavigate } from "react-router-dom";
 
 const Products = () => {

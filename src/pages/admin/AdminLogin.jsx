@@ -1,7 +1,40 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { supabase } from "../../services/supabaseClient";
 
 // pages/admin/AdminLogin.jsx
 const AdminLogin = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const redirectTo = location.state?.from || "/admin";
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    setError(null);
+    setSubmitting(true);
+
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    setSubmitting(false);
+
+    if (error) {
+      setError("Invalid email or password");
+      return;
+    }
+
+    navigate(redirectTo, { replace: true });
+  };
+
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-gray-50">
       {/* Brand panel */}
@@ -40,12 +73,14 @@ const AdminLogin = () => {
       <div className="w-full md:w-1/2 flex items-center justify-center px-6 py-10 md:py-0">
         <div className="w-full max-w-[500px] m-8">
           <div className="flex justify-end mb-6 md:mb-10">
-            <button
+            <a
+              href="https://wa.me/07046780531?text=Hi,%20I%20need%20help%20logging%20into%20the%20admin%20dashboard"
+              target="_blank"
               type="button"
               className="text-xs text-gray-400 hover:text-gray-600"
             >
               Need help?
-            </button>
+            </a>
           </div>
 
           <h1 className="text-3xl font-semibold text-gray-900 mb-1">
@@ -55,7 +90,8 @@ const AdminLogin = () => {
             Please enter your details.
           </p>
 
-          <form className="flex flex-col gap-5">
+          <form onSubmit={handleLogin} className="flex flex-col gap-5">
+            {error && <p className="text-sm text-red-600">{error}</p>}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
                 <label className="text-xs text-gray-500 block mb-1">
@@ -63,8 +99,11 @@ const AdminLogin = () => {
                 </label>
                 <input
                   type="email"
+                  value={email}
+                  required
+                  placeholder="hello@fizzauraluxury.com"
+                  onChange={(e) => setEmail(e.target.value)}
                   className="w-full border-b border-gray-300 pb-2 text-sm text-gray-900 focus:outline-none focus:border-gray-900 bg-transparent"
-                  placeholder="you@fizzauraluxury.com"
                 />
               </div>
               <div>
@@ -73,18 +112,25 @@ const AdminLogin = () => {
                 </label>
                 <input
                   type="password"
-                  className="w-full border-b border-gray-300 pb-2 text-sm text-gray-900 focus:outline-none focus:border-gray-900 bg-transparent"
+                  value={password}
+                  required
                   placeholder="••••••••"
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full border-b border-gray-300 pb-2 text-sm text-gray-900 focus:outline-none focus:border-gray-900 bg-transparent"
                 />
               </div>
             </div>
 
             <div className="flex items-center justify-between text-xs text-gray-500 mt-1">
-              <label className="flex items-center gap-2">
+              {/* <label className="flex items-center gap-2">
                 <input type="checkbox" className="accent-black" />
                 Remember me
-              </label>
-              <button type="button" className="hover:text-gray-800">
+              </label> */}
+              <button
+                type="button"
+                onClick={() => navigate("/admin/forgot-password")}
+                className="hover:text-gray-800"
+              >
                 Forgot?
               </button>
             </div>
@@ -92,9 +138,10 @@ const AdminLogin = () => {
             <div className="flex justify-end mt-6">
               <button
                 type="submit"
+                disabled={submitting}
                 className="w-28 h-11 rounded-full bg-black text-white text-xs font-medium tracking-wide hover:bg-gray-800 transition-colors"
               >
-                SIGN IN
+                {submitting ? "SIGNING IN..." : "SIGN IN"}
               </button>
             </div>
           </form>

@@ -32,6 +32,14 @@ import ProtectedAdminRoute from "./components/admin/layout/ProtectedAdminRoute.j
 import Dashboard from "./pages/admin/Dashboard.jsx";
 import Products from "./pages/admin/Products.jsx";
 import ProductForm from "./pages/admin/ProductForm.jsx";
+import Orders from "./pages/admin/Orders.jsx";
+import OrderDetail from "./pages/admin/OrderDetail.jsx";
+import Customers from "./pages/admin/Customers.jsx";
+import CustomerDetail from "./pages/admin/CustomerDetail.jsx";
+import AdminAnalytics from "./pages/admin/AnalyticsPage.jsx";
+import Settings from "./pages/admin/Settings.jsx";
+import ForgotPassword from "./pages/admin/ForgotPassword.jsx";
+import ResetPassword from "./pages/admin/ResetPassword.jsx";
 
 const App = () => {
   // Initialize Google Analytics once when app loads
@@ -116,10 +124,16 @@ const App = () => {
       element: <AdminLayout />,
       children: [
         {
-          element: <ProtectedAdminRoute />, // checks auth, renders <Outlet/> or redirects
+          element: <ProtectedAdminRoute />,
           children: [
             { index: true, element: <Dashboard /> },
-            // { path: "orders", element: <Orders /> },
+            {
+              path: "orders",
+              children: [
+                { index: true, element: <Orders /> },
+                { path: ":id", element: <OrderDetail /> },
+              ],
+            },
             // { path: "orders/:id", element: <OrderDetail /> },
             {
               path: "products",
@@ -130,13 +144,27 @@ const App = () => {
               ],
             },
             // { path: "products/:id", element: <ProductEdit /> },
-            // { path: "customers", element: <Customers /> },
-            // { path: "analytics", element: <Analytics /> },
-            // { path: "settings", element: <Settings /> },
+            {
+              path: "customers",
+              children: [
+                {
+                  index: true,
+                  element: <Customers />,
+                },
+                {
+                  path: ":id",
+                  element: <CustomerDetail />,
+                },
+              ],
+            },
+            { path: "analytics", element: <AdminAnalytics /> },
+            { path: "settings", element: <Settings /> },
           ],
         },
       ],
     },
+    { path: "/admin/forgot-password", element: <ForgotPassword /> },
+    { path: "/admin/reset-password", element: <ResetPassword /> },
   ]);
 
   return (

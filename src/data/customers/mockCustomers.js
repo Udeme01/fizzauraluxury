@@ -1,0 +1,48 @@
+// src/data/mockCustomers.js
+export const mockCustomers = [
+  {
+    id: "c1",
+    name: "Amaka O.",
+    email: "amaka.o@gmail.com",
+    phone: "0803 456 7890",
+    totalOrders: 5,
+    totalSpent: 245000,
+    joined: "2026-02-14",
+  },
+  {
+    id: "c2",
+    name: "Tunde B.",
+    email: "tunde.b@gmail.com",
+    phone: "0812 345 6789",
+    totalOrders: 1,
+    totalSpent: 11200,
+    joined: "2026-07-20",
+  },
+  {
+    id: "c3",
+    name: "Chiamaka N.",
+    email: "chiamaka.n@gmail.com",
+    phone: "0705 123 4567",
+    totalOrders: 8,
+    totalSpent: 512000,
+    joined: "2025-11-03",
+  },
+  {
+    id: "c4",
+    name: "Bola A.",
+    email: "bola.a@gmail.com",
+    phone: "0908 765 4321",
+    totalOrders: 1,
+    totalSpent: 15000,
+    joined: "2026-07-21",
+  },
+  {
+    id: "c5",
+    name: "Femi K.",
+    email: "femi.k@gmail.com",
+    phone: "0701 987 6543",
+    totalOrders: 3,
+    totalSpent: 156000,
+    joined: "2026-05-09",
+  },
+];

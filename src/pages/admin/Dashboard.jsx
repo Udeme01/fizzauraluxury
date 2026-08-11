@@ -8,7 +8,7 @@ import {
   mockVisitorTrend,
   mockRecentOrders,
   mockBestSellers,
-} from "../../data/mockDashboard";
+} from "../../data/dashboard/mockDashboard";
 
 const Dashboard = () => {
   return (

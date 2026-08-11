@@ -2,8 +2,8 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Upload } from "lucide-react";
-import { mockCategories } from "../../data/mockCategories";
-import { mockProducts } from "../../data/mockDashboard";
+import { mockCategories } from "../../data/category/mockCategories";
+import { mockProducts } from "../../data/dashboard/mockDashboard";
 
 const ProductForm = () => {
   const navigate = useNavigate();

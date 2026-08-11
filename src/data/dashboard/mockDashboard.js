@@ -25,28 +25,28 @@ export const mockRecentOrders = [
 export const mockBestSellers = [
   {
     id: "p1",
-    name: "Gold Layered Necklace",
+    name: "Ofi Stripe Jacket",
     unitsSold: 42,
     revenue: 189000,
     image: "/images/brand/fizzaura.jpeg",
   },
   {
     id: "p2",
-    name: "Silk Wrap Dress",
+    name: "Crop Jacket for Ladies",
     unitsSold: 31,
     revenue: 155000,
     image: "/images/brand/fizzaura.jpeg",
   },
   {
     id: "p3",
-    name: "Signature Tote Bag",
+    name: "FizzAura Monarch Corduroy",
     unitsSold: 27,
     revenue: 121500,
     image: "/images/brand/fizzaura.jpeg",
   },
   {
     id: "p4",
-    name: "Pearl Drop Earrings",
+    name: "Stop Staring Collection",
     unitsSold: 19,
     revenue: 68400,
     image: "/images/brand/fizzaura.jpeg",
@@ -56,7 +56,7 @@ export const mockBestSellers = [
 export const mockProducts = [
   {
     id: "p1",
-    name: "Gold Layered Necklace",
+    name: "Ofi Stripe Jacket",
     category: "Jewelry",
     price: 45000,
     stock: 12,
@@ -64,7 +64,7 @@ export const mockProducts = [
   },
   {
     id: "p2",
-    name: "Silk Wrap Dress",
+    name: "Crop Jacket for Ladies",
     category: "Apparel",
     price: 68000,
     stock: 3,
@@ -72,7 +72,7 @@ export const mockProducts = [
   },
   {
     id: "p3",
-    name: "Signature Tote Bag",
+    name: "FizzAura Monarch Corduroy",
     category: "Bags",
     price: 52000,
     stock: 0,
