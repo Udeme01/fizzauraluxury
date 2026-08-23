@@ -27,8 +27,8 @@ const ForgotPassword = () => {
   if (sent) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="max-w-sm text-center">
-          <p className="text-sm text-gray-700">
+        <div className="w-full md:w-1/2 text-center">
+          <p className="text-md text-gray-700 font-bold">
             If that email is registered, a reset link has been sent.
           </p>
         </div>

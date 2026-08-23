@@ -1,8 +1,26 @@
 // components/admin/settings/StoreSettings.jsx
 import { useState } from "react";
+import { supabase } from "../../../services/supabaseClient";
 
 const StoreSettings = ({ storeInfo }) => {
   const [form, setForm] = useState(storeInfo);
+  const [saving, setSaving] = useState(false);
+
+  const handleSave = async () => {
+    setSaving(true);
+    const { error } = await supabase
+      .from("store_settings")
+      .update({
+        store_name: form.storeName,
+        contact_email: form.contactEmail,
+        currency: form.currency,
+        updated_at: new Date().toISOString(),
+      })
+      .eq("id", 1);
+    setSaving(false);
+
+    if (error) console.error(error);
+  };
 
   return (
     <div className="bg-white border border-gray-200 rounded-xl p-5">
@@ -15,8 +33,8 @@ const StoreSettings = ({ storeInfo }) => {
         <div>
           <label className="text-xs text-gray-500 block mb-1">Store name</label>
           <input
-            type="text"
             value={form.storeName}
+            placeholder={form.storeName}
             onChange={(e) => setForm({ ...form, storeName: e.target.value })}
             className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-gray-400"
           />
@@ -26,7 +44,6 @@ const StoreSettings = ({ storeInfo }) => {
             Contact email
           </label>
           <input
-            type="email"
             value={form.contactEmail}
             onChange={(e) => setForm({ ...form, contactEmail: e.target.value })}
             className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-gray-400"
@@ -43,8 +60,12 @@ const StoreSettings = ({ storeInfo }) => {
             <option value="USD">USD ($)</option>
           </select>
         </div>
-        <button className="self-start bg-black text-white text-sm font-medium px-4 py-2 rounded-md hover:bg-gray-800">
-          Save changes
+        <button
+          onClick={handleSave}
+          disabled={saving}
+          className="self-start bg-black text-white text-sm font-medium px-4 py-2 rounded-md hover:bg-gray-800"
+        >
+          {saving ? "Saving..." : "Save changes"}
         </button>
       </div>
     </div>

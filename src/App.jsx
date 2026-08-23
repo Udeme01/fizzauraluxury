@@ -115,10 +115,15 @@ const App = () => {
         },
       ],
     },
+
     {
       path: "/admin/login",
       element: <AdminLogin />,
     },
+
+    { path: "/admin/forgot-password", element: <ForgotPassword /> },
+    { path: "/admin/reset-password", element: <ResetPassword /> },
+
     {
       path: "/admin",
       element: <AdminLayout />,
@@ -163,8 +168,6 @@ const App = () => {
         },
       ],
     },
-    { path: "/admin/forgot-password", element: <ForgotPassword /> },
-    { path: "/admin/reset-password", element: <ResetPassword /> },
   ]);
 
   return (
