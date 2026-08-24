@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { supabase } from "../../services/supabaseClient";
+import { Eye, EyeOff } from "lucide-react";
 
 // pages/admin/AdminLogin.jsx
 const AdminLogin = () => {
@@ -11,6 +12,7 @@ const AdminLogin = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
   const [submitting, setSubmitting] = useState(false);
 
@@ -106,18 +108,26 @@ const AdminLogin = () => {
                   className="w-full border-b border-gray-300 pb-2 text-sm text-gray-900 focus:outline-none focus:border-gray-900 bg-transparent"
                 />
               </div>
-              <div>
+              <div className="relative z-0">
                 <label className="text-xs text-gray-500 block mb-1">
                   Password
                 </label>
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   value={password}
                   required
                   placeholder="••••••••"
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full border-b border-gray-300 pb-2 text-sm text-gray-900 focus:outline-none focus:border-gray-900 bg-transparent"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="absolute right-0 bottom-2 text-gray-500 hover:text-gray-900 opacity-80"
+                  aria-label={showPassword ? "Hide Password" : "Show Password"}
+                >
+                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                </button>
               </div>
             </div>
 
