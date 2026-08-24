@@ -1,10 +1,6 @@
-// pages/admin/ProductForm.jsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Upload, Check, Plus } from "lucide-react";
-import { mockCategories } from "../../data/category/mockCategories";
-import { mockProducts } from "../../data/dashboard/mockDashboard";
-
 import { supabase } from "../../services/supabaseClient";
 
 const availableSizes = ["XS", "S", "M", "L", "XL", "XXL"];
@@ -19,11 +15,15 @@ const availableColors = [
 ];
 
 const ProductForm = () => {
-  // useState hooks...
   const [customColors, setCustomeColors] = useState([]);
   const [showColorPicker, setShowColorPicker] = useState(false);
   const [newColorHex, setNewColorHex] = useState("#000000");
   const [newColorName, setNewColorName] = useState("");
+
+  const [categories, setCategories] = useState([]);
+  const [showAddCategory, setShowAddCategory] = useState(false);
+  const [newCategoryName, setNewCategoryName] = useState("");
+  const [categoryError, setCategoryError] = useState(null);
 
   const [submitting, setSubmitting] = useState(false);
 
@@ -32,20 +32,60 @@ const ProductForm = () => {
   const { id } = useParams();
   const isEditMode = Boolean(id);
 
-  const existingProduct = isEditMode
-    ? mockProducts.find((p) => p.id === id)
-    : null;
-
+  const [loading, setLoading] = useState(isEditMode);
   const [form, setForm] = useState({
-    name: existingProduct?.name || "",
-    category: existingProduct?.category || mockCategories[0],
-    price: existingProduct?.price || "",
-    stock: existingProduct?.stock ?? "",
-    status: existingProduct?.status || "active",
+    name: "",
+    category: "",
+    price: "",
+    stock: "",
+    status: "active",
     description: "",
-    sizes: existingProduct?.sizes || [],
-    colors: existingProduct?.colors || [],
+    sizes: [],
+    colors: [],
   });
+
+  useEffect(() => {
+    if (!isEditMode) return;
+
+    const loadProduct = async () => {
+      const { data, error } = await supabase
+        .from("products")
+        .select("*")
+        .eq("id", id)
+        .single();
+
+      if (error) {
+        console.error("error getting product", error);
+        setLoading(false);
+        return;
+      }
+
+      setForm({
+        name: data.name,
+        category: data.category,
+        price: data.price,
+        stock: data.stock,
+        status: data.status,
+        description: data.description || "",
+        sizes: data.sizes || [],
+        colors: data.colors || [],
+      });
+
+      setLoading(false);
+    };
+    loadProduct();
+  }, [id, isEditMode]);
+
+  useEffect(() => {
+    const loadCategories = async () => {
+      const { data } = await supabase
+        .from("categories")
+        .select("*")
+        .order("name");
+      setCategories(data || []);
+    };
+    loadCategories();
+  }, []);
 
   const handleChange = (field) => (e) => {
     setForm((prev) => ({ ...prev, [field]: e.target.value }));
@@ -73,7 +113,7 @@ const ProductForm = () => {
     e.preventDefault();
     setSubmitting(true);
 
-    const { error } = await supabase.from("products").insert({
+    const productData = {
       name: form.name,
       category: form.category,
       price: Number(form.price),
@@ -81,7 +121,11 @@ const ProductForm = () => {
       status: form.status,
       sizes: form.sizes,
       colors: form.colors,
-    });
+    };
+
+    const { error } = isEditMode
+      ? await supabase.from("products").update(productData).eq("id", id)
+      : await supabase.from("products").insert(productData);
 
     setSubmitting(false);
 
@@ -93,6 +137,7 @@ const ProductForm = () => {
     navigate("/admin/products");
   };
 
+  // colors...
   const allColors = [...availableColors, ...customColors];
 
   const addCustomColor = () => {
@@ -109,6 +154,39 @@ const ProductForm = () => {
     setNewColorHex("#000000");
     setShowColorPicker(false);
   };
+
+  const addCategory = async () => {
+    const trimmed = newCategoryName.trim();
+    if (!trimmed) return;
+
+    setCategoryError(null);
+
+    const { data, error } = await supabase
+      .from("categories")
+      .insert({ name: trimmed })
+      .select()
+      .single();
+
+    if (error) {
+      setCategoryError(
+        error.code === "23505"
+          ? "That category already exists."
+          : "Could not add category.",
+      );
+      return;
+    }
+
+    setCategories((prev) =>
+      [...prev, data].sort((a, b) => a.name.localeCompare(b.name)),
+    );
+    setForm((prev) => ({ ...prev, category: data.name })); // auto-select the new one
+    setNewCategoryName("");
+    setShowAddCategory(false);
+  };
+
+  if (loading) {
+    return <p className="text-sm text-gray-500">Loading product...</p>;
+  }
 
   return (
     <div className="mx-auto flex flex-col gap-6 font-montserrat">
@@ -164,17 +242,55 @@ const ProductForm = () => {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="text-xs text-gray-500 block mb-1">Category</label>
-            <select
-              value={form.category}
-              onChange={handleChange("category")}
-              className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-gray-400"
-            >
-              {mockCategories.map((cat) => (
-                <option key={cat} value={cat}>
-                  {cat}
-                </option>
-              ))}
-            </select>
+            <div className="flex gap-2">
+              <select
+                value={form.category}
+                onChange={handleChange("category")}
+                className="flex-1 border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-gray-400"
+              >
+                {categories.map((cat) => (
+                  <option key={cat.id} value={cat.name}>
+                    {cat.name}
+                  </option>
+                ))}
+              </select>
+              <button
+                type="button"
+                onClick={() => setShowAddCategory(true)}
+                className="px-3 border border-gray-200 rounded-md text-gray-500 hover:border-gray-400 hover:text-gray-700"
+              >
+                <Plus size={16} />
+              </button>
+            </div>
+
+            {showAddCategory && (
+              <div className="mt-2 flex items-center gap-2">
+                <input
+                  type="text"
+                  value={newCategoryName}
+                  onChange={(e) => setNewCategoryName(e.target.value)}
+                  placeholder="New category name"
+                  className="flex-1 border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-gray-400"
+                />
+                <button
+                  type="button"
+                  onClick={addCategory}
+                  className="bg-black text-white text-xs font-medium px-3 py-2 rounded-md hover:bg-gray-800"
+                >
+                  Add
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowAddCategory(false)}
+                  className="text-xs text-gray-400 hover:text-gray-600"
+                >
+                  Cancel
+                </button>
+              </div>
+            )}
+            {categoryError && (
+              <p className="text-xs text-red-600 mt-1">{categoryError}</p>
+            )}
           </div>
 
           <div>

@@ -5,6 +5,8 @@ import ProductsTable from "../../components/admin/products/ProductsTable";
 import { mockProducts } from "../../data/dashboard/mockDashboard";
 import { useNavigate } from "react-router-dom";
 
+// import { supabase } from "../../services/supabaseClient";
+
 const Products = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
@@ -41,7 +43,7 @@ const Products = () => {
         </button>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-3">
+      <div className="flex flex-col sm:flex-row gap-3 border">
         <div className="relative flex-1">
           <Search
             size={16}

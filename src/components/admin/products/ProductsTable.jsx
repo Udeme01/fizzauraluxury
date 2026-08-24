@@ -65,11 +65,8 @@ const ProductsTable = ({ products, onEdit, onDelete }) => {
                     >
                       <Pencil size={15} />
                     </button>
-                    <button
-                      onClick={() => onDelete(product)}
-                      className="text-gray-400 hover:text-red-600"
-                    >
-                      <Trash2 size={15} />
+                    <button onClick={() => onDelete(product)}>
+                      <Trash2 size={15} color="red" />
                     </button>
                   </div>
                 </td>
