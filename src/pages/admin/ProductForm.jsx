@@ -24,8 +24,12 @@ const ProductForm = () => {
   const [showAddCategory, setShowAddCategory] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState("");
   const [categoryError, setCategoryError] = useState(null);
-
   const [submitting, setSubmitting] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  const [existingImageUrls, setExistingImageUrls] = useState([]);
+  const [imageFiles, setImageFiles] = useState([]);
+  const [imagePreviews, setImagePreviews] = useState([]);
 
   // navigate route...
   const navigate = useNavigate();
@@ -71,6 +75,8 @@ const ProductForm = () => {
         colors: data.colors || [],
       });
 
+      setExistingImageUrls(data.image_urls || []);
+
       setLoading(false);
     };
     loadProduct();
@@ -83,9 +89,34 @@ const ProductForm = () => {
         .select("*")
         .order("name");
       setCategories(data || []);
+
+      if (data && data.length > 0) {
+        setForm((prev) => ({
+          ...prev,
+          category: prev.category || data[0].name,
+        }));
+      }
     };
     loadCategories();
   }, []);
+
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    setImageFiles((prev) => [...prev, ...files]);
+    setImagePreviews((prev) => [
+      ...prev,
+      ...files.map((f) => URL.createObjectURL(f)),
+    ]);
+  };
+
+  const removeNewImage = (index) => {
+    setImageFiles((prev) => prev.filter((_, i) => i !== index));
+    setImagePreviews((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const removeExistingImage = (index) => {
+    setExistingImageUrls((prev) => prev.filter((_, i) => i !== index));
+  };
 
   const handleChange = (field) => (e) => {
     setForm((prev) => ({ ...prev, [field]: e.target.value }));
@@ -98,6 +129,7 @@ const ProductForm = () => {
         ? prev.sizes.filter((s) => s !== size)
         : [...prev.sizes, size],
     }));
+    setErrors((prev) => ({ ...prev, sizes: undefined }));
   };
 
   const toggleColor = (colorName) => {
@@ -107,11 +139,70 @@ const ProductForm = () => {
         ? prev.colors.filter((c) => c !== colorName)
         : [...prev.colors, colorName],
     }));
+    setErrors((prev) => ({ ...prev, colors: undefined }));
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!form.name.trim()) {
+      newErrors.name = "Product name is required.";
+    }
+
+    if (!form.category) {
+      newErrors.category = "Please select a category.";
+    }
+
+    if (!form.price || Number(form.price) <= 0) {
+      newErrors.price = "Enter a valid price.";
+    }
+
+    if (form.stock === "" || Number(form.stock) < 0) {
+      newErrors.stock = "Enter a valid stock quantity.";
+    }
+
+    if (form.sizes.length === 0) {
+      newErrors.sizes = "Select at least one size.";
+    }
+
+    if (form.colors.length === 0) {
+      newErrors.colors = "Select at least one color.";
+    }
+
+    // if (!form.description) {
+    //   newErrors.description = "Provide a product description.";
+    // }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0; // true if no errors
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
     setSubmitting(true);
+
+    const newUrls = [];
+    for (const file of imageFiles) {
+      const fileExt = file.name.split(".").pop();
+      const fileName = `${crypto.randomUUID()}.${fileExt}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from("product-images")
+        .upload(fileName, file);
+
+      if (uploadError) {
+        console.error("upload error", uploadError);
+        continue;
+      }
+
+      const { data } = supabase.storage
+        .from("product-images")
+        .getPublicUrl(fileName);
+      newUrls.push(data.publicUrl);
+    }
+
+    const finalImageUrls = [...existingImageUrls, ...newUrls];
 
     const productData = {
       name: form.name,
@@ -121,6 +212,8 @@ const ProductForm = () => {
       status: form.status,
       sizes: form.sizes,
       colors: form.colors,
+      description: form.description,
+      image_urls: finalImageUrls,
     };
 
     const { error } = isEditMode
@@ -214,7 +307,7 @@ const ProductForm = () => {
         className="bg-white border border-gray-200 rounded-xl p-6 flex flex-col gap-5"
       >
         {/* Image upload placeholder */}
-        <div>
+        {/* <div>
           <label className="text-xs text-gray-500 block mb-2">
             Product image
           </label>
@@ -223,6 +316,57 @@ const ProductForm = () => {
             <span className="text-xs">Click to upload</span>
             <input type="file" className="hidden" onChange={() => {}} />
           </label>
+        </div> */}
+
+        <div>
+          <label className="text-xs text-gray-500 block mb-2">
+            Product images
+          </label>
+          <div className="flex flex-wrap gap-3">
+            {existingImageUrls.map((url, index) => (
+              <div
+                key={`existing-${index}`}
+                className="relative w-24 h-24 rounded-lg overflow-hidden border border-gray-200 group"
+              >
+                <img src={url} alt="" className="w-full h-full object-cover" />
+                <button
+                  type="button"
+                  onClick={() => removeExistingImage(index)}
+                  className="absolute top-1 right-1 bg-black/60 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100"
+                >
+                  ×
+                </button>
+              </div>
+            ))}
+
+            {imagePreviews.map((src, index) => (
+              <div
+                key={`new-${index}`}
+                className="relative w-24 h-24 rounded-lg overflow-hidden border border-gray-200 group"
+              >
+                <img src={src} alt="" className="w-full h-full object-cover" />
+                <button
+                  type="button"
+                  onClick={() => removeNewImage(index)}
+                  className="absolute top-1 right-1 bg-black/60 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100"
+                >
+                  ×
+                </button>
+              </div>
+            ))}
+
+            <label className="w-24 h-24 border border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center text-gray-400 gap-1 cursor-pointer hover:border-gray-400">
+              <Upload size={18} />
+              <span className="text-[10px]">Add</span>
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                className="hidden"
+                onChange={handleImageChange}
+              />
+            </label>
+          </div>
         </div>
 
         <div>
@@ -237,6 +381,9 @@ const ProductForm = () => {
             placeholder="Gold Layered Necklace"
             className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-gray-400"
           />
+          {errors.name && (
+            <p className="text-xs text-red-600 mt-1">{errors.name}</p>
+          )}
         </div>
 
         <div className="grid grid-cols-2 gap-4">
@@ -248,6 +395,9 @@ const ProductForm = () => {
                 onChange={handleChange("category")}
                 className="flex-1 border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-gray-400"
               >
+                <option value="" disabled>
+                  select a category
+                </option>
                 {categories.map((cat) => (
                   <option key={cat.id} value={cat.name}>
                     {cat.name}
@@ -362,6 +512,9 @@ const ProductForm = () => {
               );
             })}
           </div>
+          {errors.sizes && (
+            <p className="text-xs text-red-600 mt-2">{errors.sizes}</p>
+          )}
         </div>
 
         {/* Colors */}
@@ -447,6 +600,9 @@ const ProductForm = () => {
               </button>
             </div>
           )}
+          {errors.colors && (
+            <p className="text-xs text-red-600 mt-1">{errors.colors}</p>
+          )}
         </div>
 
         <div>
@@ -456,10 +612,14 @@ const ProductForm = () => {
           <textarea
             rows={4}
             value={form.description}
+            required
             onChange={handleChange("description")}
             placeholder="Brief description of the product..."
             className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-gray-400 resize-none"
           />
+          {errors.description && (
+            <p className="text-xs text-red-600 mt-1">{errors.description}</p>
+          )}
         </div>
 
         <div className="flex justify-end gap-3 pt-2">

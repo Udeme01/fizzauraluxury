@@ -11,6 +11,7 @@ const Products = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+  // const [products, setProducts] = useState([]);
 
   const filteredProducts = useMemo(() => {
     return mockProducts.filter((product) => {
