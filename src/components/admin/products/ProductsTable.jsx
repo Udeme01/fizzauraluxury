@@ -1,10 +1,8 @@
 // components/admin/products/ProductsTable.jsx
 import { Pencil, Trash2 } from "lucide-react";
 import StockBadge from "./StockBadge";
-import { useNavigate } from "react-router-dom";
 
 const ProductsTable = ({ products, onEdit, onDelete }) => {
-  const navigate = useNavigate();
   if (products.length === 0) {
     return (
       <div className="bg-white border border-gray-200 rounded-xl p-10 text-center">
@@ -58,9 +56,7 @@ const ProductsTable = ({ products, onEdit, onDelete }) => {
                 <td className="px-4 py-3">
                   <div className="flex items-center justify-end gap-3">
                     <button
-                      onClick={() =>
-                        navigate(`/admin/products/${product.id}/edit`)
-                      }
+                      onClick={onEdit}
                       className="text-gray-400 hover:text-blue-600"
                     >
                       <Pencil size={15} />

@@ -1,20 +1,39 @@
 // pages/admin/Products.jsx
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Plus, Search } from "lucide-react";
 import ProductsTable from "../../components/admin/products/ProductsTable";
-import { mockProducts } from "../../data/dashboard/mockDashboard";
 import { useNavigate } from "react-router-dom";
-
-// import { supabase } from "../../services/supabaseClient";
+import { supabase } from "../../services/supabaseClient";
 
 const Products = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
-  // const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      const { data, error } = await supabase
+        .from("products")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error("error fetching products", error);
+        setLoading(false);
+        return;
+      }
+
+      setProducts(data || []);
+      setLoading(false);
+    };
+
+    loadProducts();
+  }, []);
 
   const filteredProducts = useMemo(() => {
-    return mockProducts.filter((product) => {
+    return products.filter((product) => {
       const matchesSearch = product.name
         .toLowerCase()
         .includes(searchTerm.toLowerCase());
@@ -22,7 +41,25 @@ const Products = () => {
         statusFilter === "all" || product.status === statusFilter;
       return matchesSearch && matchesStatus;
     });
-  }, [searchTerm, statusFilter]);
+  }, [products, searchTerm, statusFilter]);
+
+  const handleDelete = async (product) => {
+    const { error } = await supabase
+      .from("products")
+      .delete()
+      .eq("id", product.id);
+
+    if (error) {
+      console.error("error deleting product", error);
+      return;
+    }
+
+    setProducts((prev) => prev.filter((p) => p.id !== product.id));
+  };
+
+  if (loading) {
+    return <p className="text-sm text-gray-500">Loading products...</p>;
+  }
 
   return (
     <div className="flex flex-col gap-6 font-montserrat">
@@ -44,7 +81,7 @@ const Products = () => {
         </button>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-3 border">
+      <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
           <Search
             size={16}
@@ -55,7 +92,7 @@ const Products = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search products..."
-            className="w-full border border-gray-200 rounded-md pl-9 pr-3 py-2 text-sm focus:outline-none focus:border-gray-400"
+            className="w-full border border-gray-200 rounded-md pl-9 pr-3 py-3 text-sm focus:outline-none focus:border-gray-400"
           />
         </div>
 
@@ -72,8 +109,8 @@ const Products = () => {
 
       <ProductsTable
         products={filteredProducts}
-        onEdit={(product) => console.log("edit", product)}
-        onDelete={(product) => console.log("delete", product)}
+        onEdit={(product) => navigate(`/admin/products/${product.id}/edit`)}
+        onDelete={handleDelete}
       />
     </div>
   );
