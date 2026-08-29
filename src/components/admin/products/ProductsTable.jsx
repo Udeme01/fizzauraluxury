@@ -12,7 +12,7 @@ const ProductsTable = ({ products, onEdit, onDelete }) => {
   }
 
   return (
-    <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+    <div className="bg-white border border-gray-200 rounded-xl overflow-hidden py-3">
       {/* Horizontal scroll wrapper — protects the table on narrow screens */}
       <div className="overflow-x-auto">
         <table className="w-full text-sm min-w-[640px]">
@@ -27,47 +27,54 @@ const ProductsTable = ({ products, onEdit, onDelete }) => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
-            {products.map((product) => (
-              <tr key={product.id} className="hover:bg-gray-50">
-                <td className="px-4 py-3">
-                  <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-md bg-gray-100 shrink-0" />
-                    <span className="text-gray-900">{product.name}</span>
-                  </div>
-                </td>
-                <td className="px-4 py-3 text-gray-600">{product.category}</td>
-                <td className="px-4 py-3 text-gray-900">
-                  ₦{product.price.toLocaleString()}
-                </td>
-                <td className="px-4 py-3">
-                  <StockBadge stock={product.stock} />
-                </td>
-                <td className="px-4 py-3">
-                  <span
-                    className={`text-xs px-2 py-0.5 rounded-full capitalize ${
-                      product.status === "active"
-                        ? "bg-blue-50 text-blue-700"
-                        : "bg-gray-100 text-gray-500"
-                    }`}
-                  >
-                    {product.status}
-                  </span>
-                </td>
-                <td className="px-4 py-3">
-                  <div className="flex items-center justify-end gap-3">
-                    <button
-                      onClick={onEdit}
-                      className="text-gray-400 hover:text-blue-600"
+            {products.map((product) => {
+              // console.log(product);
+              return (
+                <tr key={product.id} className="hover:bg-gray-50">
+                  <td className="px-4 py-6">
+                    <div className="flex items-center gap-3">
+                      <div className="w-9 h-6 rounded-md bg-gray-100 shrink-0">
+                        <img src={product.image_urls[0]} alt="" className="h-9 w-9 object-cover object-top rounded-md" />
+                      </div>
+                      <span className="text-gray-900">{product.name}</span>
+                    </div>
+                  </td>
+                  <td className="px-4 py-3 text-gray-600">
+                    {product.category}
+                  </td>
+                  <td className="px-4 py-3 text-gray-900">
+                    ₦{product.price.toLocaleString()}
+                  </td>
+                  <td className="px-4 py-3">
+                    <StockBadge stock={product.stock} />
+                  </td>
+                  <td className="px-4 py-3">
+                    <span
+                      className={`text-xs px-2 py-0.5 rounded-full capitalize ${
+                        product.status === "active"
+                          ? "bg-blue-50 text-blue-700"
+                          : "bg-gray-100 text-gray-500"
+                      }`}
                     >
-                      <Pencil size={15} />
-                    </button>
-                    <button onClick={() => onDelete(product)}>
-                      <Trash2 size={15} color="red" />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
+                      {product.status}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3">
+                    <div className="flex items-center justify-end gap-3">
+                      <button
+                        onClick={onEdit}
+                        className="text-gray-400 hover:text-blue-600"
+                      >
+                        <Pencil size={15} />
+                      </button>
+                      <button onClick={() => onDelete(product)}>
+                        <Trash2 size={15} color="red" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
