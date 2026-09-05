@@ -3,6 +3,7 @@ import { X, User, Phone, Mail, MapPin } from "lucide-react";
 import Button from "../common/Button";
 import { CartContext } from "../../context/shoppingCartContext";
 import { toast } from "react-toastify";
+import { supabase } from "../../services/supabaseClient";
 
 const CartCheckoutModalForm = ({
   showCheckoutModal,
@@ -89,7 +90,7 @@ const CartCheckoutModalForm = ({
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleWhatsAppCheckout = (e) => {
+  const handleWhatsAppCheckout = async (e) => {
     e.preventDefault();
 
     // Validate form
@@ -104,50 +105,73 @@ const CartCheckoutModalForm = ({
     setIsSubmitting(true);
 
     try {
+      const { data: orderNumber, error: orderError } = await supabase.rpc(
+        "create_order",
+        {
+          p_customer_name: customerInfo.fullName,
+          p_customer_email: customerInfo.email,
+          p_customer_phone: customerInfo.phone,
+          p_shipping_address: `${customerInfo.address}, ${customerInfo.city}, ${customerInfo.state}`,
+          p_subtotal: total,
+          p_items: items.map((item) => ({
+            product_id: item.id,
+            name: item.name,
+            price: item.price,
+            qty: item.quantity,
+          })),
+        },
+      );
+
+      // console.log("Order created:", orderNumber);
+
+      if (orderError) {
+        throw new Error(orderError.message);
+      }
+
       const message = `
-🛍️ *NEW ORDER FROM ${customerInfo.fullName.toUpperCase()}*
+  🛍️ *NEW ORDER ${orderNumber}*
 
-━━━━━━━━━━━━━━━━━
-👤 *CUSTOMER DETAILS*
-━━━━━━━━━━━━━━━━━
-Name: ${customerInfo.fullName}
-Phone: ${customerInfo.phone}
-Email: ${customerInfo.email}
+  ━━━━━━━━━━━━━━━━━
+  👤 *CUSTOMER DETAILS*
+  ━━━━━━━━━━━━━━━━━
+  Name: ${customerInfo.fullName}
+  Phone: ${customerInfo.phone}
+  Email: ${customerInfo.email}
 
-━━━━━━━━━━━━━━━━━
-📍 *DELIVERY ADDRESS*
-━━━━━━━━━━━━━━━━━
-${customerInfo.address}
-${customerInfo.city}, ${customerInfo.state}
+  ━━━━━━━━━━━━━━━━━
+  📍 *DELIVERY ADDRESS*
+  ━━━━━━━━━━━━━━━━━
+  ${customerInfo.address}
+  ${customerInfo.city}, ${customerInfo.state}
 
-━━━━━━━━━━━━━━━━━
-🛒 *ORDER ITEMS*
-━━━━━━━━━━━━━━━━━
-${items
-  .map(
-    (item, index) =>
-      `*${index + 1}. ${item.name}*
-🔗 Product_Link: https://fizzauraluxury.com/product/${item.id}
-🎨 Color: ${item.selectedColor || "N/A"}
-📏 Size: ${item.selectedSize || "N/A"}
-📦 Quantity: ${item.quantity}
-💰 Subtotal: ₦${(item.price * item.quantity).toLocaleString()}`,
-  )
-  .join("\n\n")}
+  ━━━━━━━━━━━━━━━━━
+  🛒 *ORDER ITEMS*
+  ━━━━━━━━━━━━━━━━━
+  ${items
+    .map(
+      (item, index) =>
+        `*${index + 1}. ${item.name}*
+  🔗 Product_Link: https://fizzauraluxury.com/product/${item.id}
+  🎨 Color: ${item.selectedColor || "N/A"}
+  📏 Size: ${item.selectedSize || "N/A"}
+  📦 Quantity: ${item.quantity}
+  💰 Subtotal: ₦${(item.price * item.quantity).toLocaleString()}`,
+    )
+    .join("\n\n")}
 
-━━━━━━━━━━━━━━━━━
-💵 *ORDER SUMMARY*
-━━━━━━━━━━━━━━━━━
-Subtotal: ₦${subtotal.toLocaleString()}
-*TOTAL: ₦${total.toLocaleString()}*
+  ━━━━━━━━━━━━━━━━━
+  💵 *ORDER SUMMARY*
+  ━━━━━━━━━━━━━━━━━
+  Subtotal: ₦${subtotal.toLocaleString()}
+  *TOTAL: ₦${total.toLocaleString()}*
 
-${
-  customerInfo.notes
-    ? `━━━━━━━━━━━━━━━━━\n📝 *SPECIAL NOTES*\n━━━━━━━━━━━━━━━━━\n${customerInfo.notes}\n\n`
-    : ""
-}━━━━━━━━━━━━━━━━━
-📅 Order Date: ${new Date().toLocaleString()}
-      `.trim();
+  ${
+    customerInfo.notes
+      ? `━━━━━━━━━━━━━━━━━\n📝 *SPECIAL NOTES*\n━━━━━━━━━━━━━━━━━\n${customerInfo.notes}\n\n`
+      : ""
+  }━━━━━━━━━━━━━━━━━
+  📅 Order Date: ${new Date().toLocaleString()}
+        `.trim();
 
       const phoneNumber = "2349138965388";
       const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
@@ -158,18 +182,13 @@ ${
       window.open(whatsappUrl, "_blank");
 
       // Success toast
-      toast.success("Order sent! Check your WhatsApp", {
+      toast.success(`Order ${orderNumber} sent! Check your WhatsApp`, {
         position: "top-center",
         autoClose: 3000,
       });
 
-      // Clear the cart after sending order
       clearCart();
-
-      // Close modal
       setShowCheckoutModal(false);
-
-      // Reset form
       setCustomerInfo({
         fullName: "",
         phone: "",
@@ -181,7 +200,8 @@ ${
       });
       setErrors({});
     } catch (error) {
-      toast.error("Something went wrong. Please try again.", {
+      console.error("Order save failed:", error);
+      toast.error("Something went wrong saving your order. Please try again.", {
         position: "top-center",
         autoClose: 3000,
       });

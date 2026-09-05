@@ -62,7 +62,7 @@ const ProductsTable = ({ products, onEdit, onDelete }) => {
                   <td className="px-4 py-3">
                     <div className="flex items-center justify-end gap-3">
                       <button
-                        onClick={onEdit}
+                        onClick={() => onEdit(product)}
                         className="text-gray-400 hover:text-blue-600"
                       >
                         <Pencil size={15} />

@@ -1,24 +1,66 @@
 // pages/admin/Orders.jsx
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Search } from "lucide-react";
 import OrdersTable from "../../components/admin/orders/OrdersTable";
-import { mockOrders } from "../../data/orders/mockOrders";
+
+import { supabase } from "../../services/supabaseClient";
 
 const statusTabs = ["all", "pending", "paid", "shipped", "cancelled"];
 
 const Orders = () => {
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [activeTab, setActiveTab] = useState("all");
 
+  useEffect(() => {
+    const loadOrders = async () => {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from("orders")
+        .select("*, order_items(count)")
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error("Error fetching orders:", error);
+        setOrders([]);
+      } else {
+        // Reshape to match what OrdersTable already expects
+        const mapped = data.map((row) => ({
+          id: row.order_number,
+          customer: row.customer_name,
+          email: row.customer_email,
+          items: row.order_items?.[0]?.count ?? 0,
+          total: row.subtotal,
+          status: row.status,
+          date: row.created_at,
+        }));
+        setOrders(mapped);
+        console.log(mapped);
+      }
+      setLoading(false);
+    };
+
+    loadOrders();
+  }, []);
+
   const filteredOrders = useMemo(() => {
-    return mockOrders.filter((order) => {
+    return orders.filter((order) => {
       const matchesSearch =
         order.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
         order.id.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesTab = activeTab === "all" || order.status === activeTab;
       return matchesSearch && matchesTab;
     });
-  }, [searchTerm, activeTab]);
+  }, [orders, searchTerm, activeTab]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <div className="w-8 h-8 border-4 border-gray-300 border-t-gray-800 rounded-full animate-spin"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col gap-6">

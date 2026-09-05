@@ -1,19 +1,123 @@
 // pages/admin/OrderDetail.jsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
-import { mockOrderDetails } from "../../data/orders/mockOrderDetails";
+import { supabase } from "../../services/supabaseClient";
 import OrderStatusBadge from "../../components/admin/orders/OrderStatusBadge";
 import OrderStatusTimeline from "../../components/admin/orders/OrderStatusTimeline";
 
 const statusOptions = ["pending", "paid", "shipped", "cancelled"];
 
 const OrderDetail = () => {
-  const { id } = useParams();
+  const { id } = useParams(); // this is the order_number from the URL, e.g. "FL-1016"
   const navigate = useNavigate();
-  const order = mockOrderDetails[id];
 
-  const [status, setStatus] = useState(order?.status);
+  const [order, setOrder] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [status, setStatus] = useState("");
+  const [updating, setUpdating] = useState(false);
+
+  useEffect(() => {
+    const loadOrder = async () => {
+      setLoading(true);
+
+      const { data, error } = await supabase
+        .from("orders")
+        .select("*, order_items(*), order_status_history(*)")
+        .eq("order_number", id)
+        .single();
+
+      if (error) {
+        console.error("Error fetching order:", error);
+        setOrder(null);
+      } else {
+        const mapped = {
+          dbId: data.id, // real uuid — needed later for updates
+          id: data.order_number,
+          date: new Date(data.created_at).toLocaleDateString(),
+          status: data.status,
+          customer: {
+            name: data.customer_name,
+            email: data.customer_email,
+            phone: data.customer_phone,
+          },
+          shippingAddress: data.shipping_address,
+          items: data.order_items.map((item) => ({
+            id: item.id,
+            name: item.name,
+            qty: item.qty,
+            price: item.price,
+          })),
+          timeline: data.order_status_history
+            .slice()
+            .sort((a, b) => new Date(a.changed_at) - new Date(b.changed_at))
+            .map((entry) => ({
+              status: entry.status,
+              date: new Date(entry.changed_at).toLocaleString(),
+            })),
+        };
+
+        setOrder(mapped);
+        setStatus(mapped.status);
+      }
+
+      setLoading(false);
+    };
+
+    loadOrder();
+  }, [id]);
+
+  const handleStatusChange = async (e) => {
+    const newStatus = e.target.value;
+    const previousStatus = status;
+
+    setStatus(newStatus);
+    setUpdating(true);
+
+    const { error: updateError } = await supabase
+      .from("orders")
+      .update({ status: newStatus })
+      .eq("id", order.dbId);
+
+    if (updateError) {
+      console.error("Failed to update order status:", updateError);
+      setStatus(previousStatus);
+      setUpdating(false);
+      return;
+    }
+
+    const { data: historyRow, error: historyError } = await supabase
+      .from("order_status_history")
+      .insert({ order_id: order.dbId, status: newStatus })
+      .select()
+      .single();
+
+    if (historyError) {
+      console.error("Failed to log status history:", historyError);
+    } else {
+      setOrder((prev) => ({
+        ...prev,
+        status: newStatus,
+        timeline: [
+          ...prev.timeline,
+          {
+            status: historyRow.status,
+            date: new Date(historyRow.changed_at).toLocaleString(),
+          },
+        ],
+      }));
+    }
+
+    setUpdating(false);
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <div className="w-8 h-8 border-4 border-gray-300 border-t-gray-800 rounded-full animate-spin"></div>
+      </div>
+    );
+  }
 
   if (!order) {
     return (
@@ -27,11 +131,6 @@ const OrderDetail = () => {
     (sum, item) => sum + item.price * item.qty,
     0,
   );
-
-  const handleStatusChange = (e) => {
-    setStatus(e.target.value);
-    console.log(`order ${order.id} status changed to ${e.target.value}`);
-  };
 
   return (
     <div className="flex flex-col gap-6">
@@ -54,7 +153,6 @@ const OrderDetail = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left: items + customer — takes 2/3 width on desktop */}
         <div className="lg:col-span-2 flex flex-col gap-6">
           <div className="bg-white border border-gray-200 rounded-xl p-4">
             <p className="text-xs text-gray-500 mb-3">Items</p>
@@ -97,14 +195,14 @@ const OrderDetail = () => {
           </div>
         </div>
 
-        {/* Right: status control + timeline — 1/3 width */}
         <div className="flex flex-col gap-6">
           <div className="bg-white border border-gray-200 rounded-xl p-4">
             <p className="text-xs text-gray-500 mb-2">Update status</p>
             <select
               value={status}
               onChange={handleStatusChange}
-              className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-gray-400 capitalize"
+              disabled={updating}
+              className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-gray-400 capitalize disabled:opacity-50"
             >
               {statusOptions.map((s) => (
                 <option key={s} value={s} className="capitalize">
