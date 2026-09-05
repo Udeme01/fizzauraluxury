@@ -4,6 +4,7 @@ import Button from "../common/Button";
 import { CartContext } from "../../context/shoppingCartContext";
 import { toast } from "react-toastify";
 import { supabase } from "../../services/supabaseClient";
+import { getSessionId } from "../../lib/getSessionId";
 
 const CartCheckoutModalForm = ({
   showCheckoutModal,
@@ -178,13 +179,18 @@ const CartCheckoutModalForm = ({
         message,
       )}`;
 
-      // Open WhatsApp
-      window.open(whatsappUrl, "_blank");
-
       // Success toast
       toast.success(`Order ${orderNumber} sent! Check your WhatsApp`, {
         position: "top-center",
         autoClose: 3000,
+      });
+
+      // Open WhatsApp
+      window.open(whatsappUrl, "_blank");
+
+      supabase.from("page_views").insert({
+        session_id: getSessionId(),
+        event_type: "whatsapp_click",
       });
 
       clearCart();
