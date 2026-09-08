@@ -188,10 +188,19 @@ const CartCheckoutModalForm = ({
       // Open WhatsApp
       window.open(whatsappUrl, "_blank");
 
-      supabase.from("page_views").insert({
-        session_id: getSessionId(),
-        event_type: "whatsapp_click",
-      });
+      supabase
+        .from("page_views")
+        .insert({
+          session_id: getSessionId(),
+          event_type: "whatsapp_click",
+        })
+        .then(({ data, error }) => {
+          if (error) {
+            console.error("WhatsApp click insert FAILED:", error);
+          } else {
+            console.log("WhatsApp click insert SUCCESS:", data);
+          }
+        });
 
       clearCart();
       setShowCheckoutModal(false);

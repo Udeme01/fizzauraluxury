@@ -22,12 +22,22 @@ const Root = () => {
 
   // Log page views on route change - Our own dashboard stats.
   useEffect(() => {
-    // API call to log page view in your dashboard
-    supabase.from("page_views").insert({
-      session_id: getSessionId(),
-      event_id: "page_views",
-      path: location.pathname,
-    });
+    console.log("Attempting to log page view:", location.pathname);
+
+    supabase
+      .from("page_views")
+      .insert({
+        session_id: getSessionId(),
+        event_type: "page_view",
+        path: location.pathname,
+      })
+      .then(({ data, error }) => {
+        if (error) {
+          console.error("Page view insert FAILED:", error);
+        } else {
+          console.log("Page view insert SUCCESS:", data);
+        }
+      });
   }, [location]);
 
   return (
