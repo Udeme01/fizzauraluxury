@@ -4,7 +4,7 @@ import Button from "../common/Button";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { Link } from "react-router-dom";
-import { fetchProducts } from "../../lib/fetchProducts";
+import { supabase } from "../../services/supabaseClient";
 
 // Import Swiper styles
 import "swiper/css";
@@ -17,19 +17,49 @@ const NewArrivals = () => {
   const [newProducts, setNewProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch products on mount
+  // // Fetch products on mount
+  // useEffect(() => {
+  //   const loadNewProducts = async () => {
+  //     setLoading(true);
+  //     const data = await fetchProducts();
+  //     // Filter only new arrivals and limit to 6
+  //     const filtered = data.filter((product) => product.isNew);
+  //     const shuffled = shuffleArray(filtered);
+
+  //     setNewProducts(shuffled.slice(0, 6));
+  //     setLoading(false);
+  //   };
+
+  //   loadNewProducts();
+  // }, []);
+
   useEffect(() => {
     const loadNewProducts = async () => {
       setLoading(true);
-      const data = await fetchProducts();
-      // Filter only new arrivals and limit to 6
-      const filtered = data.filter((product) => product.isNew);
-      const shuffled = shuffleArray(filtered);
-      
-      setNewProducts(shuffled.slice(0, 6));
-      setLoading(false);
-    };
+      try {
+        const { data, error } = await supabase
+          .from("products")
+          .select("*")
+          .eq("is_new", true)
+          .eq("status", "active")
+          .order("created_at", { ascending: false })
+          .limit(6);
 
+        if (error) {
+          throw error;
+        }
+        // console.log("Fetched new arrivals:", data);
+        if (data) {
+          const shuffled = shuffleArray(data);
+          // console.log("Shuffled new arrivals:", shuffled);
+          setNewProducts(shuffled);
+        }
+      } catch (error) {
+        console.error("Error fetching new arrivals:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
     loadNewProducts();
   }, []);
 
@@ -46,6 +76,8 @@ const NewArrivals = () => {
       </section>
     );
   }
+
+  // console.log("New products state:", newProducts);
 
   // No products state
   if (newProducts.length === 0) {
@@ -107,6 +139,7 @@ const NewArrivals = () => {
                 }}
               >
                 {newProducts.map((product) => {
+                  // console.log("Rendering product:", product); // Debugging log
                   return (
                     <SwiperSlide key={product.id}>
                       <div className="shrink-0 pr-6">
@@ -119,7 +152,9 @@ const NewArrivals = () => {
                           <div className="relative bg-gray-100 aspect-square overflow-hidden">
                             {/* Product Image */}
                             <img
-                              src={product.images[0] || product.image}
+                              src={
+                                product.image_urls[0] || product.image_urls?.[0]
+                              }
                               alt={product.name}
                               className={`w-full h-full object-cover transition-transform duration-500 group-hover/card:scale-110 ${
                                 product.stock === 0 ? "opacity-50" : ""
