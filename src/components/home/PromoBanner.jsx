@@ -1,23 +1,59 @@
 // src/components/home/PromoBanner.jsx
 import { useState, useEffect } from "react";
 import Button from "../common/Button";
-import { fetchPromoBanner } from "../../lib/fetchProducts";
+// import { fetchPromoBanner } from "../../lib/fetchProducts";
 
-// import supabase from "../../services/supabaseClient";
+import { supabase } from "../../services/supabaseClient";
 
 const PromoBanner = () => {
   const [banner, setBanner] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const loadBanner = async () => {
-      setLoading(true);
-      const data = await fetchPromoBanner();
-      setBanner(data);
-      setLoading(false);
-    };
+  // useEffect(() => {
+  //   const loadBanner = async () => {
+  //     setLoading(true);
+  //     const data = await fetchPromoBanner();
+  //     setBanner(data);
+  //     setLoading(false);
+  //   };
 
-    loadBanner();
+  //   loadBanner();
+  // }, []);
+
+  useEffect(() => {
+    const fetchPromoBanner = async () => {
+      setLoading(true);
+      try {
+        const { data, error } = await supabase
+          .from("promo_banners")
+          .select("*")
+          .eq("is_active", true)
+          .order("created_at", { ascending: false })
+          .limit(1);
+        if (error) {
+          throw error;
+        }
+
+        if (data.length === 0) return null; // No active banner
+
+        const item = data[0];
+        console.log("Fetched promo banner:", item); // Debugging log
+        setBanner({
+          tagLine: item.tag_line,
+          mainHeading: item.main_heading,
+          subheading: item.subheading,
+          buttonText: item.button_text,
+          buttonLink: item.button_link,
+          productImage: item.product_image || "/images/profiles/dp01.jpg",
+          backgroundColor: item.background_color || "#1F2937", // Default to gray-800 if not provided
+        });
+      } catch (error) {
+        console.error("Error fetching promo banner:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPromoBanner();
   }, []);
 
   // Loading state
