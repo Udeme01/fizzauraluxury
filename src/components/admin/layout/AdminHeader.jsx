@@ -1,10 +1,38 @@
 // components/admin/layout/AdminHeader.jsx
+import { useEffect, useState } from "react";
 import { Bell, LogOut, Menu } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../../../services/supabaseClient";
 
-const AdminHeader = ({ adminName = "FizzAura", onToggleSidebar }) => {
+const AdminHeader = ({ onToggleSidebar }) => {
+  const [adminName, setAdminName] = useState("FizzAura");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchAdminName = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return;
+
+      if (user) {
+        const { data, error } = await supabase
+          .from("profiles")
+          .select("name")
+          .eq("id", user.id)
+          .single();
+
+        if (error) {
+          console.error("Error fetching admin name:", error);
+        }
+
+        if (data && data.name) {
+          setAdminName(data.name);
+        }
+      }
+    };
+    fetchAdminName();
+  });
 
   const handleLogout = async () => {
     await supabase.auth.signOut();

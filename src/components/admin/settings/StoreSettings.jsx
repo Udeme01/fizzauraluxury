@@ -11,8 +11,8 @@ const StoreSettings = ({ storeInfo }) => {
     const { error } = await supabase
       .from("store_settings")
       .update({
-        store_name: form.storeName,
-        contact_email: form.contactEmail,
+        store_name: form.store_name,
+        contact_email: form.contact_email,
         currency: form.currency,
         updated_at: new Date().toISOString(),
       })
@@ -21,6 +21,8 @@ const StoreSettings = ({ storeInfo }) => {
 
     if (error) console.error(error);
   };
+
+  // console.log("StoreSettings form state:", form);
 
   return (
     <div className="bg-white border border-gray-200 rounded-xl p-5">
@@ -33,9 +35,9 @@ const StoreSettings = ({ storeInfo }) => {
         <div>
           <label className="text-xs text-gray-500 block mb-1">Store name</label>
           <input
-            value={form.storeName}
-            placeholder={form.storeName}
-            onChange={(e) => setForm({ ...form, storeName: e.target.value })}
+            value={form.store_name}
+            // placeholder={form.store_name}
+            onChange={(e) => setForm({ ...form, store_name: e.target.value })}
             className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-gray-400"
           />
         </div>
@@ -44,8 +46,10 @@ const StoreSettings = ({ storeInfo }) => {
             Contact email
           </label>
           <input
-            value={form.contactEmail}
-            onChange={(e) => setForm({ ...form, contactEmail: e.target.value })}
+            value={form.contact_email}
+            onChange={(e) =>
+              setForm({ ...form, contact_email: e.target.value })
+            }
             className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-gray-400"
           />
         </div>

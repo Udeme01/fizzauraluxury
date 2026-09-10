@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import ProfileSettings from "../../components/admin/settings/ProfileSettings";
 import StoreSettings from "../../components/admin/settings/StoreSettings";
 import NotificationSettings from "../../components/admin/settings/NotificationSettings";
+import PasswordSettings from "../../components/admin/settings/PasswordSettings";
 import { supabase } from "../../services/supabaseClient";
 
 const Settings = () => {
@@ -18,7 +19,7 @@ const Settings = () => {
         data: { session },
       } = await supabase.auth.getSession();
       if (!session) return;
-
+      // console.log("User session:", session);
       setUserId(session.user.id);
 
       const [{ data: profileData }, { data: storeData }] = await Promise.all([
@@ -33,6 +34,9 @@ const Settings = () => {
         //   .select("id, name, email, role")
         //   .order("created_at"),
       ]);
+
+      // console.log("Profile data:", profileData);
+      // console.log("Store data:", storeData);
 
       setProfile(profileData);
       setStoreInfo(storeData);
@@ -57,6 +61,7 @@ const Settings = () => {
       </div>
 
       <ProfileSettings profile={profile} userId={userId} />
+      <PasswordSettings userEmail={profile?.email} />
       <StoreSettings storeInfo={storeInfo} />
       {/* <TeamSettings members={teamMembers} /> */}
       {/* <NotificationSettings userId={userId} /> */}
