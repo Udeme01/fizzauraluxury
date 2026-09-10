@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import Button from "../common/Button";
 import { fetchPromoBanner } from "../../lib/fetchProducts";
 
+// import supabase from "../../services/supabaseClient";
+
 const PromoBanner = () => {
   const [banner, setBanner] = useState(null);
   const [loading, setLoading] = useState(true);

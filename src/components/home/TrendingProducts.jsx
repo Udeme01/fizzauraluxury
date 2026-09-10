@@ -4,24 +4,55 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import { Link } from "react-router-dom";
-import { fetchProducts } from "../../lib/fetchProducts";
+// import { fetchProducts } from "../../lib/fetchProducts";
 import { shuffleArray } from "../../utils/helpers";
+
+import { supabase } from "../../services/supabaseClient";
 
 const TrendingProducts = () => {
   const [trendingProducts, setTrendingProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // useEffect(() => {
+  //   const loadTrendingProducts = async () => {
+  //     setLoading(true);
+  //     const data = await fetchProducts();
+  //     // filter only trending products and limit to 6
+  //     const filter = data.filter((product) => product.isTrending);
+  //     const shuffled = shuffleArray(filter);
+  //     setTrendingProducts(shuffled.slice(0, 6));
+  //     setLoading(false);
+  //   };
+
+  //   loadTrendingProducts();
+  // }, []);
+
   useEffect(() => {
     const loadTrendingProducts = async () => {
       setLoading(true);
-      const data = await fetchProducts();
-      // filter only trending products and limit to 6
-      const filter = data.filter((product) => product.isTrending);
-      const shuffled = shuffleArray(filter);
-      setTrendingProducts(shuffled.slice(0, 6));
-      setLoading(false);
-    };
+      try {
+        const { data, error } = await supabase
+          .from("products")
+          .select("*")
+          .eq("is_trending", true)
+          .eq("status", "active")
+          .order("created_at", { ascending: false })
+          .limit(6);
 
+        if (error) {
+          throw error;
+        }
+
+        if (data) {
+          const shuffled = shuffleArray(data);
+          setTrendingProducts(shuffled);
+        }
+      } catch (error) {
+        console.error("Error fetching trending products:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
     loadTrendingProducts();
   }, []);
 
@@ -108,7 +139,9 @@ const TrendingProducts = () => {
                       <div className="relative bg-gray-100 aspect-square overflow-hidden">
                         {/* Product Image */}
                         <img
-                          src={product.images?.[0] || product.image}
+                          src={
+                            product.image_urls?.[0] || product.image_urls?.[0]
+                          }
                           alt={product.name}
                           className={`w-full h-full object-cover transition-transform duration-500 group-hover/card:scale-110 ${
                             product.stock === 0 ? "opacity-50" : ""
