@@ -37,14 +37,14 @@ const PromoBanner = () => {
         if (data.length === 0) return null; // No active banner
 
         const item = data[0];
-        console.log("Fetched promo banner:", item); // Debugging log
+        // console.log("Fetched promo banner:", item); // Debugging log
         setBanner({
           tagLine: item.tag_line,
           mainHeading: item.main_heading,
           subheading: item.subheading,
           buttonText: item.button_text,
           buttonLink: item.button_link,
-          productImage: item.product_image || "/images/profiles/dp01.jpg",
+          productImage: item.product_image,
           backgroundColor: item.background_color || "#1F2937", // Default to gray-800 if not provided
         });
       } catch (error) {

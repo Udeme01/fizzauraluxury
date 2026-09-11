@@ -40,6 +40,7 @@ import AdminAnalytics from "./pages/admin/AnalyticsPage.jsx";
 import Settings from "./pages/admin/Settings.jsx";
 import ForgotPassword from "./pages/admin/ForgotPassword.jsx";
 import ResetPassword from "./pages/admin/ResetPassword.jsx";
+import PromoBanner from "./pages/admin/PromoBanner.jsx";
 
 const App = () => {
   // Initialize Google Analytics once when app loads
@@ -149,6 +150,10 @@ const App = () => {
               ],
             },
             // { path: "products/:id", element: <ProductEdit /> },
+            {
+              path: "promo-banners",
+              children: [{ index: true, element: <PromoBanner /> }],
+            },
             {
               path: "customers",
               children: [

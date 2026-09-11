@@ -19,7 +19,6 @@ const Settings = () => {
         data: { session },
       } = await supabase.auth.getSession();
       if (!session) return;
-      // console.log("User session:", session);
       setUserId(session.user.id);
 
       const [{ data: profileData }, { data: storeData }] = await Promise.all([
@@ -29,14 +28,7 @@ const Settings = () => {
           .eq("id", session.user.id)
           .single(),
         supabase.from("store_settings").select("*").eq("id", 1).single(),
-        // supabase
-        //   .from("profiles")
-        //   .select("id, name, email, role")
-        //   .order("created_at"),
       ]);
-
-      // console.log("Profile data:", profileData);
-      // console.log("Store data:", storeData);
 
       setProfile(profileData);
       setStoreInfo(storeData);

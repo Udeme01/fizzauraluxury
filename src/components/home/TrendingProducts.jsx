@@ -4,7 +4,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import { Link } from "react-router-dom";
-// import { fetchProducts } from "../../lib/fetchProducts";
 import { shuffleArray } from "../../utils/helpers";
 
 import { supabase } from "../../services/supabaseClient";
@@ -12,20 +11,6 @@ import { supabase } from "../../services/supabaseClient";
 const TrendingProducts = () => {
   const [trendingProducts, setTrendingProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  // useEffect(() => {
-  //   const loadTrendingProducts = async () => {
-  //     setLoading(true);
-  //     const data = await fetchProducts();
-  //     // filter only trending products and limit to 6
-  //     const filter = data.filter((product) => product.isTrending);
-  //     const shuffled = shuffleArray(filter);
-  //     setTrendingProducts(shuffled.slice(0, 6));
-  //     setLoading(false);
-  //   };
-
-  //   loadTrendingProducts();
-  // }, []);
 
   useEffect(() => {
     const loadTrendingProducts = async () => {
