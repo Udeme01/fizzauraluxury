@@ -1,10 +1,12 @@
 import React, { useState, useContext } from "react";
 import { X, User, Phone, Mail, MapPin } from "lucide-react";
-import Button from "../common/Button";
+// import Button from "../common/Button";
 import { CartContext } from "../../context/shoppingCartContext";
 import { toast } from "react-toastify";
 import { supabase } from "../../services/supabaseClient";
 import { getSessionId } from "../../lib/getSessionId";
+
+import { trackTikTokEvent } from "../../lib/tiktokPixel"; // Import the TikTok tracking function
 
 const CartCheckoutModalForm = ({
   showCheckoutModal,
@@ -128,6 +130,18 @@ const CartCheckoutModalForm = ({
       if (orderError) {
         throw new Error(orderError.message);
       }
+
+      // Track the PlaceAnOrder event with TikTok Pixel
+      trackTikTokEvent("PlaceAnOrder", {
+        content_id: orderNumber,
+        value: total,
+        currency: "NGN",
+        contents: items.map((item) => ({
+          content_id: item.id,
+          content_name: item.name,
+          quantity: item.quantity,
+        })),
+      });
 
       const message = `
   🛍️ *NEW ORDER ${orderNumber}*

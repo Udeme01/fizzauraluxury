@@ -1,6 +1,7 @@
 import { createContext, useReducer, useEffect } from "react";
-import { products } from "../data/products";
 import { toast } from "react-toastify";
+
+import { trackTikTokEvent } from "../lib/tiktokPixel"; // Import the TikTok tracking function
 
 // Cart Context
 export const CartContext = createContext({
@@ -211,6 +212,15 @@ export const CartContextProvider = ({ children }) => {
         selectedSize,
         selectedColor,
       },
+    });
+
+    // Track the AddToCart event with TikTok Pixel
+    trackTikTokEvent("AddToCart", {
+      content_id: product.id,
+      content_name: product.name,
+      value: product.price * quantity,
+      currency: "NGN",
+      quantity,
     });
 
     toast.success("Item added to cart!", {

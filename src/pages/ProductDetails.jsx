@@ -7,6 +7,8 @@ import { toast } from "react-toastify";
 
 import { fetchProductById, fetchProducts } from "../lib/fetchProducts";
 
+import { trackTikTokEvent } from "../lib/tiktokPixel"; // Import the TikTok tracking function
+
 const ProductDetail = () => {
   // from cart-context
   const { addItemToCart, items } = useContext(CartContext);
@@ -71,6 +73,19 @@ const ProductDetail = () => {
     setSelectedSize("");
     setSelectedColor("");
     setQuantity(1);
+  }, [product]);
+
+  // TikTok Pixel Tracking for ViewContent event
+  useEffect(() => {
+    if (!product) return;
+
+    trackTikTokEvent("ViewContent", {
+      content_id: product.id,
+      content_name: product.name,
+      content_category: product.category,
+      value: product.price,
+      currency: "NGN",
+    });
   }, [product]);
 
   // add-item-to-cart func...

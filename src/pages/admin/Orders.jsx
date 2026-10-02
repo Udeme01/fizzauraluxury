@@ -36,7 +36,7 @@ const Orders = () => {
           date: row.created_at,
         }));
         setOrders(mapped);
-        console.log(mapped);
+        // console.log(mapped);
       }
       setLoading(false);
     };
