@@ -1,8 +1,9 @@
 // components/admin/layout/AdminLayout.jsx
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { Outlet } from "react-router-dom";
 import AdminSidebar from "./AdminSidebar";
 import AdminHeader from "./AdminHeader";
+import { PageFallback } from "../../common/PageFallback";
 
 const AdminLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -19,7 +20,9 @@ const AdminLayout = () => {
           onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)}
         />
         <main className="p-4 md:p-6">
-          <Outlet />
+          <Suspense fallback={<PageFallback />}>
+            <Outlet />
+          </Suspense>
         </main>
       </div>
     </div>

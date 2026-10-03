@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, Suspense } from "react";
 import { Outlet } from "react-router";
 import Header from "../components/layout/Header.jsx";
 import Footer from "../components/layout/Footer.jsx";
@@ -11,6 +11,9 @@ import { getSessionId } from "../lib/getSessionId.js";
 
 // Analytics
 import { logPageView } from "../analytics.js";
+
+// page fallback component
+import { PageFallback } from "../components/common/PageFallback.jsx";
 
 function TikTokPageViews() {
   const { pathname } = useLocation();
@@ -62,7 +65,9 @@ const Root = () => {
       <ScrollToTop />
       <Header />
       <main className="min-h-[calc(100vh-80px-200px)]">
-        <Outlet />
+        <Suspense fallback={<PageFallback />}>
+          <Outlet />
+        </Suspense>
       </main>
       <Footer />
     </>
