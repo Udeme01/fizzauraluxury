@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const FooterSection = ({ title, links }) => {
   return (
     <section>
-      <h1 className="mb-4 text-lg text-neutral-white font-semibold">{title}</h1>
+      <h2 className="mb-4 text-lg text-neutral-white font-semibold">{title}</h2>
       <ul className="text-xs flex flex-col gap-3">
         {links.map((link) => (
           <li key={link.label}>
@@ -35,13 +35,15 @@ const Footer = () => {
         <section>
           <div className="flex items-center justify-left">
             <img
-              src="/images/brand/fizzaura_logo.png"
-              alt="FizzAura Luxury logo"
+              src="/images/brand/fizzaura_logo.webp"
+              alt=""
+              width="96"
+              height="96"
               className="w-24 h-auto invert"
             />
-            <h1 className="font-opensans text-2xl font-semibold tracking-tighter text-neutral-white">
+            <p className="font-opensans text-2xl font-semibold tracking-tighter text-neutral-white">
               FizzAura Luxury
-            </h1>
+            </p>
           </div>
           <p className="text-sm mt-4 text-neutral-white/60 w-full leading-relaxed lg:max-w-96">
             Elevate your style with our curated collection of premium fashion

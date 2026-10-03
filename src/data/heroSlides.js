@@ -5,6 +5,7 @@ export const slides = [
     tag: "Statement Streetwear",
     title: "Lift Your AURA Effortlessly",
     image: "/images/hero/heroImg1.webp",
+    imageSmall: "/images/hero/heroImg1-400.webp",
     bgColor: "bg-[#6B4423]", // Brown
   },
   {
@@ -12,6 +13,7 @@ export const slides = [
     tag: "Authentic African Luxury",
     title: "Designed for Your Presence",
     image: "/images/hero/heroImg2.webp",
+    imageSmall: "/images/hero/heroImg2-400.webp",
     bgColor: "bg-[#2C3E50]", // Dark blue
   },
   {
@@ -19,6 +21,7 @@ export const slides = [
     tag: "Refined Smart-Casual",
     title: "Everyday Luxury, Minimalist Design",
     image: "/images/hero/heroImg3.webp",
+    imageSmall: "/images/hero/heroImg3-400.webp",
     bgColor: "bg-[#1C4532]", // Dark green
   },
 ];

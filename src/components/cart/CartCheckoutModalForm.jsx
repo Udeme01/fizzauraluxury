@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { X, User, Phone, Mail, MapPin } from "lucide-react";
 // import Button from "../common/Button";
 import { CartContext } from "../../context/shoppingCartContext";
@@ -31,6 +31,21 @@ const CartCheckoutModalForm = ({
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (!showCheckoutModal || items.length === 0) return;
+    trackTikTokEvent("InitiateCheckout", {
+      contents: items.map((i) => ({
+        content_id: String(i.id),
+        content_type: "product",
+        content_name: i.name,
+        quantity: i.quantity,
+        price: Number(i.price),
+      })),
+      value: Number(total),
+      currency: "NGN",
+    });
+  }, [showCheckoutModal, items, total]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -133,14 +148,16 @@ const CartCheckoutModalForm = ({
 
       // Track the PlaceAnOrder event with TikTok Pixel
       trackTikTokEvent("PlaceAnOrder", {
-        content_id: orderNumber,
-        value: total,
-        currency: "NGN",
+        content_type: "product",
         contents: items.map((item) => ({
-          content_id: item.id,
+          content_id: String(item.id),
+          content_type: "product",
           content_name: item.name,
           quantity: item.quantity,
+          price: Number(item.price),
         })),
+        value: Number(total),
+        currency: "NGN",
       });
 
       const message = `

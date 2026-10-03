@@ -25,7 +25,7 @@ const ProductDetail = () => {
   const [selectedColor, setSelectedColor] = useState("");
   const [quantity, setQuantity] = useState(1);
 
-  const [product, setProduct] = useState([]);
+  const [product, setProduct] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -80,13 +80,14 @@ const ProductDetail = () => {
     if (!product) return;
 
     trackTikTokEvent("ViewContent", {
-      content_id: product.id,
+      content_id: String(product.id),
+      content_type: "product",
       content_name: product.name,
       content_category: product.category,
-      value: product.price,
+      value: Number(product.price),
       currency: "NGN",
     });
-  }, [product]);
+  }, [product?.id, product]); // Only run when product ID changes
 
   // add-item-to-cart func...
   const handleAddItemToCart = () => {

@@ -32,8 +32,10 @@ const Header = () => {
             className="flex items-center absolute left-1/2 -translate-x-1/2 md:relative md:left-0 md:translate-x-0"
           >
             <img
-              src="/images/brand/fizzaura_logo.png"
-              alt="FizzAura Luxury Logo"
+              src="/images/brand/fizzaura_logo.webp"
+              alt=""
+              width="96"
+              height="96"
               className="w-24 h-auto invert"
             />
             <span className="text-xl font-semibold text-neutral-900 hidden sm:block">

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Outlet } from "react-router";
 import Header from "../components/layout/Header.jsx";
 import Footer from "../components/layout/Footer.jsx";
@@ -11,6 +11,21 @@ import { getSessionId } from "../lib/getSessionId.js";
 
 // Analytics
 import { logPageView } from "../analytics.js";
+
+function TikTokPageViews() {
+  const { pathname } = useLocation();
+  const first = useRef(true);
+
+  useEffect(() => {
+    if (first.current) {
+      first.current = false;
+      return;
+    } // base code already counted the first load
+    window.ttq?.page();
+  }, [pathname]);
+
+  return null;
+}
 
 const Root = () => {
   const location = useLocation();
@@ -42,6 +57,7 @@ const Root = () => {
 
   return (
     <>
+      <TikTokPageViews />
       <ScrollToTopOnNavigate />
       <ScrollToTop />
       <Header />

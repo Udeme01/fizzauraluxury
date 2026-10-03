@@ -40,9 +40,10 @@ const About = () => {
           {/* <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-neutral-black mb-4">
             FizzAura...
           </h1> */}
-          <p className="text-white text-lg md:text-xl mx-auto font-bold tracking-wider uppercase italic">
+          <h1 className="text-white text-lg md:text-xl mx-auto font-bold tracking-wider uppercase italic">
+            <span className="sr-only">About FizzAura Luxury: </span>
             ...where energy meets style.
-          </p>
+          </h1>
         </div>
       </section>
 
