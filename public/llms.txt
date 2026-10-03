@@ -1,0 +1,11 @@
+# FizzAura Luxury
+
+> Nigerian streetwear and fashion brand selling premium jackets and apparel online.
+
+## Key pages
+- [Shop](https://fizzauraluxury.com/shop): all products
+- [About](https://fizzauraluxury.com/about): brand story and founder
+- [Size guide](https://fizzauraluxury.com/size-guide): sizing information
+- [Shipping & delivery](https://fizzauraluxury.com/shipping-delivery): delivery details
+- [Returns & refunds](https://fizzauraluxury.com/returns-refunds): return policy
+- [Contact](https://fizzauraluxury.com/contact): get in touch
